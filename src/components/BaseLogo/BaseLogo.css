@@ -1,0 +1,10 @@
+.BaseLogo {
+  text-align: center;
+  width: 100%;
+  display: inline-block;
+  margin-top: 20%;
+}
+
+.BaseLogo img {
+  width: 20%;
+}
