@@ -11,17 +11,17 @@ import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SmsIcon from '@material-ui/icons/Sms';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { AppContext } from '../../context/AppContextManager';
+import { AppContext, AppContextType } from '../../context/AppContextManager';
 import MachineSelector from '../MachineSelector/MachineSelector';
 import Logo from '../Logo/Logo';
 import Loader from '../Loader/Loader';
 
 import './Base.css';
 
-import NavList from './NavList/NavList';
+import NavList, { NavListItem } from './NavList/NavList';
 
-import WithSecurity from '../../hoc/WithSecurity';
-import WithErrorHandling from '../../hoc/WithErrorHandling';
+import withSecurity from '../../hoc/withSecurity';
+import withErrorHandling from '../../hoc/withErrorHandling';
 
 const drawerWidth = 240;
 
@@ -67,8 +67,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Base = (props: any) => {
-  const appContext: any = useContext(AppContext);
+const Base: React.FC = () => {
+  const appContext = useContext<AppContextType>(AppContext);
+
+  // console.log(appContext);
 
   const classes = useStyles();
   // const theme = useTheme();
@@ -79,7 +81,7 @@ const Base = (props: any) => {
   };
 
   const errorHandleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    appContext.setAlerts({});
+    // appContext.setAlerts(null);
   };
 
   const showAlert = () => {
@@ -92,7 +94,7 @@ const Base = (props: any) => {
     });
   };
 
-  const navList = [
+  const navList: NavListItem[] = [
     { id: 1, text: 'Overview', icon: <RemoveRedEyeIcon /> },
     { id: 2, text: 'Settings', icon: <SettingsIcon /> },
     { id: 3, text: 'Feedback', icon: <SmsIcon />, onClick: showAlert },
@@ -141,4 +143,4 @@ const Base = (props: any) => {
 
 // export default Base;
 
-export default WithErrorHandling(WithSecurity(Base));
+export default withErrorHandling(withSecurity(Base));

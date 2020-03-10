@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../context/AppContextManager';
+import { AppContext, AppContextType } from '../context/AppContextManager';
 // import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Alerts from '../components/UI/Alerts/Alerts';
@@ -14,18 +14,22 @@ import BaseLogo from '../components/BaseLogo/BaseLogo';
 //   },
 // }));
 
-const WithErrorHandling = (WrappedComponet: any) => {
+const withErrorHandling = (WrappedComponet: React.ComponentType) => {
   const WithErrorHandlingComponent = () => {
-    const appContext: any = useContext(AppContext);
+    const appContext = useContext<AppContextType>(AppContext);
 
     return (
       <div>
-        {appContext.alerts.hideApp ? <BaseLogo /> : <WrappedComponet />}
-        <Alerts {...appContext.alerts} />
+        {appContext.alerts && appContext.alerts.hideApp ? (
+          <BaseLogo />
+        ) : (
+          <WrappedComponet />
+        )}
+        {appContext.alerts && <Alerts {...appContext.alerts} />}
       </div>
     );
   };
   return WithErrorHandlingComponent;
 };
 
-export default WithErrorHandling;
+export default withErrorHandling;

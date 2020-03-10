@@ -5,10 +5,14 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import './NavList.css';
 
-const NavList = (props: any) => {
+type Props = {
+  navList: NavListItem[];
+};
+
+const NavList: React.FC<Props> = ({ navList }: Props) => {
   return (
     <List className="NavList">
-      {props.navList.map((item: any, idx: number) => {
+      {navList.map((item: NavListItem) => {
         return (
           <ListItem key={item.id} button onClick={item.onClick}>
             <ListItemIcon>{item.icon}</ListItemIcon>
@@ -18,6 +22,13 @@ const NavList = (props: any) => {
       })}
     </List>
   );
+};
+
+export type NavListItem = {
+  id: number;
+  text: string;
+  icon: JSX.Element;
+  onClick?: undefined | (() => void);
 };
 
 export default NavList;

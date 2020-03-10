@@ -2,10 +2,10 @@ import React, { useContext } from 'react';
 // import Logo from '../../assets/aarbakke-logo.png';
 // import './Login.css';
 
-// import { AppContext } from '../../context/AppContextManager';
+// import { AppContext, AppContextType } from '../../context/AppContextManager';
 
-const Login = () => {
-  // const appContext: any = useContext(AppContext);
+const Login: React.FC = () => {
+  // const appContext: AppContextType = useContext(AppContext);
   return (
     <div className="Login">
       {/* <div>

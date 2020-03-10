@@ -1,17 +1,22 @@
 import React, { useContext, useRef } from 'react';
 import './MachineSelector.css';
-import { AppContext } from '../../context/AppContextManager';
+import { Asset } from '@cognite/sdk';
+import { AppContext, AppContextType } from '../../context/AppContextManager';
 
-const MachineSelector = (props: any) => {
-  const appContext: any = useContext(AppContext);
+type Props = {
+  assets: Asset[];
+};
+
+const MachineSelector: React.FC<Props> = ({ assets }: Props) => {
+  const appContext = useContext<AppContextType>(AppContext);
 
   const machineSelector = useRef<HTMLSelectElement>(null);
 
   const setSelectedMachine = () => {
     if (machineSelector.current) {
       const selectedMachineId = machineSelector.current.value;
-      const selectedMachine = props.assets.find(
-        (asset: any) => asset.id.toString() === selectedMachineId
+      const selectedMachine = assets.find(
+        asset => asset.id.toString() === selectedMachineId
       );
       appContext.setSelectedMachine(selectedMachine);
     }
@@ -28,8 +33,8 @@ const MachineSelector = (props: any) => {
             ref={machineSelector}
             onChange={setSelectedMachine}
           >
-            {props.assets
-              ? props.assets.map((asset: any) => {
+            {assets
+              ? assets.map(asset => {
                   return (
                     <option key={asset.id} value={asset.id}>
                       {asset.name}

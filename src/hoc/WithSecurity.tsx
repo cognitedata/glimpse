@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import { CogniteClient, REDIRECT, Group } from '@cognite/sdk';
-import { AppContext } from '../context/AppContextManager';
+import { AppContext, AppContextType } from '../context/AppContextManager';
 import {
   APP_NAME,
   APP_VERSION,
@@ -11,6 +11,12 @@ import {
 } from '../constants/appData';
 import { MESSAGES } from '../constants/messages';
 
+type Capability = {
+  [key: string]: {
+    actions: string[];
+  };
+};
+
 const authResultsKey = `${APP_NAME}_${APP_VERSION}_storage/${project}/authResult`;
 
 const client = new CogniteClient({ appId: APP_NAME });
@@ -18,10 +24,10 @@ const client = new CogniteClient({ appId: APP_NAME });
 const getUserCapabilities = (groups: Group[]) =>
   groups
     .map(group =>
-      group.capabilities?.map((capability: any) =>
+      group.capabilities?.map((capability: Capability) =>
         Object.keys(capability).map(capabilityKey =>
           capability[capabilityKey].actions.map(
-            (action: any) => `${capabilityKey}:${action}`
+            (action: string) => `${capabilityKey}:${action}`
           )
         )
       )
@@ -37,9 +43,9 @@ const hasPermissions = (userCapabilities: string[]) =>
 const isAdmin = (groups: Group[]) =>
   groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
 
-const WithSecurity = (WrappedComponet: any) => {
+const withSecurity = (WrappedComponet: React.ComponentType) => {
   const WithSecurityComponent = () => {
-    const appContext: any = useContext(AppContext);
+    const appContext = useContext<AppContextType>(AppContext);
 
     client.loginWithOAuth({
       project,
@@ -59,6 +65,7 @@ const WithSecurity = (WrappedComponet: any) => {
         status = await client.login.status();
       }
       const groups = await client.groups.list();
+      console.log(groups);
       const userCapabilities = getUserCapabilities(groups);
       const isAdminUser = isAdmin(groups);
       appContext.setAdminUser(isAdminUser);
@@ -76,10 +83,21 @@ const WithSecurity = (WrappedComponet: any) => {
         });
       } else {
         appContext.setLoggedIn(!!status);
-        const assets = await client.assets.retrieve(
-          MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
-        );
-        appContext.setAssets(assets);
+        try {
+          const assets = await client.assets.retrieve(
+            MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
+          );
+          appContext.setAssets(assets);
+        } catch (error) {
+          appContext.setAlerts({
+            open: true,
+            type: 'error',
+            text: MESSAGES.ASSETS_FETCH_ERROR,
+            handleClose: errorHandleClose,
+            duration: 10000,
+            hideApp: true,
+          });
+        }
       }
       // console.log("userHasPermissions", userHasPermissions);
       appContext.setLoading(false);
@@ -89,7 +107,7 @@ const WithSecurity = (WrappedComponet: any) => {
       event?: React.SyntheticEvent,
       reason?: string
     ) => {
-      appContext.setAlerts({});
+      appContext.setAlerts(undefined);
       logout();
     };
 
@@ -116,4 +134,4 @@ const WithSecurity = (WrappedComponet: any) => {
   return WithSecurityComponent;
 };
 
-export default WithSecurity;
+export default withSecurity;
