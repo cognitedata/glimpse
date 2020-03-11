@@ -4,10 +4,11 @@ import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { getEmptyPositions } from '../GridLayout/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
+import { Layout, ComponentDetail } from '../interfaces';
 
 const WithAddGridComponents = (WrappedComponent: any) => {
   const WrapperObject = () => {
-    const initialLayout: any = [
+    const initialLayout: Layout[] = [
       { i: 'a', x: 0, y: 0, w: 1, h: 1 },
       { i: 'b', x: 0, y: 1, w: 1, h: 1 },
       { i: 'c', x: 0, y: 2, w: 1, h: 2 },
@@ -19,25 +20,25 @@ const WithAddGridComponents = (WrappedComponent: any) => {
       // { i: 'i', x: 1, y: 4, w: 3, h: 2, component: '' },
     ];
 
-    const initialcomponents: any = [
-      { i: 'a', component: 'a', props: {} },
-      { i: 'b', component: 'a', props: {} },
-      { i: 'c', component: 'a', props: {} },
-      { i: 'd', component: 'a', props: {} },
-      { i: 'e', component: 'a', props: {} },
-      { i: 'f', component: 'a', props: {} },
-      { i: 'g', component: 'a' },
-      { i: 'h', component: 'a' },
-      // { i: 'i', component: 'a' },
+    const initialcomponents: ComponentDetail[] = [
+      { i: 'a', compName: 'a' },
+      { i: 'b', compName: 'a' },
+      { i: 'c', compName: 'a' },
+      { i: 'd', compName: 'a' },
+      { i: 'e', compName: 'a' },
+      { i: 'f', compName: 'a' },
+      { i: 'g', compName: 'a' },
+      { i: 'h', compName: 'a' },
+      // { i: 'i', compName: 'a' },
     ];
 
     const [components, setComponents] = useState(initialcomponents);
-    const [layout, setLayout] = useState(initialLayout);
+    const [layouts, setLayouts] = useState(initialLayout);
 
     const addElement = (height: number, width: number) => {
       if (height > 0 && height <= 6 && width > 0 && width <= 4) {
         const cordinates = getEmptyPositions(
-          layout,
+          layouts,
           width,
           height,
           MAXCOLS,
@@ -45,15 +46,15 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         );
         if (!cordinates) {
           // eslint-disable-next-line no-alert
-          alert('no position to add the component');
+          alert('There is no position to add the component');
           return;
         }
         const key = generateRandomKey();
-        setComponents((prevComponents: any) => {
-          prevComponents.push({ i: key, component: 'a' });
+        setComponents((prevComponents: ComponentDetail[]) => {
+          prevComponents.push({ i: key, compName: 'a' });
           return prevComponents;
         });
-        setLayout((prevLayout: any) => {
+        setLayouts((prevLayout: Layout[]) => {
           const newLayout = [...prevLayout];
           newLayout.push({
             i: key,
@@ -61,7 +62,6 @@ const WithAddGridComponents = (WrappedComponent: any) => {
             y: cordinates[1],
             w: width,
             h: height,
-            component: '',
           });
           return newLayout;
         });
@@ -72,23 +72,25 @@ const WithAddGridComponents = (WrappedComponent: any) => {
     };
 
     const onRemoveItem = (key: string) => {
-      setLayout((prevLayout: any[]) =>
-        prevLayout.filter((compDetails: any) => compDetails.i !== key)
+      setLayouts((prevLayout: Layout[]) =>
+        prevLayout.filter((compDetails: Layout) => compDetails.i !== key)
       );
-      setComponents((prevComponets: any[]) =>
-        prevComponets.filter((compDetails: any) => compDetails.i !== key)
+      setComponents((prevComponets: ComponentDetail[]) =>
+        prevComponets.filter(
+          (compDetails: ComponentDetail) => compDetails.i !== key
+        )
       );
     };
 
-    const onLayoutChange = (newLayout: any) => {
-      setLayout(newLayout);
+    const onLayoutChange = (newLayout: Layout[]) => {
+      setLayouts(newLayout);
     };
 
     return (
       <>
         <AddComponent addElement={addElement} />
         <WrappedComponent
-          layout={layout}
+          layouts={layouts}
           components={components}
           onRemoveItem={onRemoveItem}
           onLayoutChange={onLayoutChange}

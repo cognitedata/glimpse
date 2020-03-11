@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './gridLayout.css';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import {
   DUMMY_COMP_ID,
@@ -9,51 +9,60 @@ import {
   BREAKPOINTS,
   MAXCOLS,
   DEFAULT_LAYOUT_WIDTH,
+  IS_RESIZABLE,
 } from 'constants/grid';
-import generateComponent from '../../componentFactory/components';
+import generateComponent from '../../componentFactory/componentsFactory';
+import { ComponentDetail, GridLayoutProps } from '../interfaces';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const GridLayout = (props: any) => {
+const GridLayout = (props: GridLayoutProps) => {
   const [height, setHeight] = useState(600);
-  const [layout, setLayout] = useState(props.layout);
+  const [layout, setLayout] = useState(props.layouts);
 
   useEffect(() => {
     setHeight(props.size.height);
   }, []);
 
   useEffect(() => {
-    setLayout(props.layout);
-  }, [props.layout]);
+    setLayout(props.layouts);
+  }, [props.layouts]);
 
-  const generateComponents = (components: any) => {
-    return components.map((comp: any) =>
-      generateComponent(comp.i, comp.component, {
-        ...comp.props,
+  const generateComponents = (components: ComponentDetail[]) => {
+    return components.map((comp: ComponentDetail) =>
+      generateComponent(comp.i, comp.compName, {
         onRemoveItem: props.onRemoveItem,
       })
     );
   };
 
   const revertChange = () => {
-    setLayout((prevLayout: any) => {
-      let newLayOut = [...prevLayout];
-      if (newLayOut.find(item => item.i === DUMMY_COMP_ID)) {
-        newLayOut = newLayOut.filter(item => item.i !== DUMMY_COMP_ID);
+    setLayout((prevLayouts: Layout[]) => {
+      let newLayOuts = [...prevLayouts];
+      if (newLayOuts.find(layOutItem => layOutItem.i === DUMMY_COMP_ID)) {
+        newLayOuts = newLayOuts.filter(
+          layOutItem => layOutItem.i !== DUMMY_COMP_ID
+        );
       } else {
-        newLayOut.push({ i: DUMMY_COMP_ID, x: 0, y: 0, w: 0, h: 0 });
+        newLayOuts.push({ i: DUMMY_COMP_ID, x: 0, y: 0, w: 0, h: 0 });
       }
-      return newLayOut;
+      return newLayOuts;
     });
   };
 
-  const onLayoutChange = (ChangedLayout: any) => {
-    if (ChangedLayout.find((comp: any) => comp.y + comp.h > MAXROWS)) {
+  const onLayoutChange = (ChangedLayout: Layout[]) => {
+    if (
+      ChangedLayout.find(
+        (layoutItem: Layout) => layoutItem.y + layoutItem.h > MAXROWS
+      )
+    ) {
       revertChange();
       return;
     }
     props.onLayoutChange(
-      ChangedLayout.filter((item: any) => item.i !== DUMMY_COMP_ID)
+      ChangedLayout.filter(
+        (layoutItem: Layout) => layoutItem.i !== DUMMY_COMP_ID
+      )
     );
   };
 
@@ -62,6 +71,7 @@ const GridLayout = (props: any) => {
       className="layout"
       compactType={null}
       onLayoutChange={onLayoutChange}
+      isResizable={IS_RESIZABLE}
       margin={MARGIN}
       breakpoints={BREAKPOINTS}
       layouts={{ lg: layout }}
@@ -74,7 +84,5 @@ const GridLayout = (props: any) => {
     </ResponsiveGridLayout>
   );
 };
-//
-// export default sizeMe({ monitorHeight: true })(BasicLayout);
 
 export default sizeMe({ monitorHeight: true })(GridLayout);

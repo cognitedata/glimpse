@@ -1,23 +1,28 @@
 import React from 'react';
 import ShiftUtilization from 'components/ShiftUtilization/ShiftUtilization';
+import CSS from 'csstype';
 
 const Components: any = {
   shiftUtilization: ShiftUtilization,
 };
 
-export default (key: string, compName: string, props: any = {}) => {
+type CompProps = {
+  onRemoveItem: Function;
+};
+
+export default (key: string, compName: string, compProps: CompProps) => {
   if (Components[compName] !== undefined) {
     return (
       <div key={key}>
         <button
           type="button"
           style={removeStyle}
-          onClick={() => props.onRemoveItem(key)}
+          onClick={() => compProps.onRemoveItem(key)}
         >
           x
         </button>
         {React.createElement(Components[compName], {
-          ...props,
+          ...compProps,
         })}
       </div>
     );
@@ -27,7 +32,7 @@ export default (key: string, compName: string, props: any = {}) => {
       <button
         type="button"
         style={removeStyle}
-        onClick={() => props.onRemoveItem(key)}
+        onClick={() => compProps.onRemoveItem(key)}
       >
         x
       </button>
@@ -35,7 +40,7 @@ export default (key: string, compName: string, props: any = {}) => {
   );
 };
 
-const removeStyle: any = {
+const removeStyle: CSS.Properties = {
   position: 'absolute',
   right: '2px',
   top: 0,
