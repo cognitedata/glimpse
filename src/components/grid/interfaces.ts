@@ -1,11 +1,4 @@
-export interface Layout {
-  i: string;
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  static?: boolean;
-}
+import { Layout } from 'react-grid-layout';
 
 export interface ComponentDetail {
   i: string;

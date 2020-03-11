@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { generateRandomKey } from 'utills/utills';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
+import { Layout } from 'react-grid-layout';
 import { getEmptyPositions } from '../GridLayout/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
-import { Layout, ComponentDetail } from '../interfaces';
+import { ComponentDetail } from '../interfaces';
 
 const WithAddGridComponents = (WrappedComponent: any) => {
   const WrapperObject = () => {

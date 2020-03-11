@@ -1,4 +1,6 @@
-const getGridMap = (layout: any, cols: number, rows: number) => {
+import { Layout } from 'react-grid-layout';
+
+const getGridMap = (layout: Layout[], cols: number, rows: number) => {
   const matrix = new Array(cols).fill(0).map(() => new Array(rows).fill(0));
   layout.forEach((compDetails: any) => {
     const { x, y, w, h } = compDetails;
