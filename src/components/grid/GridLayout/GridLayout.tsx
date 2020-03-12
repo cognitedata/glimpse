@@ -36,6 +36,10 @@ const GridLayout = (props: GridLayoutProps) => {
     );
   };
 
+  /**
+   * For change grid layout to previous position, Need to change the layout array length (library implementation)
+   * so need to push dummy layout or remove dummy layout
+   */
   const revertChange = () => {
     setLayout((prevLayouts: Layout[]) => {
       let newLayOuts = [...prevLayouts];
@@ -67,21 +71,25 @@ const GridLayout = (props: GridLayoutProps) => {
   };
 
   return (
-    <ResponsiveGridLayout
-      className="layout"
-      compactType={null}
-      onLayoutChange={onLayoutChange}
-      isResizable={IS_RESIZABLE}
-      margin={MARGIN}
-      breakpoints={BREAKPOINTS}
-      layouts={{ lg: layout }}
-      cols={{ lg: MAXCOLS }}
-      preventCollision
-      rowHeight={height / MAXROWS}
-      width={DEFAULT_LAYOUT_WIDTH}
-    >
-      {generateComponents(props.components)}
-    </ResponsiveGridLayout>
+    <>
+      <div className="gridLayout">
+        <ResponsiveGridLayout
+          className="layout"
+          compactType={null}
+          onLayoutChange={onLayoutChange}
+          isResizable={IS_RESIZABLE}
+          margin={MARGIN}
+          breakpoints={BREAKPOINTS}
+          layouts={{ lg: layout }}
+          cols={{ lg: MAXCOLS }}
+          preventCollision
+          rowHeight={height / MAXROWS - MARGIN[1]}
+          width={DEFAULT_LAYOUT_WIDTH}
+        >
+          {generateComponents(props.components)}
+        </ResponsiveGridLayout>
+      </div>
+    </>
   );
 };
 
