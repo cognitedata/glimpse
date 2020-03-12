@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps, Color } from '@material-ui/lab/Alert';
 
-const Alerts: React.FC<AlertsPropsType> = ({
+const Alerts: FC<AlertsPropsType> = ({
   open,
   duration,
   handleClose,

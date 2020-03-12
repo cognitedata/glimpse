@@ -3,7 +3,7 @@ import { AppContext, AppContextType } from '../context/AppContextManager';
 // import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Alerts from '../components/UI/Alerts/Alerts';
-import BaseLogo from '../components/BaseLogo/BaseLogo';
+import BaseLogo from '../components/UI/BaseLogo/BaseLogo';
 
 // const useStyles = makeStyles((theme: Theme) => ({
 //   root: {
@@ -17,7 +17,6 @@ import BaseLogo from '../components/BaseLogo/BaseLogo';
 const withErrorHandling = (WrappedComponet: React.ComponentType) => {
   const WithErrorHandlingComponent = () => {
     const appContext = useContext<AppContextType>(AppContext);
-
     return (
       <div>
         {appContext.alerts && appContext.alerts.hideApp ? (

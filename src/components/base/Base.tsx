@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, FC } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,13 +12,14 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SmsIcon from '@material-ui/icons/Sms';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { AppContext, AppContextType } from '../../context/AppContextManager';
-import MachineSelector from '../MachineSelector/MachineSelector';
-import Logo from '../Logo/Logo';
-import Loader from '../Loader/Loader';
+import Logo from '../UI/Logo/Logo';
+import CogniteLogo from '../UI/CogniteLogo/CogniteLogo';
+import Loader from '../UI/Loader/Loader';
 
 import './Base.css';
 
 import NavList, { NavListItem } from './NavList/NavList';
+import TopBar from './TopBar/TopBar';
 
 import withSecurity from '../../hoc/withSecurity';
 import withErrorHandling from '../../hoc/withErrorHandling';
@@ -67,7 +68,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Base: React.FC = () => {
+const Base: FC = () => {
   const appContext = useContext<AppContextType>(AppContext);
 
   // console.log(appContext);
@@ -123,7 +124,7 @@ const Base: React.FC = () => {
           }),
         }}
       >
-        <div className={classes.toolbar}>
+        <div className={`${classes.toolbar} Drawer-Header`}>
           <Logo hide={!open} />
           <IconButton onClick={handleDrawerToggle}>
             {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
@@ -131,9 +132,13 @@ const Base: React.FC = () => {
         </div>
         <Divider />
         <NavList navList={navList} />
+        <CogniteLogo width={open ? '50px' : '20px'} />
       </Drawer>
       <main className="widgetsHolder">
-        <MachineSelector assets={appContext.assets} />
+        <div className="topBarHolder">
+          <TopBar />
+        </div>
+        <div>{/* <MachineSelector assets={appContext.assets} /> */}</div>
       </main>
     </div>
   );
@@ -143,4 +148,4 @@ const Base: React.FC = () => {
 
 // export default Base;
 
-export default withErrorHandling(withSecurity(Base));
+export default withErrorHandling(withSecurity()(Base));

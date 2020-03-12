@@ -20,8 +20,12 @@
     background-color: #f55039;
 } */
 
-.MuiIconButton-root {
+.Drawer-Header .MuiIconButton-root {
   padding: unset !important;
   background-color: #f55039 !important;
   color: #fff !important;
+}
+
+.topBarHolder {
+  width: 100%;
 }

@@ -17,9 +17,17 @@ type Capability = {
   };
 };
 
+type withSecurityPropType =
+  | {
+      sdk?: CogniteClient;
+    }
+  | undefined;
+
+// console.log(UserInfo)
+
 const authResultsKey = `${APP_NAME}_${APP_VERSION}_storage/${project}/authResult`;
 
-const client = new CogniteClient({ appId: APP_NAME });
+const deafultClient = new CogniteClient({ appId: APP_NAME });
 
 const getUserCapabilities = (groups: Group[]) =>
   groups
@@ -43,9 +51,13 @@ const hasPermissions = (userCapabilities: string[]) =>
 const isAdmin = (groups: Group[]) =>
   groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
 
-const withSecurity = (WrappedComponet: React.ComponentType) => {
+const withSecurity = (props?: withSecurityPropType) => (
+  WrappedComponet: React.ComponentType
+) => {
   const WithSecurityComponent = () => {
     const appContext = useContext<AppContextType>(AppContext);
+
+    const client = props?.sdk || deafultClient;
 
     client.loginWithOAuth({
       project,
@@ -65,7 +77,7 @@ const withSecurity = (WrappedComponet: React.ComponentType) => {
         status = await client.login.status();
       }
       const groups = await client.groups.list();
-      console.log(groups);
+
       const userCapabilities = getUserCapabilities(groups);
       const isAdminUser = isAdmin(groups);
       appContext.setAdminUser(isAdminUser);
@@ -83,6 +95,8 @@ const withSecurity = (WrappedComponet: React.ComponentType) => {
         });
       } else {
         appContext.setLoggedIn(!!status);
+        const userInfo = { name: status?.user };
+        appContext.setUserInfo(userInfo);
         try {
           const assets = await client.assets.retrieve(
             MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))

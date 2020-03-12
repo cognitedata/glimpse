@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, FC } from 'react';
 import { Asset } from '@cognite/sdk';
 import { AlertsPropsType } from '../components/UI/Alerts/Alerts';
 
@@ -17,6 +17,7 @@ const defaultContextObj = {
   setAlerts: (inp?: AlertsPropsType) => {},
   logout: () => {},
   setLogout: () => {},
+  setUserInfo: (inp?: UserInfo) => {},
 };
 
 export const AppContext = React.createContext<AppContextType>(
@@ -27,7 +28,15 @@ type Props = {
   children: JSX.Element;
 };
 
-export const AppContextProvider: React.FC<Props> = ({ children }: Props) => {
+// export interface UserInfo extends IdInfo {
+
+// }
+
+type UserInfo = {
+  name?: string | undefined;
+};
+
+export const AppContextProvider: FC<Props> = ({ children }: Props) => {
   const [adminUser, setAdminUser] = useState(false);
   const [assets, setAssets] = useState<Asset[]>([]);
   const [selectedMachine, setSelectedMachine] = useState<Asset>();
@@ -35,6 +44,7 @@ export const AppContextProvider: React.FC<Props> = ({ children }: Props) => {
   const [loading, setLoading] = useState(false);
   const [userCapabilities, setUserCapabilities] = useState<string[]>([]);
   const [alerts, setAlerts] = useState<AlertsPropsType>();
+  const [userInfo, setUserInfo] = useState<UserInfo>();
   const [logout, setLogout] = useState<() => void>(() => {});
 
   const contextObj: AppContextType = {
@@ -54,6 +64,8 @@ export const AppContextProvider: React.FC<Props> = ({ children }: Props) => {
     setAlerts,
     logout,
     setLogout,
+    userInfo,
+    setUserInfo,
   };
 
   return (
@@ -84,4 +96,8 @@ export type AppContextType = {
     | React.Dispatch<React.SetStateAction<AlertsPropsType | undefined>>;
   logout: () => void;
   setLogout: (() => void) | React.Dispatch<React.SetStateAction<() => void>>;
+  userInfo?: UserInfo | undefined;
+  setUserInfo:
+    | ((inp?: UserInfo) => void)
+    | React.Dispatch<React.SetStateAction<UserInfo | undefined>>;
 };

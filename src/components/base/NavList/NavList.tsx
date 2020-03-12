@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -9,7 +9,7 @@ type Props = {
   navList: NavListItem[];
 };
 
-const NavList: React.FC<Props> = ({ navList }: Props) => {
+const NavList: FC<Props> = ({ navList }: Props) => {
   return (
     <List className="NavList">
       {navList.map((item: NavListItem) => {
