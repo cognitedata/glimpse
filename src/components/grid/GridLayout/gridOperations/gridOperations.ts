@@ -1,7 +1,7 @@
 import { Layout } from 'react-grid-layout';
 
 /**
- * Get calculated matrix related to given layout
+ * Get calculated matrix related to the given layout
  * empty positions marked as 0, filled with components marked as 1
  * @param layout layOuts array
  * @param maxCols
@@ -66,20 +66,20 @@ const isHeightAvailable = (
 
 /**
  * return first empty position cordinate ([x,y]) if availble, else none
- * @param layout
+ * @param layouts
  * @param width
  * @param height
  * @param maxCols
  * @param maxRows
  */
 export const getEmptyPositions = (
-  layout: any,
+  layouts: Layout[],
   width: number,
   height: number,
   maxCols: number,
   maxRows: number
 ) => {
-  const matrix = getGridMap(layout, maxCols, maxRows);
+  const matrix = getGridMap(layouts, maxCols, maxRows);
   for (let j = 0; j + height <= maxRows; j++) {
     for (let i = 0; i + width <= maxCols; i++) {
       if (

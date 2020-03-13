@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { generateRandomKey } from 'utills/utills';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
 import { initialcomponentsMocked, initialLayoutMocked } from 'mocks/gridMocks';
-import { getEmptyPositions } from '../GridLayout/gridOperations';
+import { AppContextType, AppContext } from 'context/AppContextManager';
+import { getEmptyPositions } from '../GridLayout/gridOperations/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
 import { ComponentDetail } from '../interfaces';
 
 const WithAddGridComponents = (WrappedComponent: any) => {
   const WrapperObject = () => {
+    const appContext = useContext<AppContextType>(AppContext);
     const [components, setComponents] = useState(initialcomponentsMocked);
     const [layouts, setLayouts] = useState(initialLayoutMocked);
 
@@ -23,8 +25,14 @@ const WithAddGridComponents = (WrappedComponent: any) => {
           MAXROWS
         );
         if (!cordinates) {
-          // eslint-disable-next-line no-alert
-          alert('There is no position to add the component');
+          appContext.setAlerts({
+            open: true,
+            type: 'error',
+            text: 'There is no position for adding the component',
+            handleClose: () => appContext.setAlerts(undefined),
+            duration: 50000,
+            hideApp: false,
+          });
           return;
         }
         const key = generateRandomKey();
@@ -45,8 +53,14 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         });
         return;
       }
-      // eslint-disable-next-line no-alert
-      alert('1 <= width <=4 and 1 <= height <= 6');
+      appContext.setAlerts({
+        open: true,
+        type: 'error',
+        text: '1 <= width <=4 and 1 <= height <= 6',
+        handleClose: () => appContext.setAlerts(undefined),
+        duration: 10000,
+        hideApp: false,
+      });
     };
 
     const onRemoveItem = (key: string) => {

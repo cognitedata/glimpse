@@ -30,3 +30,11 @@
   margin-top: 15px;
   margin-right: 15px;
 }
+
+.MuiInputBase-root {
+  color: white !important;
+}
+
+.MuiInputBase-input {
+  border-bottom: 1px solid white !important;
+}
