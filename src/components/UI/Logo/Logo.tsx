@@ -6,6 +6,10 @@ type Props = {
   hide?: boolean;
 };
 
+/**
+ * This component used to show the app logo in the left drawer
+ * @param hide - visible status is parameterized
+ */
 const Logo: FC<Props> = ({ hide }: Props) => {
   return !hide ? (
     <div className="Logo">

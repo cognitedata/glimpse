@@ -1,18 +1,15 @@
 import React, { useContext } from 'react';
 import { AppContext, AppContextType } from '../context/AppContextManager';
-// import { makeStyles, Theme } from '@material-ui/core/styles';
 
 import Alerts from '../components/UI/Alerts/Alerts';
 import BaseLogo from '../components/UI/BaseLogo/BaseLogo';
 
-// const useStyles = makeStyles((theme: Theme) => ({
-//   root: {
-//     width: '100%',
-//     '& > * + *': {
-//       marginTop: theme.spacing(2),
-//     },
-//   },
-// }));
+/**
+ * This higher order component is used to populate global alerts. When ever a alert is pushed to appContext,
+ * this will populate appropiate alert
+ * @prop hideApp
+ *            This will hide the current background and show the logo instead
+ */
 
 const withErrorHandling = (WrappedComponet: React.ComponentType) => {
   const WithErrorHandlingComponent = () => {

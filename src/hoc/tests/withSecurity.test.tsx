@@ -34,9 +34,9 @@ afterEach(() => {
 });
 
 test('authorization status checked successfully ', async () => {
-  const Base = () => <div>Base Component</div>;
+  const Home = () => <div>Home Component</div>;
 
-  const WrappedComponent = withSecurity({ sdk: client })(Base);
+  const WrappedComponent = withSecurity({ sdk: client })(Home);
 
   const wrapper = mount(<WrappedComponent />);
 
@@ -45,14 +45,14 @@ test('authorization status checked successfully ', async () => {
   expect(client.login.status).toBeCalledTimes(1);
 });
 
-test('base component loaded successfully ', async () => {
-  const Base = () => <div>Base Component</div>;
+test('Home component loaded successfully ', async () => {
+  const Home = () => <div>Home Component</div>;
 
-  const WrappedComponent = withSecurity({ sdk: client })(Base);
+  const WrappedComponent = withSecurity({ sdk: client })(Home);
 
   const wrapper = mount(<WrappedComponent />);
 
   wrapper.update();
 
-  expect(wrapper.find('div').text()).toEqual('Base Component');
+  expect(wrapper.find('div').text()).toEqual('Home Component');
 });

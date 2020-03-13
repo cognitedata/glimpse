@@ -1,6 +1,6 @@
 import React from 'react';
-import Logo from './Logo';
 import { render } from '@testing-library/react';
+import Logo from './Logo';
 
 test('logo loaded successfully ', async () => {
   const { getByAltText } = render(<Logo />);
@@ -8,6 +8,6 @@ test('logo loaded successfully ', async () => {
 });
 
 test('should hide logo ', async () => {
-  const { queryByAltText } = render(<Logo hide={true} />);
+  const { queryByAltText } = render(<Logo hide />);
   expect(queryByAltText('Aarbakke Logo')).toBeNull();
 });

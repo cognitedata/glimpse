@@ -2,6 +2,9 @@ import React, { FC } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps, Color } from '@material-ui/lab/Alert';
 
+/**
+ * Global alerts component
+ */
 const Alerts: FC<AlertsPropsType> = ({
   open,
   duration,

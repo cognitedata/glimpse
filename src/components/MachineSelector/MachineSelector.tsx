@@ -2,6 +2,11 @@ import React, { useContext, useRef, FC } from 'react';
 import './MachineSelector.css';
 import { AppContext, AppContextType } from '../../context/AppContextManager';
 
+/**
+ * This is the machine selector component.
+ * Machines / Assets are taken from app context
+ * and set the selected Machine in the appContext on dropdown select
+ */
 const MachineSelector: FC = () => {
   const appContext = useContext<AppContextType>(AppContext);
 

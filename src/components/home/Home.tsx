@@ -7,22 +7,14 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import RemoveRedEyeIcon from '@material-ui/icons/RemoveRedEye';
-import SettingsIcon from '@material-ui/icons/Settings';
-import SmsIcon from '@material-ui/icons/Sms';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { AppContext, AppContextType } from '../../context/AppContextManager';
 import Logo from '../UI/Logo/Logo';
 import CogniteLogo from '../UI/CogniteLogo/CogniteLogo';
-import Loader from '../UI/Loader/Loader';
 
-import './Base.css';
+import './Home.css';
 
 import NavList, { NavListItem } from './NavList/NavList';
 import TopBar from './TopBar/TopBar';
-
-import withSecurity from '../../hoc/withSecurity';
-import withErrorHandling from '../../hoc/withErrorHandling';
 
 const drawerWidth = 240;
 
@@ -68,48 +60,27 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Base: FC = () => {
+type Props = {
+  navList: NavListItem[];
+};
+
+/**
+ *
+ * This is the Home component where it binds all the main components together
+ *  such as Left navigation, App header etc
+ */
+const Home: FC<Props> = ({ navList }: Props) => {
   const appContext = useContext<AppContextType>(AppContext);
 
-  // console.log(appContext);
-
   const classes = useStyles();
-  // const theme = useTheme();
+
   const [open, setOpen] = React.useState(true);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
 
-  const errorHandleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    // appContext.setAlerts(null);
-  };
-
-  const showAlert = () => {
-    appContext.setAlerts({
-      open: true,
-      type: 'error',
-      text: 'Test message',
-      handleClose: errorHandleClose,
-      duration: 10000,
-    });
-  };
-
-  const navList: NavListItem[] = [
-    { id: 1, text: 'Overview', icon: <RemoveRedEyeIcon /> },
-    { id: 2, text: 'Settings', icon: <SettingsIcon /> },
-    { id: 3, text: 'Feedback', icon: <SmsIcon />, onClick: showAlert },
-    {
-      id: 4,
-      text: 'Log out',
-      icon: <ExitToAppIcon />,
-      onClick: appContext.logout,
-    },
-  ];
-
-  const baseHtml = appContext.loading ? (
-    <Loader />
-  ) : (
+  const homeHtml = (
     <div className={classes.root}>
       <Drawer
         variant="permanent"
@@ -138,14 +109,12 @@ const Base: FC = () => {
         <div className="topBarHolder">
           <TopBar />
         </div>
-        <div>{/* <MachineSelector assets={appContext.assets} /> */}</div>
+        <div />
       </main>
     </div>
   );
 
-  return baseHtml;
+  return homeHtml;
 };
 
-// export default Base;
-
-export default withErrorHandling(withSecurity()(Base));
+export default Home;

@@ -1,6 +1,6 @@
 import React from 'react';
-import BaseLogo from './BaseLogo';
 import { render } from '@testing-library/react';
+import BaseLogo from './BaseLogo';
 
 test('logo loaded successfully ', async () => {
   const { getByAltText } = render(<BaseLogo />);

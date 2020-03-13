@@ -1,6 +1,6 @@
 import React from 'react';
-import CogniteLogo from './CogniteLogo';
 import { render } from '@testing-library/react';
+import CogniteLogo from './CogniteLogo';
 
 test('cognite logo loaded successfully ', async () => {
   const { getByAltText } = render(<CogniteLogo />);

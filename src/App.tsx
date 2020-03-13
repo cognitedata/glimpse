@@ -1,10 +1,10 @@
 import React from 'react';
-import Base from './components/base/Base';
+import AppContainer from './containers/AppContainer/AppContainer';
 import { AppContextProvider } from './context/AppContextManager';
 
 const App = () => (
   <AppContextProvider>
-    <Base />
+    <AppContainer />
   </AppContextProvider>
 );
 

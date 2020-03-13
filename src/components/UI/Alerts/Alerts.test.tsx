@@ -1,6 +1,6 @@
 import React from 'react';
-import Alerts, { AlertsPropsType } from './Alerts';
 import { render } from '@testing-library/react';
+import Alerts, { AlertsPropsType } from './Alerts';
 
 const alertProp: AlertsPropsType = {
   open: true,

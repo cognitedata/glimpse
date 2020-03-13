@@ -9,6 +9,13 @@ type Props = {
   navList: NavListItem[];
 };
 
+/**
+ * This component generates left side navigation list
+ *
+ * @param navList
+ *    - Navigation item list
+ */
+
 const NavList: FC<Props> = ({ navList }: Props) => {
   return (
     <List className="NavList">

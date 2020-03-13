@@ -4,7 +4,6 @@ import { AppContext, AppContextType } from '../context/AppContextManager';
 import {
   APP_NAME,
   APP_VERSION,
-  MACHINE_EXTERNAL_IDS,
   ADMIN_GROUPS,
   USER_REQUIRED_CAPABILITIES,
   CDF_PROJECT as project,
@@ -22,8 +21,6 @@ type withSecurityPropType =
       sdk?: CogniteClient;
     }
   | undefined;
-
-// console.log(UserInfo)
 
 const authResultsKey = `${APP_NAME}_${APP_VERSION}_storage/${project}/authResult`;
 
@@ -51,15 +48,20 @@ const hasPermissions = (userCapabilities: string[]) =>
 const isAdmin = (groups: Group[]) =>
   groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
 
+/**
+ * This hoc manages all the auth operations
+ */
 const withSecurity = (props?: withSecurityPropType) => (
   WrappedComponet: React.ComponentType
 ) => {
   const WithSecurityComponent = () => {
     const appContext = useContext<AppContextType>(AppContext);
 
-    const client = props?.sdk || deafultClient;
+    const cogniteClient = props?.sdk || deafultClient;
 
-    client.loginWithOAuth({
+    appContext.setCogniteClient(cogniteClient);
+
+    cogniteClient.loginWithOAuth({
       project,
       accessToken: localStorage.getItem(authResultsKey) || '',
       onAuthenticate: REDIRECT,
@@ -71,12 +73,12 @@ const withSecurity = (props?: withSecurityPropType) => (
     const login = async () => {
       appContext.setLoading(true);
       appContext.setLoggedIn(false);
-      let status = await client.login.status();
+      let status = await cogniteClient.login.status();
       if (!status || !localStorage.getItem(authResultsKey)) {
-        await client.authenticate();
-        status = await client.login.status();
+        await cogniteClient.authenticate();
+        status = await cogniteClient.login.status();
       }
-      const groups = await client.groups.list();
+      const groups = await cogniteClient.groups.list();
 
       const userCapabilities = getUserCapabilities(groups);
       const isAdminUser = isAdmin(groups);
@@ -97,23 +99,7 @@ const withSecurity = (props?: withSecurityPropType) => (
         appContext.setLoggedIn(!!status);
         const userInfo = { name: status?.user };
         appContext.setUserInfo(userInfo);
-        try {
-          const assets = await client.assets.retrieve(
-            MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
-          );
-          appContext.setAssets(assets);
-        } catch (error) {
-          appContext.setAlerts({
-            open: true,
-            type: 'error',
-            text: MESSAGES.ASSETS_FETCH_ERROR,
-            handleClose: errorHandleClose,
-            duration: 10000,
-            hideApp: true,
-          });
-        }
       }
-      // console.log("userHasPermissions", userHasPermissions);
       appContext.setLoading(false);
     };
 
@@ -126,12 +112,11 @@ const withSecurity = (props?: withSecurityPropType) => (
     };
 
     const logout = async () => {
-      console.log('came to logout');
       const redirectUrl = `https://${window.location.host}/`;
       try {
         localStorage.removeItem(authResultsKey);
         appContext.setLoggedIn(false);
-        await client.logout.getUrl({ redirectUrl });
+        await cogniteClient.logout.getUrl({ redirectUrl });
         login();
       } catch (ex) {
         console.log('error on logout');

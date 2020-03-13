@@ -6,6 +6,11 @@ type Props = {
   width?: string;
 };
 
+/**
+ * This component used to show the cognite logo in the left drawer
+ *
+ * @param width - Logo width is parameterized
+ */
 const CogniteLogo: FC<Props> = ({ width = '50px' }: Props) => {
   return (
     <div className="CogniteLogo">

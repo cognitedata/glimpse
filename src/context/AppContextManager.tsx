@@ -1,6 +1,8 @@
 import React, { useState, FC } from 'react';
-import { Asset } from '@cognite/sdk';
+import { Asset, CogniteClient } from '@cognite/sdk';
 import { AlertsPropsType } from '../components/UI/Alerts/Alerts';
+
+export type CogniteClientType = CogniteClient | null;
 
 const defaultContextObj = {
   assets: [],
@@ -18,6 +20,8 @@ const defaultContextObj = {
   logout: () => {},
   setLogout: () => {},
   setUserInfo: (inp?: UserInfo) => {},
+  cogniteClient: null,
+  setCogniteClient: (cogniteClient: CogniteClientType) => {},
 };
 
 export const AppContext = React.createContext<AppContextType>(
@@ -28,14 +32,13 @@ type Props = {
   children: JSX.Element;
 };
 
-// export interface UserInfo extends IdInfo {
-
-// }
-
 type UserInfo = {
   name?: string | undefined;
 };
 
+/**
+ * This context holds global app state values
+ */
 export const AppContextProvider: FC<Props> = ({ children }: Props) => {
   const [adminUser, setAdminUser] = useState(false);
   const [assets, setAssets] = useState<Asset[]>([]);
@@ -46,6 +49,7 @@ export const AppContextProvider: FC<Props> = ({ children }: Props) => {
   const [alerts, setAlerts] = useState<AlertsPropsType>();
   const [userInfo, setUserInfo] = useState<UserInfo>();
   const [logout, setLogout] = useState<() => void>(() => {});
+  const [cogniteClient, setCogniteClient] = useState<CogniteClientType>(null);
 
   const contextObj: AppContextType = {
     assets,
@@ -66,6 +70,8 @@ export const AppContextProvider: FC<Props> = ({ children }: Props) => {
     setLogout,
     userInfo,
     setUserInfo,
+    cogniteClient,
+    setCogniteClient,
   };
 
   return (
@@ -100,4 +106,8 @@ export type AppContextType = {
   setUserInfo:
     | ((inp?: UserInfo) => void)
     | React.Dispatch<React.SetStateAction<UserInfo | undefined>>;
+  cogniteClient: CogniteClientType;
+  setCogniteClient:
+    | ((inp: CogniteClientType) => void)
+    | React.Dispatch<React.SetStateAction<CogniteClientType>>;
 };

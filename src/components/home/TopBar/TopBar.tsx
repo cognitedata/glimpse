@@ -3,11 +3,10 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import MachineSelector from '../../MachineSelector/MachineSelector';
 import { AppContext, AppContextType } from '../../../context/AppContextManager';
@@ -32,6 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+/**
+ * App header component
+ */
 
 const TopBar = () => {
   const appContext = useContext<AppContextType>(AppContext);
@@ -92,9 +95,9 @@ const TopBar = () => {
     >
       <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
+          {/* <Badge badgeContent={11} color="secondary"> */}
+          <NotificationsOutlined />
+          {/* </Badge> */}
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
@@ -124,9 +127,9 @@ const TopBar = () => {
               aria-label="show 17 new notifications"
               color="inherit"
             >
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+              {/* <Badge badgeContent={17} color="secondary"> */}
+              <NotificationsOutlined />
+              {/* </Badge> */}
             </IconButton>
             <IconButton
               className="User-icon"
