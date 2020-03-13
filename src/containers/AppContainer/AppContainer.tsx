@@ -5,13 +5,14 @@ import SettingsIconOutlined from '@material-ui/icons/SettingsOutlined';
 import SmsIconOutlined from '@material-ui/icons/SmsOutlined';
 import ExitToAppIconOutlined from '@material-ui/icons/ExitToAppOutlined';
 import { CogniteClient } from '@cognite/sdk';
+
+import withErrorHandling from 'hoc/WithErrorHandling';
+import withSecurity from 'hoc/WithSecurity';
 import { AppContext, AppContextType } from '../../context/AppContextManager';
 import Loader from '../../components/UI/Loader/Loader';
 
 import { NavListItem } from '../../components/home/NavList/NavList';
 
-import withSecurity from '../../hoc/withSecurity';
-import withErrorHandling from '../../hoc/withErrorHandling';
 import Home from '../../components/home/Home';
 
 import { MACHINE_EXTERNAL_IDS } from '../../constants/appData';

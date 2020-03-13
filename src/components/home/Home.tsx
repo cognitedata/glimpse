@@ -1,4 +1,4 @@
-import React, { useContext, FC } from 'react';
+import React, { FC } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -7,7 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import { AppContext, AppContextType } from '../../context/AppContextManager';
+import WithAddGridComponents from 'components/grid/AddComponents/WithAddGridComponents';
 import Logo from '../UI/Logo/Logo';
 import CogniteLogo from '../UI/CogniteLogo/CogniteLogo';
 
@@ -70,8 +70,6 @@ type Props = {
  *  such as Left navigation, App header etc
  */
 const Home: FC<Props> = ({ navList }: Props) => {
-  const appContext = useContext<AppContextType>(AppContext);
-
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -109,7 +107,9 @@ const Home: FC<Props> = ({ navList }: Props) => {
         <div className="topBarHolder">
           <TopBar />
         </div>
-        <div />
+        <div style={{ height: '80vh' }}>
+          <WithAddGridComponents />
+        </div>
       </main>
     </div>
   );
