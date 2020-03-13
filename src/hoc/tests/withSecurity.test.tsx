@@ -2,9 +2,8 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { configure, mount, shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import withSecurity from 'hoc/WithSecurity';
 import { MockCogniteClient, groupList } from '../../mocks';
-
-import withSecurity from '../withSecurity';
 
 const loginStatus = jest.fn();
 

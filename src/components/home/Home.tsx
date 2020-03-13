@@ -107,7 +107,7 @@ const Home: FC<Props> = ({ navList }: Props) => {
         <div className="topBarHolder">
           <TopBar />
         </div>
-        <div style={{ height: '80vh' }}>
+        <div style={{ height: '80vh', padding: '10px' }}>
           <WithAddGridComponents />
         </div>
       </main>
