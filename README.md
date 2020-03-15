@@ -1,5 +1,7 @@
 # React Demo App
 
+[![Build Status](https://travis-ci.org/cognitedata/glimpse.svg?branch=master)](https://travis-ci.org/cognitedata/glimpse)
+
 This repository shows how to bootstrap a [React]-based application at Cognite.
 It demonstrates best practices, such as:
 
