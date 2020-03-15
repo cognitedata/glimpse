@@ -22,7 +22,7 @@ const GridLayout = (props: GridLayoutProps) => {
 
   useEffect(() => {
     setHeight(props.size.height);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setLayout(props.layouts);

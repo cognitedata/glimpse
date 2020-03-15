@@ -88,7 +88,6 @@ const withSecurity = (props?: withSecurityPropType) => (
       console.log('User Capabilities', userCapabilities);
       if (!userHasPermissions) {
         appContext.setAlerts({
-          open: true,
           type: 'error',
           text: MESSAGES.NO_ACCESS_MSG,
           handleClose: errorHandleClose,

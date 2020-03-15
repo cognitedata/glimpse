@@ -26,10 +26,8 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         );
         if (!cordinates) {
           appContext.setAlerts({
-            open: true,
             type: 'error',
             text: 'There is no position for adding the component',
-            handleClose: () => appContext.setAlerts(undefined),
             duration: 50000,
             hideApp: false,
           });
@@ -54,10 +52,8 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         return;
       }
       appContext.setAlerts({
-        open: true,
         type: 'error',
         text: '1 <= width <=4 and 1 <= height <= 6',
-        handleClose: () => appContext.setAlerts(undefined),
         duration: 10000,
         hideApp: false,
       });

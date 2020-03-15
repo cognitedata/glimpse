@@ -6,7 +6,6 @@ import MuiAlert, { AlertProps, Color } from '@material-ui/lab/Alert';
  * Global alerts component
  */
 const Alerts: FC<AlertsPropsType> = ({
-  open,
   duration,
   handleClose,
   type,
@@ -16,7 +15,7 @@ const Alerts: FC<AlertsPropsType> = ({
     <MuiAlert elevation={6} variant="filled" {...alertProps} />
   );
   return (
-    <Snackbar open={open} autoHideDuration={duration} onClose={handleClose}>
+    <Snackbar open={true} autoHideDuration={duration} onClose={handleClose}>
       <Alert onClose={handleClose} severity={type}>
         {text}
       </Alert>
@@ -27,10 +26,9 @@ const Alerts: FC<AlertsPropsType> = ({
 export default Alerts;
 
 export type AlertsPropsType = {
-  open: boolean;
   hideApp?: boolean;
   duration: number;
-  handleClose: () => void;
+  handleClose?: () => void;
   type: Color;
   text: string;
 };

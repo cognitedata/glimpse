@@ -24,16 +24,10 @@ import { MESSAGES } from '../../constants/messages';
 const AppContainer: FC = () => {
   const appContext = useContext<AppContextType>(AppContext);
 
-  const errorHandleClose = (event?: React.SyntheticEvent, reason?: string) => {
-    appContext.setAlerts(undefined);
-  };
-
   const showAlert = () => {
     appContext.setAlerts({
-      open: true,
       type: 'error',
       text: 'Test message',
-      handleClose: errorHandleClose,
       duration: 10000,
     });
   };
@@ -59,12 +53,10 @@ const AppContainer: FC = () => {
       appContext.setAssets(assets);
     } catch (error) {
       appContext.setAlerts({
-        open: true,
         type: 'error',
         text: MESSAGES.ASSETS_FETCH_ERROR,
-        handleClose: errorHandleClose,
         duration: 10000,
-        hideApp: true,
+        hideApp: false,
       });
     } finally {
       appContext.setLoading(false);
@@ -72,11 +64,10 @@ const AppContainer: FC = () => {
   };
 
   useEffect(() => {
-    console.log(appContext.cogniteClient);
     if (appContext.cogniteClient) {
       fetchAssets(appContext.cogniteClient);
     }
-  }, [appContext.cogniteClient]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const homeHtml = appContext.loading ? <Loader /> : <Home navList={navList} />;
 

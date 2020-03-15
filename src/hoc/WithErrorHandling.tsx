@@ -14,6 +14,14 @@ import BaseLogo from '../components/UI/BaseLogo/BaseLogo';
 const withErrorHandling = (WrappedComponet: React.ComponentType) => {
   const WithErrorHandlingComponent = () => {
     const appContext = useContext<AppContextType>(AppContext);
+
+    if (appContext.alerts && !appContext.alerts.handleClose) {
+      const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        appContext.setAlerts(undefined);
+      };
+      appContext.setAlerts({ handleClose, ...appContext.alerts });
+    }
+
     return (
       <div>
         {appContext.alerts && appContext.alerts.hideApp ? (
