@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import './gridLayout.css';
-import { Responsive, WidthProvider, Layout } from 'react-grid-layout';
+import { Responsive, Layout } from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import {
   DUMMY_COMP_ID,
@@ -8,25 +8,37 @@ import {
   MARGIN,
   BREAKPOINTS,
   MAXCOLS,
-  DEFAULT_LAYOUT_WIDTH,
   IS_RESIZABLE,
+  MIN_WIDTH,
 } from 'constants/grid';
 import generateComponent from '../../componentFactory/componentsFactory';
 import { ComponentDetail, GridLayoutProps } from '../interfaces';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+const ResponsiveGridLayout = Responsive;
 
 const GridLayout = (props: GridLayoutProps) => {
+  const refGridLayout = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [height, setHeight] = useState(600);
   const [layout, setLayout] = useState(props.layouts);
 
-  useEffect(() => {
-    setHeight(props.size.height);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  const updateWindowDimensions = useCallback(() => {
+    setHeight(
+      refGridLayout.current.parentElement
+        ? refGridLayout.current.parentElement.clientHeight
+        : window.innerHeight
+    );
+  }, [refGridLayout]);
 
   useEffect(() => {
     setLayout(props.layouts);
   }, [props.layouts]);
+
+  // change gridlayout height on resize events of the browser
+  useEffect(() => {
+    updateWindowDimensions();
+    window.addEventListener('resize', updateWindowDimensions);
+    return () => window.removeEventListener('resize', updateWindowDimensions);
+  }, [updateWindowDimensions]);
 
   const generateComponents = (components: ComponentDetail[]) => {
     return components.map((comp: ComponentDetail) =>
@@ -72,7 +84,7 @@ const GridLayout = (props: GridLayoutProps) => {
 
   return (
     <>
-      <div className="gridLayout">
+      <div ref={refGridLayout} className="gridLayout">
         <ResponsiveGridLayout
           className="layout"
           compactType={null}
@@ -84,7 +96,7 @@ const GridLayout = (props: GridLayoutProps) => {
           cols={{ lg: MAXCOLS }}
           preventCollision
           rowHeight={height / MAXROWS - MARGIN[1]}
-          width={DEFAULT_LAYOUT_WIDTH}
+          width={props.size.width < MIN_WIDTH ? MIN_WIDTH : props.size.width}
         >
           {generateComponents(props.components)}
         </ResponsiveGridLayout>

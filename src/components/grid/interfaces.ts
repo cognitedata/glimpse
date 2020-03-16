@@ -10,5 +10,5 @@ export interface GridLayoutProps {
   components: ComponentDetail[];
   onLayoutChange: (newLayout: Layout[]) => void;
   onRemoveItem: (key: string) => void;
-  size: { height: number };
+  size: { height: number; width: number };
 }

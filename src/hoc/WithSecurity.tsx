@@ -79,7 +79,6 @@ const withSecurity = (props?: withSecurityPropType) => (
         status = await cogniteClient.login.status();
       }
       const groups = await cogniteClient.groups.list();
-
       const userCapabilities = getUserCapabilities(groups);
       const isAdminUser = isAdmin(groups);
       appContext.setAdminUser(isAdminUser);
