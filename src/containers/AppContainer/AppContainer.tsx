@@ -52,13 +52,12 @@ const AppContainer: FC = () => {
       );
       appContext.setAssets(assets);
     } catch (error) {
-      // appContext.setAlerts({
-      //   type: 'error',
-      //   text: MESSAGES.ASSETS_FETCH_ERROR,
-      //   duration: 10000,
-      //   hideApp: false,
-      // });
-      appContext.setAssets([]);
+      appContext.setAlerts({
+        type: 'error',
+        text: MESSAGES.ASSETS_FETCH_ERROR,
+        duration: 10000,
+        hideApp: false,
+      });
     } finally {
       appContext.setLoading(false);
     }
