@@ -67,7 +67,7 @@ const AppContainer: FC = () => {
     if (appContext.cogniteClient) {
       fetchAssets(appContext.cogniteClient);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const homeHtml = appContext.loading ? <Loader /> : <Home navList={navList} />;
 
