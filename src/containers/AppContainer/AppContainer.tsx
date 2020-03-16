@@ -52,12 +52,13 @@ const AppContainer: FC = () => {
       );
       appContext.setAssets(assets);
     } catch (error) {
-      appContext.setAlerts({
-        type: 'error',
-        text: MESSAGES.ASSETS_FETCH_ERROR,
-        duration: 10000,
-        hideApp: false,
-      });
+      // appContext.setAlerts({
+      //   type: 'error',
+      //   text: MESSAGES.ASSETS_FETCH_ERROR,
+      //   duration: 10000,
+      //   hideApp: false,
+      // });
+      appContext.setAssets([]);
     } finally {
       appContext.setLoading(false);
     }
@@ -67,7 +68,7 @@ const AppContainer: FC = () => {
     if (appContext.cogniteClient) {
       fetchAssets(appContext.cogniteClient);
     }
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const homeHtml = appContext.loading ? <Loader /> : <Home navList={navList} />;
 

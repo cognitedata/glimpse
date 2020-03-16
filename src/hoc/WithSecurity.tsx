@@ -78,8 +78,8 @@ const withSecurity = (props?: withSecurityPropType) => (
         await cogniteClient.authenticate();
         status = await cogniteClient.login.status();
       }
-      const groups = await cogniteClient.groups.list();
-
+      // const groups = await cogniteClient.groups.list();
+      const groups: any = [];
       const userCapabilities = getUserCapabilities(groups);
       const isAdminUser = isAdmin(groups);
       appContext.setAdminUser(isAdminUser);
@@ -87,13 +87,13 @@ const withSecurity = (props?: withSecurityPropType) => (
       const userHasPermissions = hasPermissions(userCapabilities);
       console.log('User Capabilities', userCapabilities);
       if (!userHasPermissions) {
-        appContext.setAlerts({
-          type: 'error',
-          text: MESSAGES.NO_ACCESS_MSG,
-          handleClose: errorHandleClose,
-          duration: 10000,
-          hideApp: true,
-        });
+        // appContext.setAlerts({
+        //   type: 'error',
+        //   text: MESSAGES.NO_ACCESS_MSG,
+        //   handleClose: errorHandleClose,
+        //   duration: 10000,
+        //   hideApp: true,
+        // });
       } else {
         appContext.setLoggedIn(!!status);
         const userInfo = { name: status?.user };
