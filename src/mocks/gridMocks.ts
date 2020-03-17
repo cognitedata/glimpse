@@ -16,7 +16,15 @@ export const initialLayoutMocked: Layout[] = [
 export const initialcomponentsMocked: ComponentDetail[] = [
   { i: 'a', compName: 'a' },
   { i: 'b', compName: 'a' },
-  { i: 'c', compName: 'shiftUtilization' },
+  {
+    i: 'c',
+    compName: 'shiftUtilization',
+    props: {
+      title: 'Shift Utilization',
+      timeDisplayKey: 'Elapsed Time - Job',
+      time: '33:58:18',
+    },
+  },
   { i: 'd', compName: 'a' },
   { i: 'e', compName: 'a' },
   { i: 'f', compName: 'a' },

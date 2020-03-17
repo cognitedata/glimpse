@@ -43,6 +43,7 @@ const GridLayout = (props: GridLayoutProps) => {
   const generateComponents = (components: ComponentDetail[]) => {
     return components.map((comp: ComponentDetail) =>
       generateComponent(comp.i, comp.compName, {
+        ...comp.props,
         onRemoveItem: props.onRemoveItem,
       })
     );
