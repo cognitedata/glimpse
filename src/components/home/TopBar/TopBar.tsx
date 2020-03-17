@@ -116,7 +116,7 @@ const TopBar = () => {
   );
 
   return (
-    <div className={classes.grow}>
+    <div className={`${classes.grow} TopBar`}>
       <AppBar position="static">
         <Toolbar>
           <MachineSelector />
