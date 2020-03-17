@@ -1,7 +1,12 @@
 import React from 'react';
 import './ElapsedTime.css';
 
-const ElaspedTime = (props: any) => {
+type ElaspedTimeProps = {
+  title: string;
+  timeDisplayKey: string;
+  time: string;
+};
+const ElaspedTime = (props: ElaspedTimeProps) => {
   const { title, timeDisplayKey, time } = props;
   return (
     <div>

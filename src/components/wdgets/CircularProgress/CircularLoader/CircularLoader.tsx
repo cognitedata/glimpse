@@ -1,7 +1,13 @@
 import React from 'react';
-import './CircularPrograssBar.css';
+import './CircularLoader.css';
 
-const CircularProgressBar = (props: any) => {
+type CircularBarProps = {
+  sqSize?: number;
+  percentage: number;
+  strokeWidth?: number;
+  strokeWidthPadding?: number;
+};
+const CircularProgressBar = (props: CircularBarProps) => {
   const {
     sqSize = 150,
     percentage = 25,

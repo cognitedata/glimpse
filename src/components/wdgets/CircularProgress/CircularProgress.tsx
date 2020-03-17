@@ -1,9 +1,12 @@
 import React from 'react';
-import CircularPrograssBar from '../CircularPrograssBar/CircularPrograssBar';
+import CircularPrograssBar from './CircularLoader/CircularLoader';
 import ElapsedTime from './ElsapsedTime/ElapsedTime';
-import './ShiftUtilization.css';
+import './CircularProgress.css';
 
-const ShiftUtilization = (props: any) => {
+type ShiftUtilizationProps = {
+  precentage: number;
+};
+const ShiftUtilization = (props: ShiftUtilizationProps) => {
   return (
     <div className="card">
       <div>
@@ -14,7 +17,9 @@ const ShiftUtilization = (props: any) => {
         />
       </div>
       <div className="progress-circle">
-        <CircularPrograssBar percentage={props.precentage} />
+        <div className="inner">
+          <CircularPrograssBar percentage={props.precentage} />
+        </div>
       </div>
     </div>
   );

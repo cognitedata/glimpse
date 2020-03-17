@@ -16,7 +16,7 @@ export const initialLayoutMocked: Layout[] = [
 export const initialcomponentsMocked: ComponentDetail[] = [
   { i: 'a', compName: 'a' },
   { i: 'b', compName: 'a' },
-  { i: 'c', compName: 'a' },
+  { i: 'c', compName: 'shiftUtilization' },
   { i: 'd', compName: 'a' },
   { i: 'e', compName: 'a' },
   { i: 'f', compName: 'a' },
