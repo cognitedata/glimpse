@@ -3,6 +3,7 @@ import { Layout } from 'react-grid-layout';
 export interface ComponentDetail {
   i: string;
   compName: string;
+  props?: {};
 }
 
 export interface GridLayoutProps {

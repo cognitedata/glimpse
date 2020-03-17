@@ -5,20 +5,25 @@ import './CircularProgress.css';
 
 type ShiftUtilizationProps = {
   precentage: number;
+  title: string;
+  timeDisplayKey: string;
+  time: string;
 };
+
 const ShiftUtilization = (props: ShiftUtilizationProps) => {
+  const { precentage, title, timeDisplayKey, time } = props;
   return (
     <div className="card">
       <div>
         <ElapsedTime
-          title="Shift Utilization"
-          timeDisplayKey="Elapsed Time - Job"
-          time="33:58:18"
+          title={title}
+          timeDisplayKey={timeDisplayKey}
+          time={time}
         />
       </div>
       <div className="progress-circle">
         <div className="inner">
-          <CircularPrograssBar percentage={props.precentage} />
+          <CircularPrograssBar percentage={precentage} />
         </div>
       </div>
     </div>
