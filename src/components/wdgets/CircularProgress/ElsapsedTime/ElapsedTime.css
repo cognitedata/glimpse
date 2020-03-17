@@ -3,14 +3,14 @@ label {
 }
 
 .title {
-  font-size: 1.2em;
+  font-size: 80%;
   color: #ffffff;
   padding: 10px 0px 10px 10px;
   text-align: left;
 }
 
 .time {
-  font-size: 0.8em;
+  font-size: 60%;
   color: #ffffff;
   padding: 0px 0px 10px 10px;
   text-align: left;
