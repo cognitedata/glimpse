@@ -15,7 +15,7 @@ const Alerts: FC<AlertsPropsType> = ({
     <MuiAlert elevation={6} variant="filled" {...alertProps} />
   );
   return (
-    <Snackbar open={true} autoHideDuration={duration} onClose={handleClose}>
+    <Snackbar open autoHideDuration={duration} onClose={handleClose}>
       <Alert onClose={handleClose} severity={type}>
         {text}
       </Alert>

@@ -9,6 +9,7 @@ import {
   CDF_PROJECT as project,
 } from '../constants/appData';
 import { MESSAGES } from '../constants/messages';
+import Loader from '../components/UI/Loader/Loader';
 
 type Capability = {
   [key: string]: {
@@ -85,7 +86,7 @@ const withSecurity = (props?: withSecurityPropType) => (
       appContext.setUserCapabilities(userCapabilities);
       const userHasPermissions = hasPermissions(userCapabilities);
       console.log('User Capabilities', userCapabilities);
-      if (!userHasPermissions) {
+      if (!userHasPermissions || !status) {
         appContext.setAlerts({
           type: 'error',
           text: MESSAGES.NO_ACCESS_MSG,
@@ -126,7 +127,13 @@ const withSecurity = (props?: withSecurityPropType) => (
       login();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    return <WrappedComponet />;
+    let html = null;
+    if (appContext.loggedIn) {
+      html = <WrappedComponet />;
+    } else if (appContext.loading) {
+      html = <Loader />;
+    }
+    return html;
   };
   return WithSecurityComponent;
 };
