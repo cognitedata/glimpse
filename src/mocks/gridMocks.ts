@@ -23,6 +23,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       title: 'Shift Utilization',
       timeDisplayKey: 'Elapsed Time - Job',
       time: '33:58:18',
+      precentage: 30,
     },
   },
   { i: 'd', compName: 'a' },

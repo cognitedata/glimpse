@@ -9,7 +9,7 @@ type CompProps = {
 export default (key: string, compName: string, compProps: CompProps) => {
   if (COMPONENTS[compName] !== undefined) {
     return (
-      <div key={key} data-testid="b">
+      <div key={key} data-testid={key}>
         <button
           type="button"
           style={removeStyle}
