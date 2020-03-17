@@ -24,10 +24,21 @@ module.exports = {
     'lodash/prefer-constant': ['off'],
     'lodash/prefer-is-nil': ['off'],
     'lodash/prefer-get': ['off'],
+    'lodash/prefer-noop': ['off'],
 
-    '@typescript-eslint/no-unused-vars': [
-      'error',
-      { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    // '@typescript-eslint/no-unused-vars': [
+    //   'error',
+    //   { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+    // ],
+    '@typescript-eslint/no-unused-vars': ['off'],
+    'no-console': ['off'],
+    'jsx-a11y/label-has-associated-control': [
+      2,
+      {
+        labelComponents: ['label'],
+        labelAttributes: ['htmlFor'],
+        controlComponents: ['select'],
+      },
     ],
   },
 };

@@ -1,0 +1,9 @@
+.CogniteLogo {
+  text-align: center;
+}
+.CogniteLogo img {
+  width: 50px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}

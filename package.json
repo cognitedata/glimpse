@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
+    "start:https": "HTTPS=true yarn start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "lint": "concurrently \"yarn prettier\" \"yarn eslint\"",
@@ -13,9 +14,22 @@
     "storybook": "start-storybook -p 6006"
   },
   "dependencies": {
+    "@cognite/sdk": "^2.21.0",
+    "@material-ui/core": "^4.9.5",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.45",
+    "@types/react-grid-layout": "^0.17.0",
+    "@types/enzyme": "^3.10.5",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.3.1"
+    "react-grid-layout": "^0.18.2",
+    "react-scripts": "3.3.1",
+    "react-sizeme": "^2.6.12",
+    "react-testing-library": "^8.0.1",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@cognite/eslint-config": "^1.4.2",
