@@ -4,7 +4,7 @@ import { AlertsPropsType } from '../components/UI/Alerts/Alerts';
 
 export type CogniteClientType = CogniteClient | null;
 
-const defaultContextObj = {
+export const defaultContextObj = {
   assets: [],
   setAssets: () => {},
   setSelectedMachine: () => {},
