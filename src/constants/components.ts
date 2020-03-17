@@ -1,5 +1,5 @@
-import ShiftUtilization from 'components/wdgets/CircularProgress/CircularProgress';
+import { CircularProgress } from 'components/wdgets/CircularProgress/CircularProgress';
 
 export const COMPONENTS: any = {
-  shiftUtilization: ShiftUtilization,
+  shiftUtilization: CircularProgress,
 };
