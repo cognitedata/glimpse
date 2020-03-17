@@ -51,6 +51,7 @@ const AppContainer: FC = () => {
         MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
       );
       appContext.setAssets(assets);
+      appContext.setSelectedMachine(assets[0]);
     } catch (error) {
       appContext.setAlerts({
         type: 'error',

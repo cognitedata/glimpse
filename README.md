@@ -17,7 +17,7 @@ Please see the [deployment guide] for more information how to actually get this 
 ## Template repo
 
 This repo is configured as a template, so it's easy to get started.
-Simply go to the [create repo page] and select "cognitedata/react-demo-app" as a template.
+Simply go to the [create repo page] and select "cognitedata/glimpse" as a template.
 
 ## Help
 
