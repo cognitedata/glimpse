@@ -1,10 +1,10 @@
 import React, { useContext, FC, useEffect } from 'react';
 import './MachineSelector.css';
-import { AppContext, AppContextType } from '../../context/AppContextManager';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
+import { AppContext, AppContextType } from '../../context/AppContextManager';
 
 /**
  * This is the machine selector component.
