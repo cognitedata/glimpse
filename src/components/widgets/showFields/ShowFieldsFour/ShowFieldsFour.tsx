@@ -15,7 +15,7 @@ const ShowFieldsFour: FC<ShowFieldsFourProps> = (
   const { field1, field2, field3, field4 } = props;
 
   return (
-    <div className="show-fields-three">
+    <div className="show-fields-four">
       <ShowField field={field1.field} value={field1.value} />
       <ShowField field={field2.field} value={field2.value} />
       <ShowField field={field3.field} value={field3.value} />
