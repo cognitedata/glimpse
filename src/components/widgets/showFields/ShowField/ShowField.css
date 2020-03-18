@@ -1,0 +1,18 @@
+.show-field label {
+  display: block;
+}
+
+.show-field .field {
+  padding-top: 10%;
+  font-size: 50%;
+  color: #9297b6;
+  padding: 20px 0px 10px 10px;
+  text-align: left;
+}
+
+.show-field .value {
+  font-size: 80%;
+  color: #ffffff;
+  padding: 0px 0px 10px 10px;
+  text-align: left;
+}

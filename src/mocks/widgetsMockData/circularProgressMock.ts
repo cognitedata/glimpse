@@ -1,4 +1,4 @@
-export const CircularProgressMockProps = [
+export const circularProgressMockProps = [
   {
     title: 'Shift Utilization',
     timeDisplayKey: 'Elapsed Time - Job',
