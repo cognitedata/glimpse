@@ -1,0 +1,19 @@
+language: node_js
+node_js:
+  - '10'
+sudo: false
+install:
+  - yarn
+  - npm install -g codecov
+script:
+  - commitlint-travis
+  - yarn lint
+  - yarn build
+  - yarn test && codecov
+deploy:
+  - provider: script
+    node_js: lts/*
+    on:
+      branch: master
+    skip_cleanup: true
+    script: npx -p @semantic-release/changelog@4 -p @semantic-release/git@8 -p semantic-release semantic-release
