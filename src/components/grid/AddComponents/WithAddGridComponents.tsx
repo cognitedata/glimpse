@@ -71,7 +71,7 @@ const WithAddGridComponents = (WrappedComponent: any) => {
     };
 
     const onLayoutChange = (newLayout: Layout[]) => {
-      setLayouts(newLayout);
+      console.log(newLayout);
     };
 
     return (
