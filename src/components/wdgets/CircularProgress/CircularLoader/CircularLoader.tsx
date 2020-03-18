@@ -25,7 +25,12 @@ const CircularProgressBar = (props: CircularBarProps) => {
   const dashOffset = dashArray - (dashArray * percentage) / 100;
 
   return (
-    <svg width={sqSize} height={sqSize} viewBox={viewBox}>
+    <svg
+      width={sqSize}
+      height={sqSize}
+      viewBox={viewBox}
+      className="circular-loader"
+    >
       <circle
         className="circle-background"
         cx={sqSize / 2}

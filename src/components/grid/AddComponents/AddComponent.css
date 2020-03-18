@@ -31,10 +31,10 @@
   margin-right: 15px;
 }
 
-.MuiInputBase-root {
+.block_container .MuiInputBase-root {
   color: white !important;
 }
 
-.MuiInputBase-input {
+.block_container .MuiInputBase-input {
   border-bottom: 1px solid white !important;
 }
