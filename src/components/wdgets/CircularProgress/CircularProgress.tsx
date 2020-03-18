@@ -7,7 +7,7 @@ import { CircularProgressBarProps } from './interfaces';
 export const CircularProgress = (props: CircularProgressBarProps) => {
   const { precentage, title, timeDisplayKey, time } = props;
   return (
-    <div className="card">
+    <div className="circular-progress">
       <div>
         <ElapsedTime
           title={title}

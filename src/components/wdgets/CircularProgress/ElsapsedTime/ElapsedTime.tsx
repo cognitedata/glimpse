@@ -9,7 +9,7 @@ type ElaspedTimeProps = {
 const ElaspedTime = (props: ElaspedTimeProps) => {
   const { title, timeDisplayKey, time } = props;
   return (
-    <div>
+    <div className="elasped-time">
       <label className="title">{title}</label>
       <label className="time">
         {timeDisplayKey} : {time}
