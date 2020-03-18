@@ -1,7 +1,13 @@
-import React from 'react';
-import './CircularPrograssBar.css';
+import React, { FC } from 'react';
+import './CircularLoader.css';
 
-const CircularProgressBar = (props: any) => {
+type CircularBarProps = {
+  sqSize?: number;
+  percentage: number;
+  strokeWidth?: number;
+  strokeWidthPadding?: number;
+};
+const CircularProgressBar: FC<CircularBarProps> = (props: CircularBarProps) => {
   const {
     sqSize = 150,
     percentage = 25,
@@ -19,7 +25,12 @@ const CircularProgressBar = (props: any) => {
   const dashOffset = dashArray - (dashArray * percentage) / 100;
 
   return (
-    <svg width={sqSize} height={sqSize} viewBox={viewBox}>
+    <svg
+      width={sqSize}
+      height={sqSize}
+      viewBox={viewBox}
+      className="circular-loader"
+    >
       <circle
         className="circle-background"
         cx={sqSize / 2}

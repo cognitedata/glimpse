@@ -1,19 +1,15 @@
 import React from 'react';
-import ShiftUtilization from 'components/ShiftUtilization/ShiftUtilization';
 import CSS from 'csstype';
-
-const Components: any = {
-  shiftUtilization: ShiftUtilization,
-};
+import { COMPONENTS } from 'constants/components';
 
 type CompProps = {
   onRemoveItem: Function;
 };
 
 export default (key: string, compName: string, compProps: CompProps) => {
-  if (Components[compName] !== undefined) {
+  if (COMPONENTS[compName] !== undefined) {
     return (
-      <div key={key} data-testid="b">
+      <div key={key} data-testid={key}>
         <button
           type="button"
           style={removeStyle}
@@ -21,7 +17,7 @@ export default (key: string, compName: string, compProps: CompProps) => {
         >
           x
         </button>
-        {React.createElement(Components[compName], {
+        {React.createElement(COMPONENTS[compName], {
           ...compProps,
         })}
       </div>

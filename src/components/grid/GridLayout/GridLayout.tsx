@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import './gridLayout.css';
+import React, { FC, useEffect, useState, useRef, useCallback } from 'react';
+import './GridLayout.css';
 import { Responsive, Layout } from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import {
@@ -16,7 +16,7 @@ import { ComponentDetail, GridLayoutProps } from '../interfaces';
 
 const ResponsiveGridLayout = Responsive;
 
-const GridLayout = (props: GridLayoutProps) => {
+const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
   const refGridLayout = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [height, setHeight] = useState(600);
   const [layout, setLayout] = useState(props.layouts);
@@ -43,6 +43,7 @@ const GridLayout = (props: GridLayoutProps) => {
   const generateComponents = (components: ComponentDetail[]) => {
     return components.map((comp: ComponentDetail) =>
       generateComponent(comp.i, comp.compName, {
+        ...comp.props,
         onRemoveItem: props.onRemoveItem,
       })
     );

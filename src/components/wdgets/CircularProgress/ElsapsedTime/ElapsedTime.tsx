@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { FC } from 'react';
 import './ElapsedTime.css';
 
-const ElaspedTime = (props: any) => {
+type ElaspedTimeProps = {
+  title: string;
+  timeDisplayKey: string;
+  time: string;
+};
+const ElaspedTime: FC<ElaspedTimeProps> = (props: ElaspedTimeProps) => {
   const { title, timeDisplayKey, time } = props;
   return (
-    <div>
+    <div className="elasped-time">
       <label className="title">{title}</label>
       <label className="time">
         {timeDisplayKey} : {time}

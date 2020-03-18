@@ -1,0 +1,25 @@
+/* #progressInput {
+  margin: 20px auto;
+  width: 30%;
+} */
+
+.circular-loader .circle-background,
+.circular-loader .circle-progress {
+  fill: none;
+}
+
+.circular-loader .circle-background {
+  stroke: #232850;
+}
+
+.circular-loader .circle-progress {
+  stroke: #f85334;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.circular-loader .circle-text {
+  font-size: 100%;
+  font-weight: bold;
+  fill: #ffffff;
+}
