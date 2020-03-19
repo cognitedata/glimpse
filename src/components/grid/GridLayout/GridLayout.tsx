@@ -10,6 +10,7 @@ import {
   MAXCOLS,
   IS_RESIZABLE,
   MIN_WIDTH,
+  MIN_ROW_HEIGHT,
 } from 'constants/grid';
 import generateComponent from '../../componentFactory/componentsFactory';
 import { ComponentDetail, GridLayoutProps } from '../interfaces';
@@ -83,6 +84,13 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
     );
   };
 
+  const getRowHeight = (): number => {
+    const currentRowHeight = height / MAXROWS - MARGIN[1];
+    return currentRowHeight < MIN_ROW_HEIGHT
+      ? MIN_ROW_HEIGHT
+      : currentRowHeight;
+  };
+
   return (
     <>
       <div ref={refGridLayout} className="gridLayout">
@@ -96,7 +104,7 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
           layouts={{ lg: layout }}
           cols={{ lg: MAXCOLS }}
           preventCollision
-          rowHeight={height / MAXROWS - MARGIN[1]}
+          rowHeight={getRowHeight()}
           width={props.size.width < MIN_WIDTH ? MIN_WIDTH : props.size.width}
         >
           {generateComponents(props.components)}
