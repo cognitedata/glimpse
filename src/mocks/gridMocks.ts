@@ -44,7 +44,16 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       precentage: 30,
     },
   },
-  { i: 'd', compName: 'a' },
+  {
+    i: 'd',
+    compName: 'tSBasicString',
+    props: {
+      name: 'Machine State',
+      value: 'MANUAL MODE',
+      elapsedTime: '00.10.42',
+      isElapsedTimeEnabled: true,
+    },
+  },
   { i: 'e', compName: 'a' },
   {
     i: 'f',

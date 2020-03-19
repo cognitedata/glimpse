@@ -3,6 +3,7 @@ import ShowFieldsOne from 'components/widgets/showFields/ShowFieldsOne/ShowField
 import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowFieldsThree';
 import ShowFieldsFour from 'components/widgets/showFields/ShowFieldsFour/ShowFieldsFour';
 import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
+import TSBasicString from 'components/widgets/TSBasicString/TSBasicString';
 import TimeSeriesWideNumeric from 'components/widgets/TimeSeriesWideNumeric/TimeSeriesWideNumeric';
 
 export const COMPONENTS: any = {
@@ -11,5 +12,6 @@ export const COMPONENTS: any = {
   showFieldsThree: ShowFieldsThree,
   showFieldsFour: ShowFieldsFour,
   toolWidget: ToolWidget,
+  tSBasicString: TSBasicString,
   timeSeriesWideNumeric: TimeSeriesWideNumeric,
 };
