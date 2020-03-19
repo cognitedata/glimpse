@@ -24,7 +24,15 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       },
     },
   },
-  { i: 'b', compName: 'a' },
+  {
+    i: 'b',
+    compName: 'toolWidget',
+    props: {
+      field: 'description    84mm',
+      value: '5733-123',
+      name: 'Tool Id',
+    },
+  },
   {
     i: 'c',
     compName: 'shiftUtilization',
