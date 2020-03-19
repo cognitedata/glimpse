@@ -1,0 +1,30 @@
+.tool-widget {
+  width: 100%;
+  height: 100%;
+  /* background-color: #6b30f7; */
+  border-radius: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.tool-widget label {
+  display: block;
+}
+
+.tool-widget .name {
+  font-size: 0.6em;
+  color: #9297b6;
+  padding: 2vh 0vh 0vh 1vh;
+  text-align: left;
+}
+
+.tool-widget .show-field .field {
+  padding-top: 1vh;
+  color: white;
+  font-size: 0.6em;
+  font-weight: 300;
+}
+
+.tool-widget .show-field .value {
+  font-weight: 500;
+}
