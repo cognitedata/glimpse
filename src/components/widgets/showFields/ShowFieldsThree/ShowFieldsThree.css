@@ -3,7 +3,6 @@
   height: 100%;
   /* background-color: #6b30f7; */
   border-radius: 10px;
-}
-.show-fields-three .show-field .field {
-  padding-top: 2% !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
