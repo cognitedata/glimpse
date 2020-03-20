@@ -7,6 +7,10 @@ type TSBasicNumericProps = {
   unit: string;
 };
 
+/**
+ * Display custom timeseries name and a numeric value with the unit.
+ * @param props TSBasicNumericProps
+ */
 const TSBasicNumeric: FC<TSBasicNumericProps> = (
   props: TSBasicNumericProps
 ) => {
