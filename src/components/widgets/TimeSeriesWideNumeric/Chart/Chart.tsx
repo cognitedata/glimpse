@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Area,
 } from 'recharts';
-import * as ChartConstants from '../../../../constants/timeSeriesWideNumeric';
+import * as chartConstants from '../../../../constants/timeSeriesWideNumeric';
 
 type Props = {
   seriesColor?: string;
@@ -26,7 +26,7 @@ const Chart = ({
 }: Props) => {
   return (
     <ResponsiveContainer width={width} height={height}>
-      <AreaChart data={data} margin={ChartConstants.CHART_MARGINS}>
+      <AreaChart data={data} margin={chartConstants.CHART_MARGINS}>
         <defs>
           <linearGradient id="seriesFillColor" x1="0" y1="0" x2="0" y2="1">
             <stop offset="5%" stopColor={seriesColor} stopOpacity={0.2} />
@@ -37,24 +37,24 @@ const Chart = ({
           axisLine={false}
           tickLine={false}
           dataKey="xValue"
-          stroke={ChartConstants.CHART_COLOR}
+          stroke={chartConstants.CHART_COLOR}
           ticks={xAxisLabels}
         />
         <YAxis
           axisLine={false}
           tickLine={false}
-          stroke={ChartConstants.CHART_COLOR}
+          stroke={chartConstants.CHART_COLOR}
         />
         <CartesianGrid
           vertical={false}
-          strokeDasharray={ChartConstants.CHART_STROKE_DASH_ARRAY}
-          stroke={ChartConstants.CHART_COLOR}
+          strokeDasharray={chartConstants.CHART_STROKE_DASH_ARRAY}
+          stroke={chartConstants.CHART_COLOR}
         />
         <Area
           type="monotone"
           dataKey="yValue"
           stroke={seriesColor}
-          fillOpacity={ChartConstants.CHART_AREA_FILL_OPACITY}
+          fillOpacity={chartConstants.CHART_AREA_FILL_OPACITY}
           fill="url(#seriesFillColor)"
         />
       </AreaChart>
