@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { TSBasicStringMockProps } from 'mocks/widgetsMockData/tSBasicStringMock';
+import { TSBasicStringMockProps } from 'mocks/widgetsMockData/tsBasicMock';
 import TSBasicString from './TSBasicString';
 
 describe('TSBasicString', () => {
