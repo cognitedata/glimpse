@@ -4,6 +4,7 @@ import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowF
 import ShowFieldsFour from 'components/widgets/showFields/ShowFieldsFour/ShowFieldsFour';
 import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
 import TSBasicString from 'components/widgets/TSBasicString/TSBasicString';
+import TSBasicNumeric from 'components/widgets/TSBasicNumeric/TSBasicNumeric';
 import TimeSeriesWideNumeric from 'components/widgets/TimeSeriesWideNumeric/TimeSeriesWideNumeric';
 
 export const COMPONENTS: any = {
@@ -13,5 +14,6 @@ export const COMPONENTS: any = {
   showFieldsFour: ShowFieldsFour,
   toolWidget: ToolWidget,
   tSBasicString: TSBasicString,
+  tSBasicNumeric: TSBasicNumeric,
   timeSeriesWideNumeric: TimeSeriesWideNumeric,
 };

@@ -54,7 +54,15 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       isElapsedTimeEnabled: true,
     },
   },
-  { i: 'e', compName: 'a' },
+  {
+    i: 'e',
+    compName: 'tSBasicNumeric',
+    props: {
+      name: 'Machine Temperature',
+      value: 89,
+      unit: '°C ',
+    },
+  },
   {
     i: 'f',
     compName: 'showFieldsThree',

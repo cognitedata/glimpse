@@ -12,3 +12,9 @@ export const TSBasicStringMockProps = [
     isElapsedTimeEnabled: false,
   },
 ];
+
+export const TSBasicNumericMockProps = {
+  name: 'Machine Tempertaure',
+  value: 89,
+  unit: '°C',
+};
