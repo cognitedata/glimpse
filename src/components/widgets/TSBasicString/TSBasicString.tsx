@@ -7,9 +7,8 @@ type TSBasicStringProps = {
   elapsedTime: string;
   isElapsedTimeEnabled: boolean;
 };
-
 /**
- *Display custom name for time series, elapsed time since latest datapoint and a sting value
+ * Display custom name for time series, elapsed time since latest datapoint and a sting value
  * @param props TSBasicStringProps
  */
 const TSBasicString: FC<TSBasicStringProps> = (props: TSBasicStringProps) => {
