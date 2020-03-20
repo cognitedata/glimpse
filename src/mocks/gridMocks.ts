@@ -1,5 +1,6 @@
 import { ComponentDetail } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
+import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/TimeSeriesWideNumericMock';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -10,7 +11,7 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'f', x: 1, y: 0, w: 1, h: 2 },
   { i: 'g', x: 2, y: 0, w: 1, h: 3 },
   { i: 'h', x: 3, y: 0, w: 1, h: 4 },
-  // { i: 'i', x: 1, y: 4, w: 3, h: 2, component: '' },
+  { i: 'i', x: 1, y: 4, w: 3, h: 2 },
 ];
 
 export const initialcomponentsMocked: ComponentDetail[] = [
@@ -86,5 +87,9 @@ export const initialcomponentsMocked: ComponentDetail[] = [
     },
   },
   { i: 'h', compName: 'a' },
-  // { i: 'i', compName: 'a' },
+  {
+    i: 'i',
+    compName: 'timeSeriesWideNumeric',
+    props: timeSeriesWideNumericMockProps[0],
+  },
 ];

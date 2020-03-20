@@ -48,7 +48,8 @@ const AppContainer: FC = () => {
     appContext.setLoading(true);
     try {
       const assets = await cogniteClient.assets.retrieve(
-        MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
+        // MACHINE_EXTERNAL_IDS.map(id => ({ externalId: id }))
+        MACHINE_EXTERNAL_IDS.map(id => ({ id }))
       );
       appContext.setAssets(assets);
       appContext.setSelectedMachine(assets[0]);
