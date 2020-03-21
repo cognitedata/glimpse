@@ -4,9 +4,11 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import './NavList.css';
+import { NavLink } from 'react-router-dom';
 
 type Props = {
   navList: NavListItem[];
+  expanded: boolean;
 };
 
 /**
@@ -16,15 +18,27 @@ type Props = {
  *    - Navigation item list
  */
 
-const NavList: FC<Props> = ({ navList }: Props) => {
+const NavList: FC<Props> = ({ navList, expanded }: Props) => {
   return (
     <List className="NavList">
       {navList.map((item: NavListItem) => {
         return (
-          <ListItem key={item.id} button onClick={item.onClick}>
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.text} />
-          </ListItem>
+          <NavLink
+            key={item.id}
+            to={item.routeTo}
+            style={{ textDecoration: 'none' }}
+          >
+            <div
+              className={`Selection-highlighter ${
+                expanded ? 'expanded' : 'collapsed'
+              }`}
+            >
+              <ListItem button onClick={item.onClick}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            </div>
+          </NavLink>
         );
       })}
     </List>
@@ -36,6 +50,7 @@ export type NavListItem = {
   text: string;
   icon: JSX.Element;
   onClick?: undefined | (() => void);
+  routeTo: string;
 };
 
 export default NavList;

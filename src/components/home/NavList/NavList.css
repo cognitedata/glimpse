@@ -6,3 +6,22 @@
 .NavList .MuiSvgIcon-root {
   color: #ffffff;
 }
+
+.NavList .MuiListItem-root {
+  color: #ffffff;
+}
+
+.NavList .active .MuiListItem-root {
+  background-color: #3a4177;
+}
+
+.NavList .Selection-highlighter.expanded {
+  margin: 10px 10px;
+}
+.NavList .Selection-highlighter.collapsed {
+  margin: 10px 0;
+}
+
+.NavList .Selection-highlighter.expanded .MuiListItem-button {
+  border-radius: 10px;
+}

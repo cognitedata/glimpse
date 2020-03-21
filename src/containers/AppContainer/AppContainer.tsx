@@ -33,13 +33,30 @@ const AppContainer: FC = () => {
   };
 
   const navList: NavListItem[] = [
-    { id: 1, text: 'Overview', icon: <RemoveRedEyeIconOutlined /> },
-    { id: 2, text: 'Settings', icon: <SettingsIconOutlined /> },
-    { id: 3, text: 'Feedback', icon: <SmsIconOutlined />, onClick: showAlert },
+    {
+      id: 1,
+      text: 'Overview',
+      icon: <RemoveRedEyeIconOutlined />,
+      routeTo: '/overview',
+    },
+    {
+      id: 2,
+      text: 'Settings',
+      icon: <SettingsIconOutlined />,
+      routeTo: '/settings',
+    },
+    {
+      id: 3,
+      text: 'Feedback',
+      icon: <SmsIconOutlined />,
+      routeTo: '/feedback',
+      onClick: showAlert,
+    },
     {
       id: 4,
       text: 'Log out',
       icon: <ExitToAppIconOutlined />,
+      routeTo: '/logout',
       onClick: appContext.logout,
     },
   ];
