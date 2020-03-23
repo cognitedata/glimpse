@@ -1,6 +1,7 @@
 import { ComponentDetail } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
 import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/TimeSeriesWideNumericMock';
+import { TSTallNumericMockProps } from './widgetsMockData/TSTallNumericMock';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -103,7 +104,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       },
     },
   },
-  { i: 'h', compName: 'a' },
+  { i: 'h', compName: 'tSTallNumeric', props: TSTallNumericMockProps[0] },
   {
     i: 'i',
     compName: 'timeSeriesWideNumeric',

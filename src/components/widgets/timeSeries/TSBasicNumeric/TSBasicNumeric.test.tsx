@@ -4,7 +4,7 @@ import { TSBasicNumericMockProps } from 'mocks/widgetsMockData/tsBasicMock';
 import TSBasicString from './TSBasicNumeric';
 
 describe('TSBasicString', () => {
-  it('should render name value and elapsed time correctly', () => {
+  it('should render name value and unit correctly', () => {
     const { getByText } = render(
       <TSBasicString {...TSBasicNumericMockProps} />
     );
