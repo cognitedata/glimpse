@@ -1,4 +1,4 @@
-export const circularProgressMockProps = [
+export const TSFancyNumericMockProps = [
   {
     title: 'Shift Utilization',
     timeDisplayKey: 'Elapsed Time - Job',

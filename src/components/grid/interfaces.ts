@@ -1,8 +1,9 @@
 import { Layout } from 'react-grid-layout';
+import { Widget } from 'constants/components';
 
 export interface ComponentDetail {
   i: string;
-  compName: string;
+  compName: Widget;
   props?: {};
 }
 

@@ -4,6 +4,7 @@ import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
 import { initialcomponentsMocked, initialLayoutMocked } from 'mocks/gridMocks';
 import { AppContextType, AppContext } from 'context/AppContextManager';
+import { Widget } from 'constants/components';
 import { getEmptyPositions } from '../GridLayout/gridOperations/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
@@ -35,7 +36,7 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         }
         const key = generateRandomKey();
         setComponents((prevComponents: ComponentDetail[]) => {
-          prevComponents.push({ i: key, compName: 'a' });
+          prevComponents.push({ i: key, compName: Widget.SHOWFIELDSONE });
           return prevComponents;
         });
         setLayouts((prevLayout: Layout[]) => {
