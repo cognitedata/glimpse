@@ -1,12 +1,12 @@
 import React from 'react';
 import CSS from 'csstype';
-import { COMPONENTS } from 'constants/components';
+import { COMPONENTS, Widget } from 'constants/components';
 
 type CompProps = {
   onRemoveItem: Function;
 };
 
-export default (key: string, compName: string, compProps: CompProps) => {
+export default (key: string, compName: Widget, compProps: CompProps) => {
   if (COMPONENTS[compName] !== undefined) {
     return (
       <div key={key} data-testid={key}>

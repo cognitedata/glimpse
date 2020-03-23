@@ -1,7 +1,10 @@
 import { ComponentDetail } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
 import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/TimeSeriesWideNumericMock';
+import { Widget } from 'constants/components';
 import { TSTallNumericMockProps } from './widgetsMockData/TSTallNumericMock';
+import { TSFancyNumericMockProps } from './widgetsMockData/circularProgressMock';
+import { TSBasicStringMockProps } from './widgetsMockData/tsBasicMock';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -18,7 +21,7 @@ export const initialLayoutMocked: Layout[] = [
 export const initialcomponentsMocked: ComponentDetail[] = [
   {
     i: 'a',
-    compName: 'showFieldsOne',
+    compName: Widget.SHOWFIELDSONE,
     props: {
       field1: {
         field: 'Current Machine',
@@ -28,7 +31,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
   },
   {
     i: 'b',
-    compName: 'toolWidget',
+    compName: Widget.TOOLWIDGET,
     props: {
       field: 'description    84mm',
       value: '5733-123',
@@ -37,27 +40,17 @@ export const initialcomponentsMocked: ComponentDetail[] = [
   },
   {
     i: 'c',
-    compName: 'tSFancyNumeric',
-    props: {
-      title: 'Shift Utilization',
-      timeDisplayKey: 'Elapsed Time - Job',
-      time: '33:58:18',
-      precentage: 30,
-    },
+    compName: Widget.TSFANCYNUMERIC,
+    props: TSFancyNumericMockProps[0],
   },
   {
     i: 'd',
-    compName: 'tSBasicString',
-    props: {
-      name: 'Machine State',
-      value: 'MANUAL MODE',
-      elapsedTime: '00.10.42',
-      isElapsedTimeEnabled: true,
-    },
+    compName: Widget.TSBASICSTRING,
+    props: TSBasicStringMockProps[0],
   },
   {
     i: 'e',
-    compName: 'tSBasicNumeric',
+    compName: Widget.TSBASICNUMERIC,
     props: {
       name: 'Machine Temperature',
       value: 89,
@@ -66,7 +59,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
   },
   {
     i: 'f',
-    compName: 'showFieldsThree',
+    compName: Widget.SHOWFIELDSTHREE,
     props: {
       field1: {
         field: 'Work Order',
@@ -84,7 +77,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
   },
   {
     i: 'g',
-    compName: 'showFieldsFour',
+    compName: Widget.SHOWFIELDSFOUR,
     props: {
       field1: {
         field: 'Work Order',
@@ -104,10 +97,10 @@ export const initialcomponentsMocked: ComponentDetail[] = [
       },
     },
   },
-  { i: 'h', compName: 'tSTallNumeric', props: TSTallNumericMockProps[0] },
+  { i: 'h', compName: Widget.TSTALLNUMERIC, props: TSTallNumericMockProps[0] },
   {
     i: 'i',
-    compName: 'timeSeriesWideNumeric',
+    compName: Widget.TSWIDENUMERIC,
     props: timeSeriesWideNumericMockProps[0],
   },
 ];

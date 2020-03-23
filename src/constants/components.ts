@@ -8,14 +8,26 @@ import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNum
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
 
+export enum Widget {
+  TSFANCYNUMERIC,
+  SHOWFIELDSONE,
+  SHOWFIELDSTHREE,
+  SHOWFIELDSFOUR,
+  TOOLWIDGET,
+  TSBASICSTRING,
+  TSBASICNUMERIC,
+  TSWIDENUMERIC,
+  TSTALLNUMERIC,
+}
+
 export const COMPONENTS: any = {
-  tSFancyNumeric: TSFancyNumeric,
-  showFieldsOne: ShowFieldsOne,
-  showFieldsThree: ShowFieldsThree,
-  showFieldsFour: ShowFieldsFour,
-  toolWidget: ToolWidget,
-  tSBasicString: TSBasicString,
-  tSBasicNumeric: TSBasicNumeric,
-  timeSeriesWideNumeric: TSWideNumeric,
-  tSTallNumeric: TSTallNumeric,
+  [Widget.TSFANCYNUMERIC]: TSFancyNumeric,
+  [Widget.SHOWFIELDSONE]: ShowFieldsOne,
+  [Widget.SHOWFIELDSTHREE]: ShowFieldsThree,
+  [Widget.SHOWFIELDSFOUR]: ShowFieldsFour,
+  [Widget.TOOLWIDGET]: ToolWidget,
+  [Widget.TSBASICSTRING]: TSBasicString,
+  [Widget.TSBASICNUMERIC]: TSBasicNumeric,
+  [Widget.TSWIDENUMERIC]: TSWideNumeric,
+  [Widget.TSTALLNUMERIC]: TSTallNumeric,
 };
