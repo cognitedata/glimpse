@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import CircularPrograssBar from './CircularLoader/CircularLoader';
 import ElapsedTime from './ElsapsedTime/ElapsedTime';
-import './CircularProgress.css';
-import { CircularProgressBarProps } from './interfaces';
+import './TSFancyNumeric.css';
+import { TSFancyNumericProps } from './interfaces';
 
-export const CircularProgress: FC<CircularProgressBarProps> = (
-  props: CircularProgressBarProps
+export const TSFancyNumeric: FC<TSFancyNumericProps> = (
+  props: TSFancyNumericProps
 ) => {
   const { precentage, title, timeDisplayKey, time } = props;
   return (

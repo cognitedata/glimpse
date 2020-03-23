@@ -12,7 +12,7 @@ import {
   CHART_COLOR,
   CHART_AREA_FILL_OPACITY,
   CHART_STROKE_DASH_ARRAY,
-} from '../../../../constants/timeSeriesWideNumeric';
+} from '../../../../../constants/timeSeriesWideNumeric';
 
 type Props = {
   seriesColor?: string;
