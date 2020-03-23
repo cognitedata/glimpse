@@ -6,6 +6,7 @@ import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicSt
 import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasicNumeric';
 import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNumeric';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
+import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
 
 export const COMPONENTS: any = {
   tSFancyNumeric: TSFancyNumeric,
@@ -16,4 +17,5 @@ export const COMPONENTS: any = {
   tSBasicString: TSBasicString,
   tSBasicNumeric: TSBasicNumeric,
   timeSeriesWideNumeric: TSWideNumeric,
+  tSTallNumeric: TSTallNumeric,
 };

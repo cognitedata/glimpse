@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import './TSWideNumeric.css';
-import Chart from './Chart/Chart';
+import Chart from '../Chart/Chart';
 
 type Props = {
   title?: string;

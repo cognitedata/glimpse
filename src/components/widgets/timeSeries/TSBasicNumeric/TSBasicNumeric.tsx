@@ -1,11 +1,7 @@
 import React, { FC } from 'react';
 import './TSBasicNumeric.css';
+import { TSBasicNumericProps } from './interfaces';
 
-type TSBasicNumericProps = {
-  name: string;
-  value: number;
-  unit: string;
-};
 /**
  * Display custom timeseries name and a numeric value with the unit.
  * @param props TSBasicNumericProps
