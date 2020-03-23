@@ -10,13 +10,15 @@ import {
 import {
   CHART_MARGINS,
   CHART_COLOR,
-  CHART_AREA_FILL_OPACITY,
   CHART_STROKE_DASH_ARRAY,
-} from '../../../../../constants/timeSeriesWideNumeric';
+  CHART_AREA_FILL_OPACITY,
+} from 'constants/timeSeriesWideNumeric';
 
 type Props = {
   seriesColor?: string;
+  chartColor?: string;
   xAxisLabels?: string[];
+  iscartesianGridEnabled?: boolean;
   data: Array<object>;
   width?: string | number;
   height?: string | number;
@@ -25,6 +27,8 @@ type Props = {
 const Chart = ({
   seriesColor = '#f1b927',
   xAxisLabels = [],
+  chartColor = CHART_COLOR,
+  iscartesianGridEnabled = true,
   data,
   width = '100%',
   height = '80%',
@@ -42,15 +46,17 @@ const Chart = ({
           axisLine={false}
           tickLine={false}
           dataKey="xValue"
-          stroke={CHART_COLOR}
+          stroke={chartColor}
           ticks={xAxisLabels}
         />
-        <YAxis axisLine={false} tickLine={false} stroke={CHART_COLOR} />
-        <CartesianGrid
-          vertical={false}
-          strokeDasharray={CHART_STROKE_DASH_ARRAY}
-          stroke={CHART_COLOR}
-        />
+        <YAxis axisLine={false} tickLine={false} stroke={chartColor} />
+        {iscartesianGridEnabled && (
+          <CartesianGrid
+            vertical={false}
+            strokeDasharray={CHART_STROKE_DASH_ARRAY}
+            stroke={chartColor}
+          />
+        )}
         <Area
           type="monotone"
           dataKey="yValue"
