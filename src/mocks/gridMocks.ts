@@ -36,7 +36,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
   },
   {
     i: 'c',
-    compName: 'shiftUtilization',
+    compName: 'tSFancyNumeric',
     props: {
       title: 'Shift Utilization',
       timeDisplayKey: 'Elapsed Time - Job',

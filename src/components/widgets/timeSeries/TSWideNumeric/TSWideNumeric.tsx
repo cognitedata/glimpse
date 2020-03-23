@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import './TimeSeriesWideNumeric.css';
+import './TSWideNumeric.css';
 import Chart from './Chart/Chart';
 
 type Props = {
@@ -10,12 +10,7 @@ type Props = {
   height?: string | number;
 };
 
-const TimeSeriesWideNumeric: FC<Props> = ({
-  title,
-  data,
-  width,
-  height,
-}: Props) => {
+const TSWideNumeric: FC<Props> = ({ title, data, width, height }: Props) => {
   const xAxisLabels = data
     .map((item: any) => item.xValue)
     .filter((value, index, self) => self.indexOf(value) === index);
@@ -35,4 +30,4 @@ const TimeSeriesWideNumeric: FC<Props> = ({
   );
 };
 
-export default TimeSeriesWideNumeric;
+export default TSWideNumeric;

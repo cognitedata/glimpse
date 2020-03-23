@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { circularProgressMockProps } from 'mocks/widgetsMockData/circularProgressMock';
-import { CircularProgress } from './CircularProgress';
+import { CircularProgress } from './TSFancyNumeric';
 
 describe('CircularProgress', () => {
   it('should render progress precentage correctly', () => {
