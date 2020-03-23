@@ -10,15 +10,12 @@ type TSTallNumericProps = TSBasicNumericProps & {
   width?: string | number;
   height?: string | number;
 };
-
-const TSTallNumeric: FC<TSTallNumericProps> = ({
-  data,
-  width,
-  height,
-  name,
-  value,
-  unit,
-}: TSTallNumericProps) => {
+/**
+ * Show a latest datapoint's numeric value with unit for a time series and the timeseries chart.
+ * @param props TSTallNumericProps
+ */
+const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
+  const { data, width, height, name, value, unit } = props;
   const xAxisLabels = data
     .map((item: any) => item.xValue)
     .filter((val, index, self) => self.indexOf(val) === index);
