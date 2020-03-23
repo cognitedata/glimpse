@@ -1,8 +1,8 @@
 import { ComponentDetail } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
-import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/TimeSeriesWideNumericMock';
+import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { Widget } from 'constants/components';
-import { TSTallNumericMockProps } from './widgetsMockData/TSTallNumericMock';
+import { TSTallNumericMockProps } from './widgetsMockData/tsTallNumericMock';
 import { TSFancyNumericMockProps } from './widgetsMockData/circularProgressMock';
 import { TSBasicStringMockProps } from './widgetsMockData/tsBasicMock';
 

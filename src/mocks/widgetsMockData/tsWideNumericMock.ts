@@ -1,5 +1,4 @@
 export const dataPoints = [
-  { xValue: '24', yValue: 40 },
   { xValue: '1', yValue: 1 },
   { xValue: '2', yValue: 40 },
   { xValue: '3', yValue: 2 },
@@ -22,7 +21,8 @@ export const dataPoints = [
   { xValue: '20', yValue: 38 },
   { xValue: '21', yValue: 8 },
   { xValue: '22', yValue: 25 },
-  { xValue: '23', yValue: 80 },
+  { xValue: '23', yValue: 70 },
+  { xValue: '24', yValue: 80 },
 ];
 
 export const timeSeriesWideNumericMockProps = [

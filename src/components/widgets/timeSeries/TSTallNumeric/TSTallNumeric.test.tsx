@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { TSTallNumericMockProps } from 'mocks/widgetsMockData/TSTallNumericMock';
+import { TSTallNumericMockProps } from 'mocks/widgetsMockData/tsTallNumericMock';
 import TSTallNumeric from './TSTallNumeric';
 
 describe('TSWideNumeric', () => {
