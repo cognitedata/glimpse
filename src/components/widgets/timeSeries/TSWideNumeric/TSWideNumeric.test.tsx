@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/TimeSeriesWideNumericMock';
+import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/tsWideNumericMock';
 import TSWideNumeric from './TSWideNumeric';
 
 describe('TSWideNumeric', () => {
