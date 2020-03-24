@@ -40,7 +40,7 @@ module.exports = {
       [
         {
           pattern: ' Copyright \\d{4} Cognite AS',
-          template: ' Copyright 2020 Cognite AS',
+          template: ` Copyright ${new Date().getFullYear()} Cognite AS`,
         },
       ],
     ],
