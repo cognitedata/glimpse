@@ -11,6 +11,7 @@ export const USER_REQUIRED_CAPABILITIES = ['groupsAcl:LIST'];
 export const APP_NAME = 'operator';
 export const APP_VERSION = 'v1';
 export const CDF_PROJECT = 'publicdata';
+export const AUTH_RESULTS_KEY = `${APP_NAME}_${APP_VERSION}_storage/${CDF_PROJECT}/authResult`;
 
 // const project = 'sre-monitoring';
 // const project = 'publicdata';

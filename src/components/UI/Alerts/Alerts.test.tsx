@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Alerts, { AlertsPropsType } from './Alerts';
+import { AlertsPropsType } from 'custom-types';
+import Alerts from './Alerts';
 
 const alertProp: AlertsPropsType = {
   type: 'error',
   text: 'Test message',
   handleClose: jest.fn(),
-  duration: 10000,
 };
 
 test('logo loaded successfully ', async () => {
