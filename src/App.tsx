@@ -1,11 +1,6 @@
 import React from 'react';
 import AppContainer from './containers/AppContainer/AppContainer';
-import { AppContextProvider } from './context/AppContextManager';
 
-const App = () => (
-  <AppContextProvider>
-    <AppContainer />
-  </AppContextProvider>
-);
+const App = () => <AppContainer />;
 
 export default App;

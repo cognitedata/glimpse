@@ -1,21 +1,16 @@
-import React, { useEffect, useContext } from 'react';
-import { CogniteClient, REDIRECT, Group } from '@cognite/sdk';
-import { AppContext, AppContextType } from '../context/AppContextManager';
+import React, { useEffect } from 'react';
+import { CogniteClient, REDIRECT } from '@cognite/sdk';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { RootState } from 'StoreTypes';
+
 import {
   APP_NAME,
   APP_VERSION,
-  ADMIN_GROUPS,
-  USER_REQUIRED_CAPABILITIES,
   CDF_PROJECT as project,
 } from '../constants/appData';
-import { MESSAGES } from '../constants/messages';
 import Loader from '../components/UI/Loader/Loader';
-
-type Capability = {
-  [key: string]: {
-    actions: string[];
-  };
-};
+import { setCdfClient, login } from '../store/actions/root-action';
 
 type withSecurityPropType =
   | {
@@ -27,40 +22,16 @@ const authResultsKey = `${APP_NAME}_${APP_VERSION}_storage/${project}/authResult
 
 const deafultClient = new CogniteClient({ appId: APP_NAME });
 
-const getUserCapabilities = (groups: Group[]) =>
-  groups
-    .map(group =>
-      group.capabilities?.map((capability: Capability) =>
-        Object.keys(capability).map(capabilityKey =>
-          capability[capabilityKey].actions.map(
-            (action: string) => `${capabilityKey}:${action}`
-          )
-        )
-      )
-    )
-    .toString()
-    .split(',');
-
-const hasPermissions = (userCapabilities: string[]) =>
-  USER_REQUIRED_CAPABILITIES.filter(userRequiredCapability =>
-    userCapabilities.includes(userRequiredCapability)
-  ).length === USER_REQUIRED_CAPABILITIES.length;
-
-const isAdmin = (groups: Group[]) =>
-  groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
-
 /**
  * This hoc manages all the auth operations
  */
 const withSecurity = (props?: withSecurityPropType) => (
   WrappedComponet: React.ComponentType
 ) => {
-  const WithSecurityComponent = () => {
-    const appContext = useContext<AppContextType>(AppContext);
-
+  const WithSecurityComponent = (compProps: CompProps) => {
     const cogniteClient = props?.sdk || deafultClient;
 
-    appContext.setCogniteClient(cogniteClient);
+    compProps.setCdfClient(cogniteClient);
 
     cogniteClient.loginWithOAuth({
       project,
@@ -71,71 +42,34 @@ const withSecurity = (props?: withSecurityPropType) => (
       },
     });
 
-    const login = async () => {
-      appContext.setLoading(true);
-      appContext.setLoggedIn(false);
-      let status = await cogniteClient.login.status();
-      if (!status || !localStorage.getItem(authResultsKey)) {
-        await cogniteClient.authenticate();
-        status = await cogniteClient.login.status();
-      }
-      const groups = await cogniteClient.groups.list();
-      const userCapabilities = getUserCapabilities(groups);
-      const isAdminUser = isAdmin(groups);
-      appContext.setAdminUser(isAdminUser);
-      appContext.setUserCapabilities(userCapabilities);
-      const userHasPermissions = hasPermissions(userCapabilities);
-      console.log('User Capabilities', userCapabilities);
-      if (!userHasPermissions || !status) {
-        appContext.setAlerts({
-          type: 'error',
-          text: MESSAGES.NO_ACCESS_MSG,
-          handleClose: errorHandleClose,
-          duration: 10000,
-          hideApp: true,
-        });
-      } else {
-        appContext.setLoggedIn(!!status);
-        const userInfo = { name: status?.user };
-        appContext.setUserInfo(userInfo);
-      }
-      appContext.setLoading(false);
-    };
-
-    const errorHandleClose = (
-      event?: React.SyntheticEvent,
-      reason?: string
-    ) => {
-      appContext.setAlerts(undefined);
-      logout();
-    };
-
-    const logout = async () => {
-      const redirectUrl = `https://${window.location.host}/`;
-      try {
-        localStorage.removeItem(authResultsKey);
-        appContext.setLoggedIn(false);
-        await cogniteClient.logout.getUrl({ redirectUrl });
-        login();
-      } catch (ex) {
-        console.log('error on logout');
-      }
-    };
-
     useEffect(() => {
-      appContext.setLogout(() => logout);
-      login();
+      compProps.login();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     let html = null;
-    if (appContext.loggedIn) {
+    if (compProps.loggedIn) {
       html = <WrappedComponet />;
-    } else if (appContext.loading) {
+    } else if (compProps.loader) {
       html = <Loader />;
     }
     return html;
   };
-  return WithSecurityComponent;
+  return connect(mapStateToProps, mapDispatchToProps)(WithSecurityComponent);
 };
+
+const mapStateToProps = (state: RootState) => ({
+  loader: state.appState.loader,
+  loggedIn: state.authState.loggedIn,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    setCdfClient: (client: CogniteClient) => dispatch(setCdfClient(client)),
+    login: () => dispatch(login()),
+  };
+};
+
+type CompProps = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 export default withSecurity;

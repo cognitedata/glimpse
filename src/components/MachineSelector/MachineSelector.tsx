@@ -1,19 +1,22 @@
-import React, { useContext, FC, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './MachineSelector.css';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { AppContext, AppContextType } from '../../context/AppContextManager';
+import { connect } from 'react-redux';
+import { Asset } from '@cognite/sdk';
+
+import Types from 'StoreTypes';
+
+import { setAsset } from '../../store/actions/root-action';
 
 /**
  * This is the machine selector component.
  * Machines / Assets are taken from app context
- * and set the selected Machine in the appContext on dropdown select
+ * and set the selected Machine in the redux on dropdown select
  */
-const MachineSelector: FC = () => {
-  const appContext = useContext<AppContextType>(AppContext);
-
+const MachineSelector = (props: any) => {
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [selectItemList, setSelectItemList] = React.useState<
@@ -21,10 +24,12 @@ const MachineSelector: FC = () => {
   >([]);
 
   const updateContext = (machineId: number) => {
-    const selectedMachine = appContext.assets.find(
-      asset => asset.id === machineId
+    const selectedMachine = props.assets.find(
+      (asset: Asset) => asset.id === machineId
     );
-    appContext.setSelectedMachine(selectedMachine);
+    if (selectedMachine !== undefined) {
+      props.setAsset(selectedMachine);
+    }
   };
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -38,8 +43,8 @@ const MachineSelector: FC = () => {
   }, []);
 
   useEffect(() => {
-    const itemList = appContext.assets
-      ? appContext.assets.map(asset => {
+    const itemList = props.assets
+      ? props.assets.map((asset: Asset) => {
           return (
             <MenuItem key={asset.id} value={asset.id}>
               {asset.name}
@@ -48,7 +53,7 @@ const MachineSelector: FC = () => {
         })
       : null;
     setSelectItemList(itemList);
-  }, [appContext.assets]);
+  }, [props.assets]);
 
   return (
     <div className="MachineSelector">
@@ -59,9 +64,7 @@ const MachineSelector: FC = () => {
         <Select
           labelId="machineSelector-label"
           id="machineSelector"
-          value={
-            appContext.selectedMachine ? appContext.selectedMachine.id : ''
-          }
+          value={props.asset ? props.asset.id : ''}
           onChange={handleChange}
           labelWidth={labelWidth}
         >
@@ -72,4 +75,13 @@ const MachineSelector: FC = () => {
   );
 };
 
-export default MachineSelector;
+const mapStateToProps = (state: Types.RootState) => ({
+  asset: state.widgetState.asset,
+  assets: state.appState.assets,
+});
+
+const dispatchProps = {
+  setAsset,
+};
+
+export default connect(mapStateToProps, dispatchProps)(MachineSelector);

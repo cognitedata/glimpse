@@ -1,18 +1,21 @@
-import React, { useState, useContext } from 'react';
+import React, { FC, useState } from 'react';
 import { generateRandomKey } from 'utills/utills';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
 import { initialcomponentsMocked, initialLayoutMocked } from 'mocks/gridMocks';
-import { AppContextType, AppContext } from 'context/AppContextManager';
 import { Widget } from 'constants/components';
+import { connect } from 'react-redux';
+import { Dispatch, bindActionCreators } from 'redux';
+import { RootAction } from 'StoreTypes';
 import { getEmptyPositions } from '../GridLayout/gridOperations/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
 import { ComponentDetail } from '../interfaces';
 
+import { setAlerts } from '../../../store/actions/root-action';
+
 const WithAddGridComponents = (WrappedComponent: any) => {
-  const WrapperObject = () => {
-    const appContext = useContext<AppContextType>(AppContext);
+  const WrapperObject: FC<Props> = (props: Props) => {
     const [components, setComponents] = useState(initialcomponentsMocked);
     const [layouts, setLayouts] = useState(initialLayoutMocked);
 
@@ -26,7 +29,7 @@ const WithAddGridComponents = (WrappedComponent: any) => {
           MAXROWS
         );
         if (!cordinates) {
-          appContext.setAlerts({
+          props.setAlerts({
             type: 'error',
             text: 'There is no position for adding the component',
             duration: 50000,
@@ -52,10 +55,9 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         });
         return;
       }
-      appContext.setAlerts({
+      props.setAlerts({
         type: 'error',
         text: '1 <= width <=4 and 1 <= height <= 6',
-        duration: 10000,
         hideApp: false,
       });
     };
@@ -87,6 +89,16 @@ const WithAddGridComponents = (WrappedComponent: any) => {
       </>
     );
   };
-  return WrapperObject;
+  return connect(null, dispatchProps)(WrapperObject);
 };
+
+const dispatchProps = {
+  setAlerts,
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators(dispatchProps, dispatch);
+
+type Props = ReturnType<typeof mapDispatchToProps>;
+
 export default WithAddGridComponents(GridLayout);
