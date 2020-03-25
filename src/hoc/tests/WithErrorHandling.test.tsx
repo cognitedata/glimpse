@@ -1,8 +1,25 @@
 import React from 'react';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
+import { AlertsPropsType } from 'custom-types';
+import rootReducer from '../../store/reducers/root-reducer';
+import {
+  AppState,
+  initialState as appInitialState,
+} from '../../store/reducers/app';
 import withErrorHandling from '../WithErrorHandling';
-import { AppContext, defaultContextObj } from '../../context/AppContextManager';
-import { AlertsPropsType } from '../../components/UI/Alerts/Alerts';
+
+const renderWithRedux = (
+  ui: JSX.Element,
+  initialState: { appState: AppState }
+) => {
+  const store = createStore(rootReducer, initialState);
+  return {
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
+  };
+};
 
 test('Render alert successfully ', async () => {
   const Home = () => <div>Home Component</div>;
@@ -13,14 +30,8 @@ test('Render alert successfully ', async () => {
     duration: 10000,
     hideApp: false,
   };
-  const mockContext = {
-    ...defaultContextObj,
-    alerts,
-  };
-  const { getByText, container } = render(
-    <AppContext.Provider value={mockContext}>
-      <WrappedComponent />
-    </AppContext.Provider>
-  );
+  const { getByText } = renderWithRedux(<WrappedComponent />, {
+    appState: { ...appInitialState, alerts },
+  });
   expect(getByText('Alert Test')).toBeInTheDocument();
 });
