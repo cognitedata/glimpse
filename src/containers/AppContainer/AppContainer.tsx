@@ -66,13 +66,13 @@ const AppContainer: FC<Props> = (props: Props) => {
     props.updateAssets();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const homeHtml = props.loader ? <Loader /> : <Home navList={navList} />;
+  const homeHtml = props.loading ? <Loader /> : <Home navList={navList} />;
 
   return homeHtml;
 };
 
 const mapStateToProps = (state: RootState) => ({
-  loader: state.appState.loader,
+  loading: state.appState.loading,
   cdfClient: state.appState.cdfClient,
 });
 

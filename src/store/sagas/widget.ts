@@ -32,9 +32,10 @@ function* pollUpdateEvenInfo(action: any) {
       events = events.filter(event => !event.endTime);
     }
 
+    const { actionKey } = action.payload;
+
     if (events.length > 0) {
-      const { sourcePath } = action.payload;
-      yield put(setEvent({ [sourcePath]: events[0] }));
+      yield put(setEvent({ [actionKey]: events[0] }));
     }
 
     const { cancel } = yield race({
@@ -42,7 +43,7 @@ function* pollUpdateEvenInfo(action: any) {
       cancel: take(
         (stopAction: any) =>
           stopAction.type === actionTypes.STOP_UPDATE_EVENT_INFO &&
-          stopAction.payload === action.payload.actionKey
+          stopAction.payload === actionKey
       ),
     });
 

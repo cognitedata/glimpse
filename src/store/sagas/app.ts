@@ -1,9 +1,9 @@
 import { put, select } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
 import {
-  showLoader,
+  setLoading,
   setAssets,
-  hideLoader,
+  setLoaded,
   setAsset,
   setAlerts,
 } from '../actions/root-action';
@@ -17,7 +17,7 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
  * Assets list fetcher
  */
 export function* updateAssets() {
-  yield put(showLoader());
+  yield put(setLoading());
   const cdfClient = yield select(getCdfClient);
 
   try {
@@ -35,6 +35,6 @@ export function* updateAssets() {
       })
     );
   } finally {
-    yield put(hideLoader());
+    yield put(setLoaded());
   }
 }

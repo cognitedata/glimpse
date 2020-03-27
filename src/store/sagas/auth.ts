@@ -1,8 +1,8 @@
 import { put, select, call } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
 import {
-  showLoader,
-  hideLoader,
+  setLoading,
+  setLoaded,
   setAlerts,
   setLoggedOut,
   setUserCapabilities,
@@ -26,7 +26,7 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
 export function* login() {
   const cdfClient = yield select(getCdfClient);
 
-  yield put(showLoader());
+  yield put(setLoading());
   yield put(setLoggedOut());
   let status = yield cdfClient.login.status();
   const authKey = yield localStorage.getItem(AUTH_RESULTS_KEY);
@@ -52,7 +52,7 @@ export function* login() {
     yield put(setUserInfo(userInfo));
     yield put(setUserCapabilities(userCapabilities));
   }
-  yield put(hideLoader());
+  yield put(setLoaded());
   console.log('userCapabilities ', userCapabilities);
 }
 
@@ -60,7 +60,7 @@ export function* login() {
  * Async operations related to logout process
  */
 export function* logout() {
-  yield put(showLoader());
+  yield put(setLoading());
   const cdfClient = yield select(getCdfClient);
   const redirectUrl = `https://${window.location.host}/`;
   yield localStorage.removeItem(AUTH_RESULTS_KEY);

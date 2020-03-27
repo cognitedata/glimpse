@@ -49,7 +49,7 @@ const withSecurity = (props?: withSecurityPropType) => (
     let html = null;
     if (compProps.loggedIn) {
       html = <WrappedComponet />;
-    } else if (compProps.loader) {
+    } else if (compProps.loading) {
       html = <Loader />;
     }
     return html;
@@ -58,7 +58,7 @@ const withSecurity = (props?: withSecurityPropType) => (
 };
 
 const mapStateToProps = (state: RootState) => ({
-  loader: state.appState.loader,
+  loading: state.appState.loading,
   loggedIn: state.authState.loggedIn,
 });
 

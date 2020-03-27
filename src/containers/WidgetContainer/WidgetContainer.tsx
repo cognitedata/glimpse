@@ -26,7 +26,9 @@ const pollingEndActions: PollingEndAction[] = [];
 const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
-  const sourcePath = getUniqueKey(widgetConfig.valueFilter);
+  const requestKey = getUniqueKey(widgetConfig.valueFilter);
+
+  const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
 
   return (
     <div key={widgetConfig.i} data-testid={widgetConfig.i}>
@@ -39,10 +41,7 @@ const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
       </button>
       {widgetSetting !== undefined
         ? widgetConnector(
-            widgetSetting.mapStateToProps(
-              widgetConfig.valueMapping,
-              sourcePath
-            ),
+            widgetSetting.mapStateToProps(widgetConfig.valueMapping, actionKey),
             widgetSetting.component
           )
         : null}
@@ -88,17 +87,16 @@ const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
   widgetConfigs.forEach(widgetConfig => {
     const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
-    const sourcePath = getUniqueKey(widgetConfig.valueFilter);
-
     if (widgetSetting.dataFetcher) {
-      const actionKey = `${widgetSetting.dataFetcher}-${sourcePath}`;
+      const requestKey = getUniqueKey(widgetConfig.valueFilter);
+
+      const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
 
       if (dispatchedActions.indexOf(actionKey) === -1) {
         dispatchedActions.push(actionKey);
 
         const actionPaylod = {
           ...widgetConfig.valueFilter,
-          sourcePath,
           pollingInterval: widgetSetting.pollingInterval,
           actionKey,
         };

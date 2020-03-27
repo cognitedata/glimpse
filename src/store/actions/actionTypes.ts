@@ -3,8 +3,8 @@ export const SET_CDF_CLIENT = 'SET_CDF_CLIENT';
 export const CLEAR_ALERTS = 'CLEAR_ALERTS';
 export const SET_ALERTS = 'SET_ALERTS';
 
-export const SHOW_LOADER = 'SHOW_LOADER';
-export const HIDE_LOADER = 'HIDE_LOADER';
+export const SET_LOADING = 'SET_LOADING';
+export const SET_LOADED = 'SET_LOADED';
 
 export const UPDATE_ASSETS = 'UPDATE_ASSETS';
 export const SET_ASSETS = 'SET_ASSETS';
