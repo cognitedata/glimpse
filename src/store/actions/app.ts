@@ -1,9 +1,13 @@
 import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { AlertsPropsType } from 'custom-types';
-
 import { action } from 'typesafe-actions';
 import * as actionTypes from './actionTypes';
+
+/**
+ *
+ * This contains app related action creators
+ */
 
 export const setCdfClient = (cogniteClient: CogniteClient) =>
   action(actionTypes.SET_CDF_CLIENT, cogniteClient);

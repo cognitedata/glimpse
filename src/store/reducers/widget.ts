@@ -8,27 +8,27 @@ import * as actions from '../actions/widget';
 export type WidgetAction = ActionType<typeof actions>;
 
 export type WidgetState = {
-  // cdfClient? : undefined | CogniteClient;
-  // loader: boolean;
-  // alerts?: undefined | AlertsPropsType;
   asset?: undefined | Asset;
-  // assets: Asset[]
 };
 
-export const initialState: WidgetState = {
-  // loader: false,
-  // assets: []
-};
+export const initialState: WidgetState = {};
 
 const widgetReducer = (
   state = initialState,
   action: WidgetAction
 ): WidgetState => {
   switch (action.type) {
+    /** Set asset in widget state */
     case actionTypes.SET_ASSET:
       return {
         ...state,
         asset: action.payload,
+      };
+    /** Set event in widget state */
+    case actionTypes.SET_EVENT:
+      return {
+        ...state,
+        ...action.payload,
       };
   }
   return state;

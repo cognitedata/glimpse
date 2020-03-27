@@ -1,10 +1,6 @@
-import { ComponentDetail } from 'components/grid/interfaces';
+import { WidgetConfig } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
-import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/tsWideNumericMock';
-import { Widget } from 'constants/components';
-import { TSTallNumericMockProps } from './widgetsMockData/tsTallNumericMock';
-import { TSFancyNumericMockProps } from './widgetsMockData/circularProgressMock';
-import { TSBasicStringMockProps } from './widgetsMockData/tsBasicMock';
+import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -12,95 +8,111 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'c', x: 0, y: 2, w: 1, h: 2 },
   { i: 'd', x: 0, y: 4, w: 1, h: 1, static: true },
   { i: 'e', x: 0, y: 5, w: 1, h: 1 },
-  { i: 'f', x: 1, y: 0, w: 1, h: 2 },
-  { i: 'g', x: 2, y: 0, w: 1, h: 3 },
-  { i: 'h', x: 3, y: 0, w: 1, h: 4 },
-  { i: 'i', x: 1, y: 4, w: 3, h: 2 },
+  { i: 'f', x: 1, y: 0, w: 1, h: 1 },
+  { i: 'g', x: 1, y: 1, w: 1, h: 3 },
+  { i: 'h', x: 1, y: 1, w: 3, h: 2 },
+  { i: 'i', x: 2, y: 0, w: 1, h: 4 },
+  { i: 'j', x: 3, y: 0, w: 1, h: 4 },
 ];
 
-export const initialcomponentsMocked: ComponentDetail[] = [
+export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'a',
-    compName: Widget.SHOWFIELDSONE,
-    props: {
+    widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
+    valueMapping: {
       field1: {
-        field: 'Current Machine',
-        value: 'Machine 1',
+        label: 'Current Machine',
+        key: 'name',
       },
-    },
-  },
-  {
-    i: 'b',
-    compName: Widget.TOOLWIDGET,
-    props: {
-      field: 'description    84mm',
-      value: '5733-123',
-      name: 'Tool Id',
-    },
-  },
-  {
-    i: 'c',
-    compName: Widget.TSFANCYNUMERIC,
-    props: TSFancyNumericMockProps[0],
-  },
-  {
-    i: 'd',
-    compName: Widget.TSBASICSTRING,
-    props: TSBasicStringMockProps[0],
-  },
-  {
-    i: 'e',
-    compName: Widget.TSBASICNUMERIC,
-    props: {
-      name: 'Machine Temperature',
-      value: 89,
-      unit: '°C ',
     },
   },
   {
     i: 'f',
-    compName: Widget.SHOWFIELDSTHREE,
-    props: {
+    widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
+  },
+  {
+    i: 'i',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
+  },
+  {
+    i: 'd',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
+  },
+  {
+    i: 'e',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
+  },
+  {
+    i: 'c',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    valueFilter: {
+      eventType: '***',
+      eventSubType: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
       field1: {
-        field: 'Work Order',
-        value: '573367 - 30',
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
       },
       field2: {
-        field: 'Part Name',
-        value: 'Dart',
+        label: 'Event Sub Type',
+        key: 'subtype',
       },
       field3: {
-        field: 'Customer',
-        value: 'Petroleum Technolgy Company',
+        label: 'Metadata Source Id',
+        key: 'metadata.sourceId',
       },
     },
   },
   {
     i: 'g',
-    compName: Widget.SHOWFIELDSFOUR,
-    props: {
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
+    valueFilter: {
+      eventType: '***',
+      eventSubType: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
       field1: {
-        field: 'Work Order',
-        value: '573367 - 60',
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
       },
       field2: {
-        field: 'Operation Name',
-        value: 'Vigre ingvald',
+        label: 'Event Sub Type',
+        key: 'subtype',
       },
       field3: {
-        field: 'Part Name',
-        value: '5.5" SPM SWAGE',
+        label: 'Metadata Source Id',
+        key: 'metadata.sourceId',
       },
       field4: {
-        field: 'Customer',
-        value: 'Petroleum Technolgy Company',
+        label: 'Metadata Source',
+        key: 'metadata.source',
       },
     },
   },
-  { i: 'h', compName: Widget.TSTALLNUMERIC, props: TSTallNumericMockProps[0] },
   {
-    i: 'i',
-    compName: Widget.TSWIDENUMERIC,
-    props: timeSeriesWideNumericMockProps[0],
+    i: 'j',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
+  },
+  {
+    i: 'h',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
+  },
+  {
+    i: 'b',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
+    valueFilter: {
+      eventType: '***',
+      eventSubType: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+    },
   },
 ];

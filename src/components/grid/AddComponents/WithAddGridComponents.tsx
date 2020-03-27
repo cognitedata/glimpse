@@ -2,21 +2,21 @@ import React, { FC, useState } from 'react';
 import { generateRandomKey } from 'utills/utills';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
-import { initialcomponentsMocked, initialLayoutMocked } from 'mocks/gridMocks';
-import { Widget } from 'constants/components';
+import { mockedWidgetConfigs, initialLayoutMocked } from 'mocks/gridMocks';
+import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction } from 'StoreTypes';
 import { getEmptyPositions } from '../GridLayout/gridOperations/gridOperations';
 import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
-import { ComponentDetail } from '../interfaces';
+import { WidgetConfig } from '../interfaces';
 
 import { setAlerts } from '../../../store/actions/root-action';
 
 const WithAddGridComponents = (WrappedComponent: any) => {
   const WrapperObject: FC<Props> = (props: Props) => {
-    const [components, setComponents] = useState(initialcomponentsMocked);
+    const [widgetConfigs, setWidgetConfigs] = useState(mockedWidgetConfigs);
     const [layouts, setLayouts] = useState(initialLayoutMocked);
 
     const addElement = (height: number, width: number) => {
@@ -38,10 +38,21 @@ const WithAddGridComponents = (WrappedComponent: any) => {
           return;
         }
         const key = generateRandomKey();
-        setComponents((prevComponents: ComponentDetail[]) => {
-          prevComponents.push({ i: key, compName: Widget.SHOWFIELDSONE });
-          return prevComponents;
+        setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) => {
+          const valueMapping = {
+            field1: {
+              label: 'Current Machine',
+              key: 'asset.description',
+            },
+          };
+          prevWidgetConfigs.push({
+            i: key,
+            widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
+            valueMapping,
+          });
+          return prevWidgetConfigs;
         });
+
         setLayouts((prevLayout: Layout[]) => {
           const newLayout = [...prevLayout];
           newLayout.push({
@@ -66,9 +77,9 @@ const WithAddGridComponents = (WrappedComponent: any) => {
       setLayouts((prevLayout: Layout[]) =>
         prevLayout.filter((compDetails: Layout) => compDetails.i !== key)
       );
-      setComponents((prevComponets: ComponentDetail[]) =>
-        prevComponets.filter(
-          (compDetails: ComponentDetail) => compDetails.i !== key
+      setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) =>
+        prevWidgetConfigs.filter(
+          (compDetails: WidgetConfig) => compDetails.i !== key
         )
       );
     };
@@ -82,7 +93,7 @@ const WithAddGridComponents = (WrappedComponent: any) => {
         <AddComponent addElement={addElement} />
         <WrappedComponent
           layouts={layouts}
-          components={components}
+          widgetConfigs={widgetConfigs}
           onRemoveItem={onRemoveItem}
           onLayoutChange={onLayoutChange}
         />

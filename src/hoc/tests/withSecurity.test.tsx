@@ -57,12 +57,14 @@ const renderWithRedux = (
   };
 };
 
-test('Home component loaded successfully when the login status is updated', async () => {
-  const Home = () => <div>Home Component</div>;
-  const WrappedComponent = withSecurity({ sdk: client })(Home);
-  const { getByText } = renderWithRedux(<WrappedComponent />, {
-    appState: { ...appInitialState, cdfClient: client },
-    authState: { ...authInitialState, loggedIn: true },
+describe('With Security', () => {
+  test('Home component loaded successfully when the login status is updated', async () => {
+    const Home = () => <div>Home Component</div>;
+    const WrappedComponent = withSecurity({ sdk: client })(Home);
+    const { getByText } = renderWithRedux(<WrappedComponent />, {
+      appState: { ...appInitialState, cdfClient: client },
+      authState: { ...authInitialState, loggedIn: true },
+    });
+    expect(getByText('Home Component')).toBeInTheDocument();
   });
-  expect(getByText('Home Component')).toBeInTheDocument();
 });
