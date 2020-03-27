@@ -1,5 +1,4 @@
 import { RootState } from 'StoreTypes';
-
 import ShowFieldsOne from 'components/widgets/showFields/ShowFieldsOne/ShowFieldsOne';
 import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowFieldsThree';
 import ShowFieldsFour from 'components/widgets/showFields/ShowFieldsFour/ShowFieldsFour';
@@ -32,6 +31,9 @@ export enum WIDGET_TYPE_IDS {
   TIMESERIES_TALL_NUMERIC,
   TIMESERIES_WIDE_NUMERIC,
 }
+type TsWideNumericValMap = {
+  title: string;
+};
 
 type FieldMapping = {
   label: string;
@@ -58,7 +60,8 @@ type VALUE_MAPPING_SHOWFIELDSFOUR = {
 export type ValueMapping =
   | VALUE_MAPPING_SHOWFIELDSONE
   | VALUE_MAPPING_SHOWFIELDSTHREE
-  | VALUE_MAPPING_SHOWFIELDSFOUR;
+  | VALUE_MAPPING_SHOWFIELDSFOUR
+  | TsWideNumericValMap;
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
@@ -201,9 +204,15 @@ const WIDGET_SETTINGS: any = {
   },
   [WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC]: {
     component: TSWideNumeric,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_TS_DPS,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
+      state: RootState
+    ) => {
       return {
-        ...timeSeriesWideNumericMockProps[0],
+        ...valueMapping,
+        data: getChildValue(state.widgetState, statePath),
       };
     },
   },
