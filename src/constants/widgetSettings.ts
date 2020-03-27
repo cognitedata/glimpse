@@ -34,6 +34,10 @@ export enum WIDGET_TYPE_IDS {
 type TsWideNumericValMap = {
   title: string;
 };
+type TsTallNumericValMap = {
+  name: string;
+  unit: string;
+};
 
 type FieldMapping = {
   label: string;
@@ -61,7 +65,8 @@ export type ValueMapping =
   | VALUE_MAPPING_SHOWFIELDSONE
   | VALUE_MAPPING_SHOWFIELDSTHREE
   | VALUE_MAPPING_SHOWFIELDSFOUR
-  | TsWideNumericValMap;
+  | TsWideNumericValMap
+  | TsTallNumericValMap;
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
@@ -196,9 +201,20 @@ const WIDGET_SETTINGS: any = {
   },
   [WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC]: {
     component: TSTallNumeric,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_TS_DPS,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
+      state: RootState
+    ) => {
+      const data = getChildValue(state.widgetState, statePath);
       return {
-        ...TSTallNumericMockProps[0],
+        ...valueMapping,
+        data,
+        value:
+          data &&
+          data.length > 0 &&
+          Math.round(data[data.length - 1].average).toString(),
       };
     },
   },
