@@ -25,7 +25,7 @@ export const initialcomponentsMocked: ComponentDetail[] = [
     props: {
       field1: {
         field: 'Current Machine',
-        value: 'Machine 1',
+        value: 'Machine 2',
       },
     },
   },
