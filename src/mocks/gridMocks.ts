@@ -99,6 +99,12 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'h',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
+    valueFilter: {
+      id: '***',
+    },
+    valueMapping: {
+      title: '24 Hour Utilization',
+    },
   },
   {
     i: 'b',

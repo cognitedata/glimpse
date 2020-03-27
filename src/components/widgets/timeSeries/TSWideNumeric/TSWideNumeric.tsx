@@ -10,7 +10,12 @@ type Props = {
   height?: string | number;
 };
 
-const TSWideNumeric: FC<Props> = ({ title, data, width, height }: Props) => {
+const TSWideNumeric: FC<Props> = ({
+  title,
+  data = [],
+  width,
+  height,
+}: Props) => {
   const xAxisLabels = data
     .map((item: any) => item.xValue)
     .filter((value, index, self) => self.indexOf(value) === index);
