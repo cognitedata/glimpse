@@ -22,6 +22,8 @@ type Props = {
   data: Array<object>;
   width?: string | number;
   height?: string | number;
+  xDataKey?: string;
+  yDataKey?: string;
 };
 
 const Chart = ({
@@ -32,6 +34,8 @@ const Chart = ({
   data,
   width = '100%',
   height = '80%',
+  xDataKey = 'xValue',
+  yDataKey = 'yValue',
 }: Props) => {
   return (
     <ResponsiveContainer width={width} height={height}>
@@ -45,7 +49,8 @@ const Chart = ({
         <XAxis
           axisLine={false}
           tickLine={false}
-          dataKey="xValue"
+          interval={0}
+          dataKey={xDataKey}
           stroke={chartColor}
           ticks={xAxisLabels}
         />
@@ -59,7 +64,7 @@ const Chart = ({
         )}
         <Area
           type="monotone"
-          dataKey="yValue"
+          dataKey={yDataKey}
           stroke={seriesColor}
           fillOpacity={CHART_AREA_FILL_OPACITY}
           fill="url(#seriesFillColor)"

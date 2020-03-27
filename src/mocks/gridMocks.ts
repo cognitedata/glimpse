@@ -95,12 +95,27 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'j',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
+    valueFilter: {
+      id: 303782999296110,
+      start: '8d-ago',
+      end: 'now',
+      granularity: '1h',
+      limit: 1000,
+    },
+    valueMapping: {
+      name: 'Machine Temperature',
+      unit: '°c',
+    },
   },
   {
     i: 'h',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
     valueFilter: {
-      id: '***',
+      id: 303782999296110,
+      start: '15d-ago',
+      end: 'now',
+      granularity: '4h',
+      limit: 1000,
     },
     valueMapping: {
       title: '24 Hour Utilization',
