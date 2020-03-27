@@ -10,14 +10,14 @@ export type AppAction = ActionType<typeof actions>;
 
 export type AppState = {
   cdfClient?: undefined | CogniteClient;
-  loader: boolean;
+  loading: boolean;
   alerts?: undefined | AlertsPropsType;
   selectedMachine?: undefined | Asset;
   assets: Asset[];
 };
 
 export const initialState: AppState = {
-  loader: false,
+  loading: false,
   assets: [],
 };
 
@@ -38,15 +38,15 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
         ...state,
         cdfClient: action.payload,
       };
-    case actionTypes.SHOW_LOADER:
+    case actionTypes.SET_LOADING:
       return {
         ...state,
-        loader: true,
+        loading: true,
       };
-    case actionTypes.HIDE_LOADER:
+    case actionTypes.SET_LOADED:
       return {
         ...state,
-        loader: false,
+        loading: false,
       };
     case actionTypes.SET_ASSETS:
       return {
