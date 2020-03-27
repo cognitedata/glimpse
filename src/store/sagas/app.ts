@@ -13,6 +13,9 @@ import { MESSAGES } from '../../constants/messages';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
+/**
+ * Assets list fetcher
+ */
 export function* updateAssets() {
   yield put(showLoader());
   const cdfClient = yield select(getCdfClient);

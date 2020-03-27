@@ -20,6 +20,9 @@ import { MESSAGES } from '../../constants/messages';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
+/**
+ * Async operations related to login process
+ */
 export function* login() {
   const cdfClient = yield select(getCdfClient);
 
@@ -53,6 +56,9 @@ export function* login() {
   console.log('userCapabilities ', userCapabilities);
 }
 
+/**
+ * Async operations related to logout process
+ */
 export function* logout() {
   yield put(showLoader());
   const cdfClient = yield select(getCdfClient);

@@ -21,17 +21,19 @@ const renderWithRedux = (
   };
 };
 
-test('Render alert successfully ', async () => {
-  const Home = () => <div>Home Component</div>;
-  const WrappedComponent = withErrorHandling(Home);
-  const alerts: AlertsPropsType = {
-    type: 'error',
-    text: 'Alert Test',
-    duration: 10000,
-    hideApp: false,
-  };
-  const { getByText } = renderWithRedux(<WrappedComponent />, {
-    appState: { ...appInitialState, alerts },
+describe('With Error Handling', () => {
+  test('Render alert successfully ', async () => {
+    const Home = () => <div>Home Component</div>;
+    const WrappedComponent = withErrorHandling(Home);
+    const alerts: AlertsPropsType = {
+      type: 'error',
+      text: 'Alert Test',
+      duration: 10000,
+      hideApp: false,
+    };
+    const { getByText } = renderWithRedux(<WrappedComponent />, {
+      appState: { ...appInitialState, alerts },
+    });
+    expect(getByText('Alert Test')).toBeInTheDocument();
   });
-  expect(getByText('Alert Test')).toBeInTheDocument();
 });
