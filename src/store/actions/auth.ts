@@ -3,6 +3,11 @@ import { UserInfo } from 'custom-types';
 import { action } from 'typesafe-actions';
 import * as actionTypes from './actionTypes';
 
+/**
+ *
+ * This contains auth related action creators
+ */
+
 export const login = () => action(actionTypes.LOGIN);
 
 export const setLoggedIn = () => action(actionTypes.SET_LOGGED_IN);

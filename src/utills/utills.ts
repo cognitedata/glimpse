@@ -35,3 +35,22 @@ export const hasPermissions = (userCapabilities: string[]) =>
 
 export const isAdmin = (groups: Group[]) =>
   groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
+
+/**
+ * Used to get child value from a object with string key
+ */
+
+export const getChildValue = (source: any, attribString: string) => {
+  let returnValue = source;
+  attribString.split('.').forEach(attrib => {
+    returnValue = returnValue ? returnValue[attrib] : '';
+  });
+  return returnValue;
+};
+
+/**
+ * Used to get unique key from any object
+ */
+export const getUniqueKey = (source: object) => {
+  return source ? window.btoa(JSON.stringify(source)) : '';
+};

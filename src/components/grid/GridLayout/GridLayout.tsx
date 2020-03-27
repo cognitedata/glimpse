@@ -12,8 +12,9 @@ import {
   MIN_WIDTH,
   MIN_ROW_HEIGHT,
 } from 'constants/grid';
-import generateComponent from '../../componentFactory/componentsFactory';
-import { ComponentDetail, GridLayoutProps } from '../interfaces';
+import { GridLayoutProps } from '../interfaces';
+
+import WidgetContainer from '../../../containers/WidgetContainer/WidgetContainer';
 
 const ResponsiveGridLayout = Responsive;
 
@@ -40,15 +41,6 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
     window.addEventListener('resize', updateWindowDimensions);
     return () => window.removeEventListener('resize', updateWindowDimensions);
   }, [updateWindowDimensions]);
-
-  const generateComponents = (components: ComponentDetail[]) => {
-    return components.map((comp: ComponentDetail) =>
-      generateComponent(comp.i, comp.compName, {
-        ...comp.props,
-        onRemoveItem: props.onRemoveItem,
-      })
-    );
-  };
 
   /**
    * For change grid layout to previous position, Need to change the layout array length (library implementation)
@@ -107,7 +99,7 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
           rowHeight={getRowHeight()}
           width={props.size.width < MIN_WIDTH ? MIN_WIDTH : props.size.width}
         >
-          {generateComponents(props.components)}
+          {WidgetContainer(props)}
         </ResponsiveGridLayout>
       </div>
     </>
