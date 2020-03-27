@@ -3,10 +3,12 @@ import './TSTallNumeric.css';
 import Chart from '../Chart/Chart';
 import TSBasicNumeric from '../TSBasicNumeric/TSBasicNumeric';
 import { TSBasicNumericProps } from '../TSBasicNumeric/interfaces';
+import { generateXAxisVals } from '../utills';
+import { AggregateDatapoint } from '../interfaces';
 
 type TSTallNumericProps = TSBasicNumericProps & {
   xAxisLabelFormat?: string;
-  data: Array<object>;
+  data: AggregateDatapoint[];
   width?: string | number;
   height?: string | number;
 };
@@ -15,11 +17,12 @@ type TSTallNumericProps = TSBasicNumericProps & {
  * @param props TSTallNumericProps
  */
 const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
-  const { data, width, height, name, value, unit } = props;
-  const xAxisLabels = data
-    .map((item: any) => item.xValue)
-    .filter((val, index, self) => self.indexOf(val) === index);
+  const { data = [], width, height, name, value, unit } = props;
+  let [xAxisLabels, convertedDps]: any[] = [];
 
+  if (data.length > 0) {
+    [convertedDps, xAxisLabels] = generateXAxisVals(data, 5);
+  }
   return (
     <div className="ts-tall-numeric">
       <div className="ts-basic-numeric">
@@ -27,13 +30,15 @@ const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
       </div>
       <div className="content">
         <Chart
-          data={data}
+          data={convertedDps}
           xAxisLabels={xAxisLabels}
           width={width}
           height={height}
           iscartesianGridEnabled={false}
           seriesColor="black"
           chartColor="#936f27"
+          xDataKey="timestamp"
+          yDataKey="average"
         />
       </div>
     </div>

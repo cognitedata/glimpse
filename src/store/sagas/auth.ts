@@ -52,8 +52,7 @@ export function* login() {
     yield put(setUserInfo(userInfo));
     yield put(setUserCapabilities(userCapabilities));
   }
-  yield put(setLoaded());
-  console.log('userCapabilities ', userCapabilities);
+  yield put(hideLoader());
 }
 
 /**
