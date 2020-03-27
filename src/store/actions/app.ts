@@ -17,9 +17,9 @@ export const clearAlerts = () => action(actionTypes.CLEAR_ALERTS);
 export const setAlerts = (alert: AlertsPropsType) =>
   action(actionTypes.SET_ALERTS, alert);
 
-export const showLoader = () => action(actionTypes.SHOW_LOADER);
+export const setLoading = () => action(actionTypes.SET_LOADING);
 
-export const hideLoader = () => action(actionTypes.HIDE_LOADER);
+export const setLoaded = () => action(actionTypes.SET_LOADED);
 
 export const updateAssets = () => action(actionTypes.UPDATE_ASSETS);
 

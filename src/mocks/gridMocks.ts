@@ -11,7 +11,7 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'f', x: 1, y: 0, w: 1, h: 1 },
   { i: 'g', x: 1, y: 1, w: 1, h: 3 },
   { i: 'h', x: 1, y: 1, w: 3, h: 2 },
-  { i: 'i', x: 2, y: 0, w: 1, h: 4 },
+  { i: 'i', x: 2, y: 0, w: 1, h: 2 },
   { i: 'j', x: 3, y: 0, w: 1, h: 4 },
 ];
 
