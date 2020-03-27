@@ -12,3 +12,6 @@ export const setAsset = (machine: Asset) =>
 
 export const setEvent = (eventMapping: any) =>
   action(actionTypes.SET_EVENT, eventMapping);
+
+export const setTsDps = (tsDpsMapping: any) =>
+  action(actionTypes.SET_TS_DPS, tsDpsMapping);

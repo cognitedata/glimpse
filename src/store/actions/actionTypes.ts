@@ -20,3 +20,7 @@ export const LOGOUT = 'LOGOUT';
 export const START_UPDATE_EVENT_INFO = 'START_UPDATE_EVENT_INFO';
 export const STOP_UPDATE_EVENT_INFO = 'STOP_UPDATE_EVENT_INFO';
 export const SET_EVENT = 'SET_EVENT';
+
+export const START_UPDATE_TS_DPS = 'START_UPDATE_TS_DPS';
+export const STOP_UPDATE_TS_DPS = 'STOP_UPDATE_TS_DPS';
+export const SET_TS_DPS = 'SET_TS_DPS';

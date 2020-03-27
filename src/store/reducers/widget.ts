@@ -30,6 +30,11 @@ const widgetReducer = (
         ...state,
         ...action.payload,
       };
+    case actionTypes.SET_TS_DPS:
+      return {
+        ...state,
+        ...action.payload,
+      };
   }
   return state;
 };

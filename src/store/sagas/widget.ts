@@ -2,7 +2,8 @@ import { fork, take, race, put, select, delay } from 'redux-saga/effects';
 import { CogniteEvent } from '@cognite/sdk';
 
 import { RootState } from 'StoreTypes';
-import { setEvent } from '../actions/root-action';
+import { dataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
+import { setEvent, setTsDps } from '../actions/root-action';
 import * as actionTypes from '../actions/actionTypes';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
@@ -53,10 +54,40 @@ function* pollUpdateEvenInfo(action: any) {
   }
 }
 
+function* pollUpdateTsDpsInfo(action: any) {
+  while (true) {
+    console.log(
+      'firinggggggggggggggggggggg..........................................'
+    );
+    const { sourcePath } = action.payload;
+    yield put(setTsDps({ [sourcePath]: dataPoints }));
+
+    const { cancel } = yield race({
+      delay: delay(action.payload.pollingInterval),
+      cancel: take(
+        (stopAction: any) =>
+          stopAction.type === actionTypes.STOP_UPDATE_TS_DPS &&
+          stopAction.payload === action.payload.actionKey
+      ),
+    });
+
+    if (cancel) {
+      return;
+    }
+  }
+}
 /* Watcher function for event update polling */
 export function* pollUpdateEvenInfoWatcher() {
   while (true) {
     const action = yield take(actionTypes.START_UPDATE_EVENT_INFO);
     yield fork(pollUpdateEvenInfo, action);
+  }
+}
+
+/* Watcher function for TSDps update polling */
+export function* pollUpdateTsDpsWatcher() {
+  while (true) {
+    const action = yield take(actionTypes.START_UPDATE_TS_DPS);
+    yield fork(pollUpdateTsDpsInfo, action);
   }
 }
