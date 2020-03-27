@@ -56,12 +56,21 @@ function* pollUpdateEvenInfo(action: any) {
 
 function* pollUpdateTsDpsInfo(action: any) {
   while (true) {
-    console.log(
-      'firinggggggggggggggggggggg..........................................'
-    );
     const { sourcePath } = action.payload;
-    yield put(setTsDps({ [sourcePath]: dataPoints }));
-
+    const cdfClient = yield select(getCdfClient);
+    const tsDataPointsObj = yield cdfClient.datapoints.retrieve({
+      items: [
+        {
+          start: action.payload.start,
+          end: 'now',
+          limit: action.payload.granularity.limit,
+          aggregates: ['average'],
+          granularity: action.payload.granularity,
+          id: action.payload.id,
+        },
+      ],
+    });
+    yield put(setTsDps({ [sourcePath]: tsDataPointsObj[0].datapoints }));
     const { cancel } = yield race({
       delay: delay(action.payload.pollingInterval),
       cancel: take(
