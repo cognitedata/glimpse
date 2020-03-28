@@ -12,9 +12,6 @@ import { getChildValue } from '../utills/utills';
 
 import * as actionTypes from '../store/actions/actionTypes';
 
-import { TSTallNumericMockProps } from '../mocks/widgetsMockData/tsTallNumericMock';
-import { timeSeriesWideNumericMockProps } from '../mocks/widgetsMockData/tsWideNumericMock';
-
 /**
  * This contains all the widget types settings
  */

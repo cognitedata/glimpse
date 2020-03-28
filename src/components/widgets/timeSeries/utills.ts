@@ -1,4 +1,3 @@
-import { dataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { clone } from 'utills/utills';
 import { AggregateDatapoint } from './interfaces';
 
@@ -52,7 +51,7 @@ export function generateXAxisVals(
       dpArr,
       (timestamp: number) => `${new Date(timestamp).getDate()}`,
       noOfXVals,
-      `days`
+      `day`
     );
   }
   if (timeDiff[0] > 0) {
@@ -64,7 +63,7 @@ export function generateXAxisVals(
         return `${date.getDate()}|${date.getHours()}`;
       },
       noOfXVals,
-      `days | hours`
+      `day | hour`
     );
   }
   if (timeDiff[1] >= noOfXVals) {
@@ -73,7 +72,7 @@ export function generateXAxisVals(
       dpArr,
       (timestamp: number) => `${new Date(timestamp).getHours()}`,
       noOfXVals,
-      `hours`
+      `hour`
     );
   }
   if (timeDiff[1] > 0) {
@@ -85,7 +84,7 @@ export function generateXAxisVals(
         return `${date.getHours()}:${date.getMinutes()}`;
       },
       noOfXVals,
-      `hours : minutes`
+      `hour : minute`
     );
   }
   if (timeDiff[2] >= noOfXVals) {
@@ -94,7 +93,7 @@ export function generateXAxisVals(
       dpArr,
       (timestamp: number) => `${new Date(timestamp).getMinutes()}`,
       noOfXVals,
-      `minutes`
+      `minute`
     );
   }
   if (timeDiff[2] > 0) {
@@ -106,7 +105,7 @@ export function generateXAxisVals(
         return `${date.getMinutes()}:${date.getSeconds()}`;
       },
       noOfXVals,
-      `minutes : seconds`
+      `minute : second`
     );
   }
   // seconds
