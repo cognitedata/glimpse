@@ -16,6 +16,11 @@
   font-size: 12px;
 }
 
+.ts-tall-numeric .content .unit-label {
+  padding-top: 3%;
+  color: #936f27;
+  text-align: center;
+}
 .ts-tall-numeric .ts-basic-numeric {
   height: 25%;
 }

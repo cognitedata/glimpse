@@ -2,7 +2,6 @@ import { fork, take, race, put, select, delay } from 'redux-saga/effects';
 import { CogniteEvent } from '@cognite/sdk';
 
 import { RootState } from 'StoreTypes';
-import { dataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { setEvent, setTsDps } from '../actions/root-action';
 import * as actionTypes from '../actions/actionTypes';
 
@@ -56,7 +55,7 @@ function* pollUpdateEvenInfo(action: any) {
 
 function* pollUpdateTsDpsInfo(action: any) {
   while (true) {
-    const { sourcePath } = action.payload;
+    const { actionKey } = action.payload;
     const cdfClient = yield select(getCdfClient);
     const tsDataPointsObj = yield cdfClient.datapoints.retrieve({
       items: [
@@ -70,7 +69,7 @@ function* pollUpdateTsDpsInfo(action: any) {
         },
       ],
     });
-    yield put(setTsDps({ [sourcePath]: tsDataPointsObj[0].datapoints }));
+    yield put(setTsDps({ [actionKey]: tsDataPointsObj[0].datapoints }));
     const { cancel } = yield race({
       delay: delay(action.payload.pollingInterval),
       cancel: take(
