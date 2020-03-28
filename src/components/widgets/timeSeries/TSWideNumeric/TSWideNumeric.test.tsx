@@ -9,7 +9,7 @@ describe('TSWideNumeric', () => {
       <TSWideNumeric {...timeSeriesWideNumericMockProps[1]} />
     );
     expect(
-      getByText(timeSeriesWideNumericMockProps[1].title)
+      getByText(new RegExp(timeSeriesWideNumericMockProps[1].title))
     ).toBeInTheDocument();
   });
 
