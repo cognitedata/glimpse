@@ -17,3 +17,9 @@
 .TimeSeriesWideNumeric .title {
   padding: 15px 50px 0;
 }
+
+.TimeSeriesWideNumeric .content .unit-label {
+  margin-top: -0.5%;
+  color: #6a7095;
+  text-align: center;
+}

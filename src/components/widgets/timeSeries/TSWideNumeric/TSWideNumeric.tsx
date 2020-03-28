@@ -22,18 +22,15 @@ const TSWideNumeric: FC<Props> = ({
   xDataKey = 'timestamp',
   yDataKey = 'average',
 }: Props) => {
-  let [xAxisLabels, convertedDps, unit]: any[] = [];
+  let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
   if (data.length > 0) {
-    [convertedDps, xAxisLabels, unit] = generateXAxisVals(data, 25);
+    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(data, 25);
   }
 
   return (
     <div className="TimeSeriesWideNumeric">
       <div className="content">
-        <div className="title">
-          {title}
-          {` ( ${unit} )`}
-        </div>
+        <div className="title">{title}</div>
         <Chart
           data={convertedDps}
           xAxisLabels={xAxisLabels}
@@ -42,6 +39,9 @@ const TSWideNumeric: FC<Props> = ({
           xDataKey={xDataKey}
           yDataKey={yDataKey}
         />
+        <div className="unit-label">
+          <label>{unitLabel}</label>
+        </div>
       </div>
     </div>
   );
