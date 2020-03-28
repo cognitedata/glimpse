@@ -52,7 +52,7 @@ export function* login() {
     yield put(setUserInfo(userInfo));
     yield put(setUserCapabilities(userCapabilities));
   }
-  yield put(hideLoader());
+  yield put(setLoaded());
 }
 
 /**

@@ -18,10 +18,10 @@ type TSTallNumericProps = TSBasicNumericProps & {
  */
 const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
   const { data = [], width, height, name, value, unit } = props;
-  let [xAxisLabels, convertedDps]: any[] = [];
+  let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
 
   if (data.length > 0) {
-    [convertedDps, xAxisLabels] = generateXAxisVals(data, 5);
+    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(data, 5);
   }
   return (
     <div className="ts-tall-numeric">
@@ -40,6 +40,9 @@ const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
           xDataKey="timestamp"
           yDataKey="average"
         />
+        <div className="unit-label">
+          <label>{unitLabel}</label>
+        </div>
       </div>
     </div>
   );
