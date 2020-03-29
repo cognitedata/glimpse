@@ -1,6 +1,11 @@
 import { clone } from 'utills/utills';
 import { AggregateDatapoint } from './interfaces';
 
+/**
+ * get time difference as a representation of array ([day,hour,minute,second] diff)
+ * @param timstamp1 number (timestamp)
+ * @param timestamp2 number (timestamp)
+ */
 function getTimeDifference(timstamp1: number, timestamp2: number) {
   let difference = Math.abs(timestamp2 - timstamp1);
 
@@ -22,6 +27,11 @@ function getTimeDifference(timstamp1: number, timestamp2: number) {
   ];
 }
 
+/**
+ * get equal distance points from a given array
+ * @param array AggregateDatapoint[]
+ * @param noOfPoints number
+ */
 function getNPointsFromArray(array: AggregateDatapoint[], noOfPoints: number) {
   const eqlDistance = array.length / (noOfPoints - 1);
   const pointsArr = [];
@@ -33,12 +43,17 @@ function getNPointsFromArray(array: AggregateDatapoint[], noOfPoints: number) {
   return pointsArr;
 }
 
+/**
+ * conditionally return converted x axis and unit according to number of xpoints wanted
+ * @param dpArr AggregateDatapoint[]
+ * @param noOfPoints number
+ */
 export function generateXAxisVals(
   dpArr: AggregateDatapoint[],
-  xValCount: number
+  noOfPoints: number
 ): [AggregateDatapoint[], string[], string] {
-  let noOfXVals = xValCount;
-  if (xValCount >= dpArr.length) {
+  let noOfXVals = noOfPoints;
+  if (noOfPoints >= dpArr.length) {
     noOfXVals = dpArr.length;
   }
   const timeDiff = getTimeDifference(
@@ -117,6 +132,13 @@ export function generateXAxisVals(
   );
 }
 
+/**
+ * get converted aggregation points as [convertedAggrPointsArray, xAxisValArray, unit]
+ * @param arr AggregateDatapoint[]
+ * @param fun Function
+ * @param noOfDataPoints number
+ * @param unit string
+ */
 function getConvertedDataArrays(
   arr: AggregateDatapoint[],
   fun: Function,

@@ -1,40 +1,88 @@
 import { AggregateDatapoint } from 'components/widgets/timeSeries/interfaces';
 
-export const dataPoints: AggregateDatapoint[] = [
-  { timestamp: 1, average: 1 },
-  { timestamp: 2, average: 40 },
-  { timestamp: 3, average: 2 },
-  { timestamp: 4, average: 40 },
-  { timestamp: 5, average: 31 },
-  { timestamp: 6, average: 40 },
-  { timestamp: 7, average: 15 },
-  { timestamp: 8, average: 20 },
-  { timestamp: 9, average: 40 },
-  { timestamp: 10, average: 23 },
-  { timestamp: 11, average: 5 },
-  { timestamp: 12, average: 16 },
-  { timestamp: 13, average: 40 },
-  { timestamp: 14, average: 20 },
-  { timestamp: 15, average: 12 },
-  { timestamp: 16, average: 2 },
-  { timestamp: 17, average: 7 },
-  { timestamp: 18, average: 15 },
-  { timestamp: 19, average: 11 },
-  { timestamp: 20, average: 38 },
-  { timestamp: 21, average: 8 },
-  { timestamp: 22, average: 25 },
-  { timestamp: 23, average: 70 },
-  { timestamp: 24, average: 80 },
+export const mockDataPoints: AggregateDatapoint[] = [
+  {
+    timestamp: 1582542555000,
+    average: 1.9993962070618092,
+  },
+  {
+    timestamp: 1582542565000,
+    average: 2.251300872503496,
+  },
+  {
+    timestamp: 1582542575000,
+    average: 2.308454160740564,
+  },
+  {
+    timestamp: 1582542585000,
+    average: 2.3908429775778246,
+  },
+  {
+    timestamp: 1582542595000,
+    average: 3.5752881496553113,
+  },
+  {
+    timestamp: 1582542606000,
+    average: 3.7296878180889785,
+  },
+  {
+    timestamp: 1582542616000,
+    average: 4.368494836655782,
+  },
+  {
+    timestamp: 1582542626000,
+    average: 4.216852441711497,
+  },
+  {
+    timestamp: 1582542636000,
+    average: 3.627915441077067,
+  },
+  {
+    timestamp: 1582542646000,
+    average: 3.647231689064748,
+  },
+  {
+    timestamp: 1582542656000,
+    average: 4.568130702815173,
+  },
+  {
+    timestamp: 1582542667000,
+    average: 4.433428809801909,
+  },
+  {
+    timestamp: 1582542677000,
+    average: 3.8698824529128864,
+  },
+  {
+    timestamp: 1582542687000,
+    average: 4.6249878691209325,
+  },
+  {
+    timestamp: 1582542697000,
+    average: 5.253949028624634,
+  },
+  {
+    timestamp: 1582542707000,
+    average: 4.399262381641634,
+  },
+  {
+    timestamp: 1582542717000,
+    average: 5.335649501978207,
+  },
+  {
+    timestamp: 1582542727000,
+    average: 4.57192536128946,
+  },
 ];
 
 export const timeSeriesWideNumericMockProps = [
   {
     title: `24 Hour Utilization`,
-    data: dataPoints,
+    data: mockDataPoints,
   },
   {
     title: `24 Hour Utilization`,
-    data: dataPoints,
+    data: mockDataPoints,
     width: 100,
     height: 100,
   },

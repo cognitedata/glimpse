@@ -52,7 +52,10 @@ function* pollUpdateEvenInfo(action: any) {
     }
   }
 }
-
+/**
+ * Polling time series data points for given configuratin for given time period.
+ * @param action
+ */
 function* pollUpdateTsDpsInfo(action: any) {
   while (true) {
     const { actionKey } = action.payload;
