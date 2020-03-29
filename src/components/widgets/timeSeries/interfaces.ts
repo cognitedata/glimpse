@@ -1,4 +1,5 @@
 export interface AggregateDatapoint extends DatapointMetadata {
+  [x: string]: any;
   average?: number;
   max?: number;
   min?: number;

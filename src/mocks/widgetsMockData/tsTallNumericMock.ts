@@ -1,18 +1,18 @@
 import { TSBasicNumericMockProps } from './tsBasicMock';
-import { dataPoints } from './tsWideNumericMock';
+import { mockDataPoints } from './tsWideNumericMock';
 
 export const TSTallNumericMockProps = [
   {
     ...TSBasicNumericMockProps,
     title: '24 Hour Utilization',
-    data: dataPoints,
+    data: mockDataPoints,
     width: '100%',
     height: '80%',
   },
   {
     ...TSBasicNumericMockProps,
     title: '24 Hour Utilization',
-    data: dataPoints,
+    data: mockDataPoints,
     width: 100,
     height: 80,
   },

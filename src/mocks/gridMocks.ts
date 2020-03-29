@@ -97,9 +97,9 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
     valueFilter: {
       id: 303782999296110,
-      start: '8d-ago',
+      start: '15d-ago',
       end: 'now',
-      granularity: '1h',
+      granularity: '4h',
       limit: 1000,
     },
     valueMapping: {
