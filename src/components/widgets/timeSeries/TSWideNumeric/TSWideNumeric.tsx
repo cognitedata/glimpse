@@ -4,6 +4,8 @@ import Chart from '../Chart/Chart';
 import { generateXAxisVals } from '../utills';
 import { AggregateDatapoint } from '../interfaces';
 
+const X_DATAPOINTS_NUMBER = 25;
+
 type Props = {
   title?: string;
   xAxisLabelFormat?: string;
@@ -24,7 +26,10 @@ const TSWideNumeric: FC<Props> = ({
 }: Props) => {
   let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
   if (data.length > 0) {
-    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(data, 25);
+    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(
+      data,
+      X_DATAPOINTS_NUMBER
+    );
   }
 
   return (

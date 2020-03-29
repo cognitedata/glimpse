@@ -6,6 +6,8 @@ import { TSBasicNumericProps } from '../TSBasicNumeric/interfaces';
 import { generateXAxisVals } from '../utills';
 import { AggregateDatapoint } from '../interfaces';
 
+const X_DATAPOINTS_NUMBER = 6;
+
 type TSTallNumericProps = TSBasicNumericProps & {
   xAxisLabelFormat?: string;
   data: AggregateDatapoint[];
@@ -21,7 +23,10 @@ const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
   let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
 
   if (data.length > 0) {
-    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(data, 5);
+    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(
+      data,
+      X_DATAPOINTS_NUMBER
+    );
   }
   return (
     <div className="ts-tall-numeric">
