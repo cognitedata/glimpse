@@ -30,6 +30,7 @@ const widgetReducer = (
         ...state,
         ...action.payload,
       };
+    /** Set time Series aggreagation data points arrays in widget state */
     case actionTypes.SET_TS_DPS:
       return {
         ...state,
