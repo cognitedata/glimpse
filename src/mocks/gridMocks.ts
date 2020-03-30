@@ -10,9 +10,10 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'e', x: 0, y: 5, w: 1, h: 1 },
   { i: 'f', x: 1, y: 0, w: 1, h: 1 },
   { i: 'g', x: 1, y: 1, w: 1, h: 3 },
-  { i: 'h', x: 1, y: 1, w: 3, h: 2 },
+  { i: 'h', x: 1, y: 4, w: 3, h: 2 },
   { i: 'i', x: 2, y: 0, w: 1, h: 2 },
   { i: 'j', x: 3, y: 0, w: 1, h: 4 },
+  { i: 'k', x: 2, y: 2, w: 1, h: 2 },
 ];
 
 export const mockedWidgetConfigs: WidgetConfig[] = [
@@ -163,6 +164,29 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       field1: {
         label: 'Work Order',
         key: 'metadata.WORKORDER_NUMBER',
+      },
+    },
+  },
+  {
+    i: 'k',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    queryParams: {
+      eventType: '***',
+      eventSubType: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+      field2: {
+        label: 'Source Id',
+        key: 'metadata.sourceId',
+      },
+      field3: {
+        label: 'Source',
+        key: 'metadata.source',
       },
     },
   },
