@@ -69,6 +69,12 @@ type VALUE_MAPPING_TSBASICSTRING = {
   isElapsedTimeEnabled: boolean;
 };
 
+type VALUE_MAPPING_TSFANCYNUMERIC = {
+  maxPrecentageVal: number;
+  title: string;
+  timeDisplayKey: string;
+};
+
 type VALUE_MAPPING_TSBASICNUMERIC = {
   label: string;
 };
@@ -82,7 +88,8 @@ export type ValueMapping =
   | VALUE_MAPPING_SHOWFIELDSFOUR
   | VALUE_MAPPING_TOOLWIDGET
   | VALUE_MAPPING_TSBASICSTRING
-  | VALUE_MAPPING_TSBASICNUMERIC;
+  | VALUE_MAPPING_TSBASICNUMERIC
+  | VALUE_MAPPING_TSFANCYNUMERIC;
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
@@ -192,12 +199,24 @@ const WIDGET_SETTINGS: any = {
   },
   [WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC]: {
     component: TSFancyNumeric,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_TSFANCYNUMERIC,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
       return {
-        title: 'Shift Utilization',
-        timeDisplayKey: 'Elapsed Time - Job',
-        time: '33:58:18',
-        precentage: 30,
+        title: valueMapping.title,
+        value: widgetState[statePath]?.value,
+        timestamp: widgetState[statePath]?.timestamp,
+        timeDisplayKey: valueMapping.timeDisplayKey,
+        precentage:
+          (widgetState[statePath]?.value ? widgetState[statePath].value : 0) /
+          (valueMapping.maxPrecentageVal > 0
+            ? valueMapping.maxPrecentageVal
+            : 1),
       };
     },
   },
