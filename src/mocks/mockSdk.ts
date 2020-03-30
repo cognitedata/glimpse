@@ -105,5 +105,17 @@ export class MockCogniteClient extends CogniteClient {
       configurable: true,
       value: {},
     });
+    Object.defineProperty(this, 'logout', {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      value: {},
+    });
+    Object.defineProperty(this, 'datapoints', {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      value: {},
+    });
   }
 }
