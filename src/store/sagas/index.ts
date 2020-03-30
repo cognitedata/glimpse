@@ -2,7 +2,11 @@ import { takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../actions/actionTypes';
 import { updateAssets } from './app';
 import { login, logout } from './auth';
-import { pollUpdateEvenInfoWatcher, pollUpdateTsDpsWatcher } from './widget';
+import {
+  pollUpdateEventInfoWatcher,
+  pollUpdateTsDpsWatcher,
+  pollUpdateDataLatestPointWatcher,
+} from './widget';
 
 /**
  * watch app related sagas and fire on action dispatch
@@ -23,5 +27,9 @@ export function* watchAuthSagas() {
  * watch widgets related sagas and fire on action dispatch
  */
 export function* watchWidgetSagas() {
-  yield all([pollUpdateEvenInfoWatcher(), pollUpdateTsDpsWatcher()]);
+  yield all([
+    pollUpdateEventInfoWatcher(),
+    pollUpdateTsDpsWatcher(),
+    pollUpdateDataLatestPointWatcher(),
+  ]);
 }

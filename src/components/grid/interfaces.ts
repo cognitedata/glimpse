@@ -6,7 +6,7 @@ export interface WidgetConfig {
   i: string;
   widgetTypeId: WIDGET_TYPE_IDS;
   valueMapping?: ValueMapping;
-  valueFilter?: any;
+  queryParams?: any;
 }
 
 export interface GridLayoutProps {

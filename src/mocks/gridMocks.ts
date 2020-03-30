@@ -29,6 +29,13 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'f',
     widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
+    queryParams: {
+      timeSeriesExternalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      assetInfo: 'Description   84mm',
+      label: 'Tool Id',
+    },
   },
   {
     i: 'i',
@@ -37,15 +44,30 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'd',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
+    queryParams: {
+      timeSeriesExternalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      label: 'Machine State',
+      isElapsedTimeEnabled: true,
+    },
   },
   {
     i: 'e',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
+    queryParams: {
+      timeSeriesExternalId:
+        'VAL_23-KA-9101-M01_OC_instantaneous_residual_NEF1inst:VALUE',
+    },
+    valueMapping: {
+      label: 'Machine Temperature',
+      unit: '°c',
+    },
   },
   {
     i: 'c',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
-    valueFilter: {
+    queryParams: {
       eventType: '***',
       eventSubType: 'VAL',
       ongoing: false,
@@ -68,7 +90,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'g',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
-    valueFilter: {
+    queryParams: {
       eventType: '***',
       eventSubType: 'VAL',
       ongoing: false,
@@ -95,7 +117,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'j',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
-    valueFilter: {
+    queryParams: {
       id: 303782999296110,
       start: '15d-ago',
       end: 'now',
@@ -110,7 +132,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'h',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
-    valueFilter: {
+    queryParams: {
       id: 303782999296110,
       start: '15d-ago',
       end: 'now',
@@ -124,7 +146,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'b',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
-    valueFilter: {
+    queryParams: {
       eventType: '***',
       eventSubType: 'VAL',
       ongoing: false,
