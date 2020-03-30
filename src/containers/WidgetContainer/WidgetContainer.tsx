@@ -96,7 +96,7 @@ const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
         dispatchedActions.push(actionKey);
 
         const actionPaylod = {
-          ...widgetConfig.queryParams,
+          queryParams: widgetConfig.queryParams,
           pollingInterval: widgetSetting.pollingInterval,
           actionKey,
         };
