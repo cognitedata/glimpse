@@ -16,7 +16,7 @@ export default function* pollUpdateDataLatestPoint(action: any) {
 
     const response = yield cdfClient.datapoints.retrieveLatest([
       {
-        externalId: action.payload.timeSeriesExternalId,
+        ...action.payload.queryParams,
         before: 'now',
       },
     ]);

@@ -31,7 +31,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'f',
     widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
     queryParams: {
-      timeSeriesExternalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
     },
     valueMapping: {
       assetInfo: 'Description   84mm',
@@ -42,7 +42,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'i',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
     queryParams: {
-      timeSeriesExternalId: 'VAL_23-LIC-92521:Z.Y.Value',
+      externalId: 'VAL_23-LIC-92521:Z.Y.Value',
     },
     valueMapping: {
       maxPrecentageVal: 1,
@@ -54,7 +54,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'd',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
     queryParams: {
-      timeSeriesExternalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
     },
     valueMapping: {
       label: 'Machine State',
@@ -65,8 +65,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'e',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
     queryParams: {
-      timeSeriesExternalId:
-        'VAL_23-KA-9101-M01_OC_instantaneous_residual_NEF1inst:VALUE',
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
     },
     valueMapping: {
       label: 'Machine Temperature',
@@ -77,8 +76,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'c',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
     queryParams: {
-      eventType: '***',
-      eventSubType: 'VAL',
+      type: '***',
+      subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
@@ -100,8 +99,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'g',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
     queryParams: {
-      eventType: '***',
-      eventSubType: 'VAL',
+      type: '***',
+      subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
@@ -156,8 +155,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'b',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
     queryParams: {
-      eventType: '***',
-      eventSubType: 'VAL',
+      type: '***',
+      subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
@@ -171,8 +170,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'k',
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
     queryParams: {
-      eventType: '***',
-      eventSubType: 'VAL',
+      type: '***',
+      subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
