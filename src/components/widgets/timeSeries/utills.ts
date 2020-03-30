@@ -1,4 +1,3 @@
-import { clone } from 'utills/utills';
 import { AggregateDatapoint } from './interfaces';
 
 /**
@@ -33,8 +32,11 @@ function getTimeDifference(timstamp1: number, timestamp2: number) {
  * @param noOfPoints number
  */
 function getNPointsFromArray(array: AggregateDatapoint[], noOfPoints: number) {
+  const pointsArr: number[] = [];
+  if (noOfPoints <= 1) {
+    return [0];
+  }
   const eqlDistance = array.length / (noOfPoints - 1);
-  const pointsArr = [];
   for (let i = 0; i <= array.length; i += eqlDistance) {
     if (i >= array.length) {
       pointsArr.push(array.length - 1);
@@ -53,6 +55,9 @@ export function generateXAxisVals(
   noOfPoints: number
 ): [AggregateDatapoint[], string[], string] {
   let noOfXVals = noOfPoints;
+  if (dpArr.length === 0) {
+    return [[], [], ''];
+  }
   if (noOfPoints >= dpArr.length) {
     noOfXVals = dpArr.length;
   }
@@ -145,11 +150,15 @@ function getConvertedDataArrays(
   noOfDataPoints: number,
   unit: string
 ): [AggregateDatapoint[], string[], string] {
-  const mapedArr = clone(arr);
-  const xValsIndexes = getNPointsFromArray(mapedArr, noOfDataPoints);
-  const xVals = xValsIndexes.map(index => fun(arr[index].timestamp));
-  xValsIndexes.forEach(index => {
-    mapedArr[index].timestamp = fun(arr[index].timestamp);
+  const mapedArr = [...arr];
+  const xValsIndexes: number[] = getNPointsFromArray(mapedArr, noOfDataPoints);
+  const xVals: string[] = [];
+  xValsIndexes.forEach((index: number) => {
+    xVals.push(fun(arr[index].timestamp));
+    mapedArr[index] = {
+      ...mapedArr[index],
+      timestamp: fun(arr[index].timestamp),
+    };
   });
   return [mapedArr, xVals, unit];
 }
