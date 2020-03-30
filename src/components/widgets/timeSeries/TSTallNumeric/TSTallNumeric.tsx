@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import './TSTallNumeric.css';
 import Chart from '../Chart/Chart';
 import TSBasicNumeric from '../TSBasicNumeric/TSBasicNumeric';
@@ -20,14 +20,10 @@ type TSTallNumericProps = TSBasicNumericProps & {
  */
 const TSTallNumeric: FC<TSTallNumericProps> = (props: TSTallNumericProps) => {
   const { data = [], width, height, name, value, unit } = props;
-  let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
-
-  if (data.length > 0) {
-    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(
-      data,
-      X_DATAPOINTS_NUMBER
-    );
-  }
+  const [convertedDps, xAxisLabels, unitLabel] = useMemo(
+    () => generateXAxisVals(data, X_DATAPOINTS_NUMBER),
+    [data]
+  );
   return (
     <div className="ts-tall-numeric">
       <div className="ts-basic-numeric">

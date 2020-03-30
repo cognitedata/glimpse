@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useMemo } from 'react';
 import './TSWideNumeric.css';
 import Chart from '../Chart/Chart';
 import { generateXAxisVals } from '../utills';
@@ -24,13 +24,10 @@ const TSWideNumeric: FC<Props> = ({
   xDataKey = 'timestamp',
   yDataKey = 'average',
 }: Props) => {
-  let [xAxisLabels, convertedDps, unitLabel]: any[] = [];
-  if (data.length > 0) {
-    [convertedDps, xAxisLabels, unitLabel] = generateXAxisVals(
-      data,
-      X_DATAPOINTS_NUMBER
-    );
-  }
+  const [convertedDps, xAxisLabels, unitLabel] = useMemo(
+    () => generateXAxisVals(data, X_DATAPOINTS_NUMBER),
+    [data]
+  );
 
   return (
     <div className="TimeSeriesWideNumeric">
