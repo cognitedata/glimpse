@@ -29,15 +29,6 @@ describe('CircularProgress', () => {
     ).toBeInTheDocument();
   });
 
-  it('should render time correctly', () => {
-    const { getByText } = render(
-      <TSFancyNumeric {...TSFancyNumericMockProps[0]} />
-    );
-    expect(
-      getByText(new RegExp(TSFancyNumericMockProps[0].time))
-    ).toBeInTheDocument();
-  });
-
   it('should update props correctly', () => {
     const { getByText, rerender } = render(
       <TSFancyNumeric {...TSFancyNumericMockProps[0]} />
@@ -52,9 +43,6 @@ describe('CircularProgress', () => {
       getByText(
         new RegExp(`${TSFancyNumericMockProps[1].precentage.toString()}`)
       )
-    ).toBeInTheDocument();
-    expect(
-      getByText(new RegExp(TSFancyNumericMockProps[1].time))
     ).toBeInTheDocument();
   });
 });
