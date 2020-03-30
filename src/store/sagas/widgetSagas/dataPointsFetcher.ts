@@ -13,21 +13,19 @@ export function* pollUpdateTsDpsInfo(action: any) {
   while (true) {
     const { actionKey } = action.payload;
     const cdfClient = yield select(getCdfClient);
+    const { pollingInterval, queryParams } = action.payload;
     const tsDataPointsObj = yield cdfClient.datapoints.retrieve({
       items: [
         {
-          start: action.payload.start,
           end: 'now',
-          limit: action.payload.granularity.limit,
           aggregates: ['average'],
-          granularity: action.payload.granularity,
-          id: action.payload.id,
+          ...queryParams,
         },
       ],
     });
     yield put(setTsDps({ [actionKey]: tsDataPointsObj[0].datapoints }));
     const { cancel } = yield race({
-      delay: delay(action.payload.pollingInterval),
+      delay: delay(pollingInterval),
       cancel: take(
         (stopAction: any) =>
           stopAction.type === actionTypes.STOP_UPDATE_TS_DPS &&

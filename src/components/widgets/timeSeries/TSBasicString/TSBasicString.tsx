@@ -14,7 +14,6 @@ type TSBasicStringProps = {
  */
 const TSBasicString: FC<TSBasicStringProps> = (props: TSBasicStringProps) => {
   const { name, value, timestamp, isElapsedTimeEnabled } = props;
-
   const elapsedTime = useElsapsedTime(timestamp);
 
   return (
