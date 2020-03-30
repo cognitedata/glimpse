@@ -40,6 +40,14 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'i',
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
+    queryParams: {
+      timeSeriesExternalId: 'VAL_23-LIC-92521:Z.Y.Value',
+    },
+    valueMapping: {
+      maxPrecentageVal: 1,
+      title: 'Shift Utilization',
+      timeDisplayKey: 'Elapsed Time - job',
+    },
   },
   {
     i: 'd',
