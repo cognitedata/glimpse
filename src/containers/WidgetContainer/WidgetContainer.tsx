@@ -26,7 +26,7 @@ const pollingEndActions: PollingEndAction[] = [];
 const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
-  const requestKey = getUniqueKey(widgetConfig.valueFilter);
+  const requestKey = getUniqueKey(widgetConfig.queryParams);
 
   const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
 
@@ -88,7 +88,7 @@ const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
     const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
     if (widgetSetting.dataFetcher) {
-      const requestKey = getUniqueKey(widgetConfig.valueFilter);
+      const requestKey = getUniqueKey(widgetConfig.queryParams);
 
       const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
 
@@ -96,7 +96,7 @@ const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
         dispatchedActions.push(actionKey);
 
         const actionPaylod = {
-          ...widgetConfig.valueFilter,
+          ...widgetConfig.queryParams,
           pollingInterval: widgetSetting.pollingInterval,
           actionKey,
         };

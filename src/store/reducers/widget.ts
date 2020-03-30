@@ -36,6 +36,11 @@ const widgetReducer = (
         ...state,
         ...action.payload,
       };
+    case actionTypes.SET_LATEST_DATAPOINT:
+      return {
+        ...state,
+        ...action.payload,
+      };
   }
   return state;
 };

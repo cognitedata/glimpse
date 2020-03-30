@@ -15,3 +15,6 @@ export const setEvent = (eventMapping: any) =>
 
 export const setTsDps = (tsDpsMapping: any) =>
   action(actionTypes.SET_TS_DPS, tsDpsMapping);
+
+export const setLatestDataPoint = (dataPointMapping: any) =>
+  action(actionTypes.SET_LATEST_DATAPOINT, dataPointMapping);

@@ -24,10 +24,9 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
  * Async operations related to login process
  */
 export function* login() {
-  const cdfClient = yield select(getCdfClient);
-
   yield put(setLoading());
   yield put(setLoggedOut());
+  const cdfClient = yield select(getCdfClient);
   let status = yield cdfClient.login.status();
   const authKey = yield localStorage.getItem(AUTH_RESULTS_KEY);
   if (!status || !authKey) {
