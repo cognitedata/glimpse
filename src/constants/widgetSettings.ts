@@ -58,12 +58,31 @@ type VALUE_MAPPING_SHOWFIELDSFOUR = {
   field4: FieldMapping;
 };
 
+type VALUE_MAPPING_TOOLWIDGET = {
+  label: string;
+  assetInfo: string;
+};
+
+type VALUE_MAPPING_TSBASICSTRING = {
+  label: string;
+  unit: string;
+  isElapsedTimeEnabled: boolean;
+};
+
+type VALUE_MAPPING_TSBASICNUMERIC = {
+  label: string;
+};
+
 export type ValueMapping =
   | VALUE_MAPPING_SHOWFIELDSONE
   | VALUE_MAPPING_SHOWFIELDSTHREE
   | VALUE_MAPPING_SHOWFIELDSFOUR
   | TsWideNumericValMap
-  | TsTallNumericValMap;
+  | TsTallNumericValMap
+  | VALUE_MAPPING_SHOWFIELDSFOUR
+  | VALUE_MAPPING_TOOLWIDGET
+  | VALUE_MAPPING_TSBASICSTRING
+  | VALUE_MAPPING_TSBASICNUMERIC;
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
@@ -156,11 +175,18 @@ const WIDGET_SETTINGS: any = {
   },
   [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
     component: ToolWidget,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_TOOLWIDGET,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
       return {
-        field: 'description    84mm',
-        value: '5733-123',
-        name: 'Tool Id',
+        field: valueMapping.assetInfo,
+        value: widgetState[statePath]?.value,
+        name: valueMapping.label,
       };
     },
   },
@@ -177,22 +203,36 @@ const WIDGET_SETTINGS: any = {
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING]: {
     component: TSBasicString,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_TSBASICSTRING,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
       return {
-        name: 'Machine State',
-        value: 'MANUAL MODE',
-        elapsedTime: '00.10.42',
-        isElapsedTimeEnabled: true,
+        name: valueMapping.label,
+        value: widgetState[statePath]?.value,
+        timestamp: widgetState[statePath]?.timestamp,
+        isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
       };
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC]: {
     component: TSBasicNumeric,
-    mapStateToProps: () => () => {
+    dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_TSBASICSTRING,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
       return {
-        name: 'Machine Temperature',
-        value: 89,
-        unit: '°C ',
+        name: valueMapping.label,
+        value: widgetState[statePath]?.value,
+        unit: valueMapping.unit,
       };
     },
   },
@@ -200,7 +240,7 @@ const WIDGET_SETTINGS: any = {
     component: TSTallNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
-    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    pollingEndAction: actionTypes.STOP_UPDATE_TS_DPS,
     mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
       state: RootState
     ) => {
@@ -219,7 +259,7 @@ const WIDGET_SETTINGS: any = {
     component: TSWideNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
-    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    pollingEndAction: actionTypes.STOP_UPDATE_TS_DPS,
     mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
       state: RootState
     ) => {

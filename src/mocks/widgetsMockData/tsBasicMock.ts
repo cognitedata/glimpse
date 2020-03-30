@@ -2,13 +2,13 @@ export const TSBasicStringMockProps = [
   {
     name: 'Machine State',
     value: 'MANUAL MODE',
-    elapsedTime: '00.10.42',
+    timestamp: new Date(),
     isElapsedTimeEnabled: true,
   },
   {
     name: 'Machine State 2',
     value: 'MANUAL MODE 2',
-    elapsedTime: '00.10.43',
+    timestamp: new Date(),
     isElapsedTimeEnabled: false,
   },
 ];
