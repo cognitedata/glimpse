@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { combineReducers } from 'redux';
 
 import appReducer from './app';

@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { useEffect } from 'react';
 import './MachineSelector.css';
 import FormControl from '@material-ui/core/FormControl';

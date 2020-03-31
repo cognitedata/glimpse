@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC, useMemo } from 'react';
 import './TSWideNumeric.css';
 import Chart from '../Chart/Chart';

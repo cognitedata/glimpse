@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { Layout } from 'react-grid-layout';
 
 /**

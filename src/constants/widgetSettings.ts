@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { RootState } from 'StoreTypes';
 import ShowFieldsOne from 'components/widgets/showFields/ShowFieldsOne/ShowFieldsOne';
 import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowFieldsThree';

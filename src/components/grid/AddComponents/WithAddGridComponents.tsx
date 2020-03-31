@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC, useState } from 'react';
 import { generateRandomKey } from 'utills/utills';
 import { MAXCOLS, MAXROWS } from 'constants/grid';

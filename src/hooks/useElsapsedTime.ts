@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 

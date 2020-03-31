@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC, useEffect } from 'react';
 
 import RemoveRedEyeIconOutlined from '@material-ui/icons/RemoveRedEyeOutlined';

@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 declare module 'StoreTypes' {
   import { StateType, ActionType } from 'typesafe-actions';
 

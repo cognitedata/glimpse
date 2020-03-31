@@ -1,3 +1,5 @@
+// Copyright 2020 Cognite AS
+
 import { AggregateDatapoint } from 'components/widgets/timeSeries/interfaces';
 
 export const mockDataPoints: AggregateDatapoint[] = [

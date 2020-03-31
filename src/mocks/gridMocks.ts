@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { WidgetConfig } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
 import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';

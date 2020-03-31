@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { testSaga } from 'redux-saga-test-plan';
 
 import { setEvent } from '../../actions/root-action';

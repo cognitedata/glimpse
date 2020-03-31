@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { UserInfo } from 'custom-types';
 
 import { action } from 'typesafe-actions';

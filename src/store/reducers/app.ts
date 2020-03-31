@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { ActionType } from 'typesafe-actions';
 import { CogniteClient, Asset } from '@cognite/sdk';
 import { AlertsPropsType } from 'custom-types';

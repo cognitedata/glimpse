@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { take, race, put, select, delay } from 'redux-saga/effects';
 
 import { RootState } from 'StoreTypes';

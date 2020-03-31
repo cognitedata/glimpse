@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { generateXAxisVals } from './utills';
 

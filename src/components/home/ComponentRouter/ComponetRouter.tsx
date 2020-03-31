@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React from 'react';
 
 import WithAddGridComponents from 'components/grid/AddComponents/WithAddGridComponents';

@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 export const MAXROWS = 6;
 export const MAXCOLS = 4;
 export const DUMMY_COMP_ID = 'DUMMYCOMP';

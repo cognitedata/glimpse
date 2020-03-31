@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import './TSBasicNumeric.css';
 import { TSBasicNumericProps } from './interfaces';
