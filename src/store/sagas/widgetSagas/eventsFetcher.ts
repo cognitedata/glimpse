@@ -18,7 +18,7 @@ export default function* pollUpdateEventInfo(action: any) {
     const assetId = yield select(getAssetId);
     const { ongoing, type, subtype } = action.payload.queryParams;
     const eventsResults = yield cdfClient.events.list({
-      sort: { [action.payload.ongoing ? 'startTime' : 'endTime']: 'desc' },
+      sort: { [ongoing ? 'startTime' : 'endTime']: 'desc' },
       limit: ongoing ? 100 : 1,
       filter: {
         assetIds: [assetId],
@@ -29,7 +29,7 @@ export default function* pollUpdateEventInfo(action: any) {
 
     let events: CogniteEvent[] = eventsResults.items;
 
-    if (action.payload.ongoing) {
+    if (ongoing) {
       events = events.filter(event => !event.endTime);
     }
 
