@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { useEffect } from 'react';
 import { CogniteClient, REDIRECT } from '@cognite/sdk';
 import { connect } from 'react-redux';

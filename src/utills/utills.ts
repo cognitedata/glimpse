@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { Group } from '@cognite/sdk';
 import { Capability } from 'custom-types';
 import { ADMIN_GROUPS, USER_REQUIRED_CAPABILITIES } from '../constants/appData';

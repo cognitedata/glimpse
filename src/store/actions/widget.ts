@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { Asset } from '@cognite/sdk';
 import { action } from 'typesafe-actions';
 import * as actionTypes from './actionTypes';

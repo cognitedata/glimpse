@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';

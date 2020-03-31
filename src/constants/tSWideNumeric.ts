@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 export const CHART_COLOR = '#6a7095';
 export const CHART_MARGINS = { top: 20, right: 30, left: 0, bottom: 0 };
 export const CHART_STROKE_DASH_ARRAY = '3 3';

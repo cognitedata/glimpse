@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 export const SET_CDF_CLIENT = 'SET_CDF_CLIENT';
 
 export const CLEAR_ALERTS = 'CLEAR_ALERTS';

@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 declare module 'custom-types' {
   import { Color } from '@material-ui/lab/Alert';
 

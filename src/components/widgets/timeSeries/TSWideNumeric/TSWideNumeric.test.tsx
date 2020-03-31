@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React from 'react';
 import { render } from '@testing-library/react';
 import { timeSeriesWideNumericMockProps } from 'mocks/widgetsMockData/tsWideNumericMock';

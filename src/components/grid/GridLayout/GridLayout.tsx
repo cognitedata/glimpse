@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC, useEffect, useState, useRef, useCallback } from 'react';
 import './GridLayout.css';
 import { Responsive, Layout } from 'react-grid-layout';

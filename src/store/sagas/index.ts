@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../actions/actionTypes';
 import { updateAssets } from './app';

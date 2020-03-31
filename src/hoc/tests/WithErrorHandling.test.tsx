@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';

@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { put, select } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
 import {

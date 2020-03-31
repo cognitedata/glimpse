@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import './ShowField.css';
 import { ShowFieldProps } from './interfaces';

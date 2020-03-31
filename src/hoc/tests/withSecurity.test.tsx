@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import '@testing-library/jest-dom';
 import React from 'react';
 import { createStore } from 'redux';

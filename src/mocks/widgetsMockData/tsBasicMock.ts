@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 export const TSBasicStringMockProps = [
   {
     name: 'Machine State',

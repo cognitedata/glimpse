@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { useState } from 'react';
 import './AddComponent.css';
 import Button from '@material-ui/core/Button';

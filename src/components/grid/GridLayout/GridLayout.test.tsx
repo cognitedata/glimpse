@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import { initialLayoutMocked, mockedWidgetConfigs } from 'mocks/gridMocks';

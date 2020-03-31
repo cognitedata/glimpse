@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
