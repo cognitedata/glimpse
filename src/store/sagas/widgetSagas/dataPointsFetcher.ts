@@ -10,7 +10,7 @@ import * as actionTypes from '../../actions/actionTypes';
  */
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
-export function* pollUpdateTsDpsInfo(action: any) {
+export function* pollUpdateTsDps(action: any) {
   while (true) {
     const { actionKey } = action.payload;
     const cdfClient = yield select(getCdfClient);
