@@ -28,7 +28,7 @@ afterEach(() => {
 describe('Events fetcher Saga', () => {
   test('should fetch events and set to state', async () => {
     const testGen = testSaga(pollUpdateEventInfo, {
-      payload: { actionKey: 'testKey', ongoing: false },
+      payload: { actionKey: 'testKey', queryParams: { ongoing: false } },
     });
     return testGen
       .next()
