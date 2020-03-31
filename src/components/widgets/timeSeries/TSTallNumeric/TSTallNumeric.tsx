@@ -7,7 +7,7 @@ import { TSBasicNumericProps } from '../TSBasicNumeric/interfaces';
 import { generateXAxisVals } from '../utills';
 import { AggregateDatapoint } from '../interfaces';
 
-const X_DATAPOINTS_NUMBER = 6;
+const X_DATAPOINTS_NUMBER = 9;
 
 type TSTallNumericProps = TSBasicNumericProps & {
   xAxisLabelFormat?: string;

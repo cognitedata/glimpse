@@ -66,7 +66,7 @@ export function generateXAxisVals(
     dpArr[0].timestamp,
     dpArr[dpArr.length - 1].timestamp
   );
-  if (timeDiff[0] >= noOfXVals) {
+  if (timeDiff[0] >= noOfXVals - 1) {
     // days
     return getConvertedDataArrays(
       dpArr,
@@ -87,7 +87,7 @@ export function generateXAxisVals(
       `day | hour`
     );
   }
-  if (timeDiff[1] >= noOfXVals) {
+  if (timeDiff[1] >= noOfXVals - 1) {
     // hours
     return getConvertedDataArrays(
       dpArr,
@@ -108,7 +108,7 @@ export function generateXAxisVals(
       `hour : minute`
     );
   }
-  if (timeDiff[2] >= noOfXVals) {
+  if (timeDiff[2] >= noOfXVals - 1) {
     // miniutes
     return getConvertedDataArrays(
       dpArr,
