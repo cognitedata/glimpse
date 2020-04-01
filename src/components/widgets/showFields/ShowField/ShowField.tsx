@@ -7,8 +7,8 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
   const { field, value } = props;
   return (
     <div className="show-field">
-      <label className="field">{field}</label>
-      <label className="value">{value}</label>
+      <span className="field">{field}</span>
+      <span className="value">{value}</span>
     </div>
   );
 };
