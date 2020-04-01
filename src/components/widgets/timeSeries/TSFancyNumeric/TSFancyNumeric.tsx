@@ -1,6 +1,6 @@
 // Copyright 2020 Cognite AS
 import React, { FC } from 'react';
-import { useElsapsedTime } from 'hooks/useElsapsedTime';
+import { useElapsedTime } from 'hooks/useElapsedTime';
 import CircularPrograssBar from './CircularLoader/CircularLoader';
 import ElapsedTime from './ElsapsedTime/ElapsedTime';
 import './TSFancyNumeric.css';
@@ -10,7 +10,7 @@ export const TSFancyNumeric: FC<TSFancyNumericProps> = (
   props: TSFancyNumericProps
 ) => {
   const { precentage, title, timeDisplayKey, timestamp = new Date() } = props;
-  const elapsedTime = useElsapsedTime(timestamp);
+  const elapsedTime = useElapsedTime(timestamp);
   return (
     <div className="circular-progress">
       <div>

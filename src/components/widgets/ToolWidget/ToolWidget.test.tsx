@@ -6,17 +6,11 @@ import ToolWidget from './ToolWidget';
 
 describe('Tool Widget', () => {
   const name = 'Tool Test Name';
-  it('should render name correctly', () => {
+  it('should render props correctly', () => {
     const { getByText } = render(
       <ToolWidget {...showFieldsMockProps[0]} name={name} />
     );
     expect(getByText(name)).toBeInTheDocument();
-  });
-
-  it('should render field and value correctly', () => {
-    const { getByText } = render(
-      <ToolWidget {...showFieldsMockProps[0]} name={name} />
-    );
     expect(getByText(showFieldsMockProps[0].field)).toBeInTheDocument();
     expect(getByText(showFieldsMockProps[0].value)).toBeInTheDocument();
   });

@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import './TSBasicString.css';
-import { useElsapsedTime } from 'hooks/useElsapsedTime';
+import { useElapsedTime } from 'hooks/useElapsedTime';
 
 type TSBasicStringProps = {
   name: string;
@@ -15,7 +15,7 @@ type TSBasicStringProps = {
  */
 const TSBasicString: FC<TSBasicStringProps> = (props: TSBasicStringProps) => {
   const { name, value, timestamp, isElapsedTimeEnabled } = props;
-  const elapsedTime = useElsapsedTime(timestamp);
+  const elapsedTime = useElapsedTime(timestamp);
 
   return (
     <div className="basic-string">

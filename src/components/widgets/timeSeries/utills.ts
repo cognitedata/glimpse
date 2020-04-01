@@ -1,4 +1,5 @@
 // Copyright 2020 Cognite AS
+import moment from 'moment';
 import { AggregateDatapoint } from './interfaces';
 
 /**
@@ -51,6 +52,7 @@ function getNPointsFromArray(array: AggregateDatapoint[], noOfPoints: number) {
  * @param dpArr AggregateDatapoint[]
  * @param noOfPoints number
  */
+
 export function generateXAxisVals(
   dpArr: AggregateDatapoint[],
   noOfPoints: number
@@ -70,7 +72,7 @@ export function generateXAxisVals(
     // days
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => `${new Date(timestamp).getDate()}`,
+      (timestamp: number) => moment(timestamp).format('DD'),
       noOfXVals,
       `day`
     );
@@ -79,10 +81,7 @@ export function generateXAxisVals(
     // days and hours
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => {
-        const date = new Date(timestamp);
-        return `${date.getDate()}|${date.getHours()}`;
-      },
+      (timestamp: number) => moment(timestamp).format('D|h'),
       noOfXVals,
       `day | hour`
     );
@@ -91,7 +90,7 @@ export function generateXAxisVals(
     // hours
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => `${new Date(timestamp).getHours()}`,
+      (timestamp: number) => moment(timestamp).format('h'),
       noOfXVals,
       `hour`
     );
@@ -100,10 +99,7 @@ export function generateXAxisVals(
     // hours and miniutes
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => {
-        const date = new Date(timestamp);
-        return `${date.getHours()}:${date.getMinutes()}`;
-      },
+      (timestamp: number) => moment(timestamp).format('h:m'),
       noOfXVals,
       `hour : minute`
     );
@@ -112,7 +108,7 @@ export function generateXAxisVals(
     // miniutes
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => `${new Date(timestamp).getMinutes()}`,
+      (timestamp: number) => moment(timestamp).format('m'),
       noOfXVals,
       `minute`
     );
@@ -121,10 +117,7 @@ export function generateXAxisVals(
     // minuts and seconds
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => {
-        const date = new Date(timestamp);
-        return `${date.getMinutes()}:${date.getSeconds()}`;
-      },
+      (timestamp: number) => moment(timestamp).format('m:s'),
       noOfXVals,
       `minute : second`
     );
@@ -132,7 +125,7 @@ export function generateXAxisVals(
   // seconds
   return getConvertedDataArrays(
     dpArr,
-    (timestamp: number) => `${new Date(timestamp).getSeconds()}`,
+    (timestamp: number) => moment(timestamp).format('s'),
     noOfXVals,
     `seconds`
   );
