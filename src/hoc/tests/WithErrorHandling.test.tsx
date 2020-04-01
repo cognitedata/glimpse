@@ -3,7 +3,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
-import { AlertsPropsType } from 'custom-types';
+import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import rootReducer from '../../store/reducers/root-reducer';
 import {
   AppState,

@@ -1,6 +1,7 @@
 // Copyright 2020 Cognite AS
 import { Group } from '@cognite/sdk';
 import { Capability } from 'custom-types';
+import { QueryParams } from 'constants/widgetSettings';
 import { ADMIN_GROUPS, USER_REQUIRED_CAPABILITIES } from '../constants/appData';
 
 export const generateRandomKey = () =>
@@ -49,6 +50,6 @@ export const getChildValue = (source: any, attribString: string) => {
 /**
  * Used to get unique key from any object
  */
-export const getUniqueKey = (source: object) => {
+export const getUniqueKey = (source?: QueryParams) => {
   return source ? window.btoa(JSON.stringify(source)) : '';
 };

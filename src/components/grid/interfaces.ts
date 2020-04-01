@@ -1,13 +1,17 @@
 // Copyright 2020 Cognite AS
 import { Layout } from 'react-grid-layout';
 
-import { WIDGET_TYPE_IDS, ValueMapping } from 'constants/widgetSettings';
+import {
+  WIDGET_TYPE_IDS,
+  ValueMapping,
+  QueryParams,
+} from 'constants/widgetSettings';
 
 export interface WidgetConfig {
   i: string;
   widgetTypeId: WIDGET_TYPE_IDS;
   valueMapping?: ValueMapping;
-  queryParams?: any;
+  queryParams?: QueryParams;
 }
 
 export interface GridLayoutProps {

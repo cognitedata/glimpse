@@ -9,7 +9,7 @@ import * as actions from '../actions/widget';
 export type WidgetAction = ActionType<typeof actions>;
 
 export type WidgetState = {
-  asset?: undefined | Asset;
+  asset?: Asset;
 };
 
 export const initialState: WidgetState = {};

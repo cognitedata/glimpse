@@ -91,6 +91,18 @@ export type ValueMapping =
   | VALUE_MAPPING_TSBASICNUMERIC
   | VALUE_MAPPING_TSFANCYNUMERIC;
 
+export type QueryParams = {
+  externalId?: string;
+  type?: string;
+  subtype?: string;
+  ongoing?: boolean;
+  id?: number;
+  start?: string;
+  end?: string;
+  granularity?: string;
+  limit?: number;
+};
+
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
     component: ShowFieldsOne,

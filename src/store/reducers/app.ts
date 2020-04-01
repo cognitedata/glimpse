@@ -1,8 +1,8 @@
 // Copyright 2020 Cognite AS
 import { ActionType } from 'typesafe-actions';
 import { CogniteClient, Asset } from '@cognite/sdk';
-import { AlertsPropsType } from 'custom-types';
 
+import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import * as actionTypes from '../actions/actionTypes';
 
 import * as actions from '../actions/app';
@@ -10,10 +10,10 @@ import * as actions from '../actions/app';
 export type AppAction = ActionType<typeof actions>;
 
 export type AppState = {
-  cdfClient?: undefined | CogniteClient;
+  cdfClient?: CogniteClient;
   loading: boolean;
-  alerts?: undefined | AlertsPropsType;
-  selectedMachine?: undefined | Asset;
+  alerts?: AlertsPropsType;
+  selectedMachine?: Asset;
   assets: Asset[];
 };
 

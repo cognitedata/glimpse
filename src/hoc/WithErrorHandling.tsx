@@ -21,16 +21,17 @@ const withErrorHandling = (WrappedComponet: React.ComponentType) => {
   const WithErrorHandlingComponent: FC<Props> = (props: Props) => {
     let returnAlert = null;
 
-    if (props.alerts) {
+    const getHandleClose = (customHandleClose?: void) => {
       const defaultHandleClose = () => {
         props.clearAlerts();
       };
+      return customHandleClose || defaultHandleClose;
+    };
+
+    if (props.alerts) {
       const alertProps: SnackBarProps = {
         duration: props.alerts.duration,
-        handleClose:
-          typeof props.alerts.handleClose === 'undefined'
-            ? defaultHandleClose
-            : props.alerts.handleClose,
+        handleClose: getHandleClose(props.alerts.handleClose),
         type: props.alerts.type,
         text: props.alerts.text,
       };
