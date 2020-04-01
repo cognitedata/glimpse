@@ -8,23 +8,6 @@ export const generateRandomKey = () =>
     .toString(36)
     .substring(7);
 
-export const clone = (inObject: any) => {
-  if (typeof inObject !== 'object' || inObject === null) {
-    return inObject; // Return the value if inObject is not an object
-  }
-  const outObject: any = Array.isArray(inObject) ? [] : {};
-
-  Object.keys(inObject).forEach((key: any) => {
-    const value = inObject[key];
-
-    // Recursively (deep) copy for nested objects, including arrays
-    outObject[key] =
-      typeof value === 'object' && value !== null ? clone(value) : value;
-  });
-
-  return outObject;
-};
-
 /**
  *
  * Auth Utils
