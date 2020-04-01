@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 
-export const useElsapsedTime = (timestamp: Date) => {
+export const useElapsedTime = (timestamp: Date) => {
   const [elapsedTime, setElapsedTime] = useState('');
   const zeroPad = (num: number) => String(num).padStart(2, '0');
 

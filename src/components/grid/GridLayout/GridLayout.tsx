@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import React, { FC, useEffect, useState, useRef, useCallback } from 'react';
 import './GridLayout.css';
-import { Responsive, Layout } from 'react-grid-layout';
+import { Responsive as ResponsiveGridLayout, Layout } from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import {
   DUMMY_COMP_ID,
@@ -14,10 +14,7 @@ import {
   MIN_ROW_HEIGHT,
 } from 'constants/grid';
 import { GridLayoutProps } from '../interfaces';
-
 import WidgetContainer from '../../../containers/WidgetContainer/WidgetContainer';
-
-const ResponsiveGridLayout = Responsive;
 
 const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
   const refGridLayout = useRef() as React.MutableRefObject<HTMLInputElement>;
