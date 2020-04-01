@@ -2,9 +2,16 @@
 declare module 'StoreTypes' {
   import { StateType, ActionType } from 'typesafe-actions';
 
-  export type RootState = StateType<
-    ReturnType<typeof import('./reducers/root-reducer').default>
-  >;
+  import { AppState } from './reducers/app';
+  import { WidgetState } from './reducers/widget';
+  import { AuthState } from './reducers/auth';
+
+  export type RootState = {
+    appState: AppState;
+    authState: AuthState;
+    widgetState: WidgetState;
+  };
+
   export type RootAction = ActionType<
     typeof import('./actions/root-action').default
   >;

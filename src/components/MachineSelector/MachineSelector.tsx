@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import './MachineSelector.css';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,8 +7,9 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'react-redux';
 import { Asset } from '@cognite/sdk';
+import { Dispatch, bindActionCreators } from 'redux';
 
-import Types from 'StoreTypes';
+import { RootState, RootAction } from 'StoreTypes';
 
 import { setAsset } from '../../store/actions/root-action';
 
@@ -17,7 +18,7 @@ import { setAsset } from '../../store/actions/root-action';
  * Machines / Assets are taken from app context
  * and set the selected Machine in the redux on dropdown select
  */
-const MachineSelector = (props: any) => {
+const MachineSelector: FC<Props> = (props: Props) => {
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   const [selectItemList, setSelectItemList] = React.useState<
@@ -76,13 +77,21 @@ const MachineSelector = (props: any) => {
   );
 };
 
-const mapStateToProps = (state: Types.RootState) => ({
-  asset: state.widgetState.asset,
-  assets: state.appState.assets,
-});
+const mapStateToProps = (state: RootState) => {
+  return {
+    asset: state.widgetState.asset,
+    assets: state.appState.assets,
+  };
+};
 
 const dispatchProps = {
   setAsset,
 };
+
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators(dispatchProps, dispatch);
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 export default connect(mapStateToProps, dispatchProps)(MachineSelector);

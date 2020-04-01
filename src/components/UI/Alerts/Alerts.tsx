@@ -4,7 +4,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps, Color } from '@material-ui/lab/Alert';
 
 export type SnackBarProps = {
-  duration?: number | undefined;
+  duration?: number;
   handleClose: () => void;
   type: Color;
   text: String;

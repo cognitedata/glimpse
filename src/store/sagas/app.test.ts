@@ -1,6 +1,6 @@
 // Copyright 2020 Cognite AS
 import { put } from 'redux-saga/effects';
-import { AlertsPropsType } from 'custom-types';
+import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import {
   setLoading,
   setAssets,
