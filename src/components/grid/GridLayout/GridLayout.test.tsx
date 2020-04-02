@@ -32,6 +32,13 @@ const renderWithRedux = (
   };
 };
 
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  useLocation: () => ({
+    pathname: '/settings',
+  }),
+}));
+
 describe('GridLayout', () => {
   it('should initialize components correctly', () => {
     const { getByTestId } = renderWithRedux(

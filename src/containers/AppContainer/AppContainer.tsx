@@ -11,6 +11,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 import withErrorHandling from 'hoc/WithErrorHandling';
 import withSecurity from 'hoc/WithSecurity';
 import { RootState, RootAction } from 'StoreTypes';
+import { RouterPaths } from 'constants/router';
 import Loader from '../../components/UI/Loader/Loader';
 
 import { NavListItem } from '../../components/home/NavList/NavList';
@@ -39,26 +40,26 @@ const AppContainer: FC<Props> = (props: Props) => {
       id: 1,
       text: 'Overview',
       icon: <RemoveRedEyeIconOutlined />,
-      routeTo: '/overview',
+      routeTo: RouterPaths.OVERVIEW,
     },
     {
       id: 2,
       text: 'Settings',
       icon: <SettingsIconOutlined />,
-      routeTo: '/settings',
+      routeTo: RouterPaths.SETTINGS,
     },
     {
       id: 3,
       text: 'Feedback',
       icon: <SmsIconOutlined />,
-      routeTo: '/feedback',
+      routeTo: RouterPaths.FEEDBACK,
       onClick: showAlert,
     },
     {
       id: 4,
       text: 'Log out',
       icon: <ExitToAppIconOutlined />,
-      routeTo: '/logout',
+      routeTo: RouterPaths.LOGOUT,
       onClick: props.logout,
     },
   ];
