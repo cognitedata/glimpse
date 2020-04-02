@@ -14,14 +14,17 @@ const ComponentRouter = () => (
     <Route name="overview" exact path="/overview">
       <WithAddGridComponents />
     </Route>
-    <Route name="settings" exact path="/settings">
-      <WithAddGridComponents />
-    </Route>
+    <Route
+      name="settings"
+      exact
+      path="/settings"
+      render={() => <h2>Settings screen is in progress</h2>}
+    />
     <Route
       name="feedback"
       exact
       path="/feedback"
-      render={() => <h2>Inprogress</h2>}
+      render={() => <h2>Feedback screen is in progress</h2>}
     />
     <Route path="/logout" render={() => <Redirect to="/" />} />
     <Route path="/" render={() => <Redirect to="/overview" />} />
