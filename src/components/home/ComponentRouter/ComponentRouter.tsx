@@ -1,9 +1,10 @@
 // Copyright 2020 Cognite AS
 import React from 'react';
 
-import WithAddGridComponents from 'components/grid/AddComponents/WithAddGridComponents';
+import GridAddons from 'components/grid/AddComponents/GridAddons';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { RouterPaths } from 'constants/router';
 
 /**
  *
@@ -11,23 +12,26 @@ import { Switch, Route, Redirect } from 'react-router-dom';
  */
 const ComponentRouter = () => (
   <Switch>
-    <Route name="overview" exact path="/overview">
-      <WithAddGridComponents />
+    <Route name="overview" exact path={RouterPaths.OVERVIEW}>
+      <GridAddons />
     </Route>
-    <Route
-      name="settings"
-      exact
-      path="/settings"
-      render={() => <h2>Settings screen is in progress</h2>}
-    />
+    <Route name="settings" exact path={RouterPaths.SETTINGS}>
+      <GridAddons />
+    </Route>
     <Route
       name="feedback"
       exact
-      path="/feedback"
+      path={RouterPaths.FEEDBACK}
       render={() => <h2>Feedback screen is in progress</h2>}
     />
-    <Route path="/logout" render={() => <Redirect to="/" />} />
-    <Route path="/" render={() => <Redirect to="/overview" />} />
+    <Route
+      path={RouterPaths.LOGOUT}
+      render={() => <Redirect to={RouterPaths.ROOT} />}
+    />
+    <Route
+      path={RouterPaths.ROOT}
+      render={() => <Redirect to={RouterPaths.OVERVIEW} />}
+    />
   </Switch>
 );
 
