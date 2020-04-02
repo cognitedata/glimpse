@@ -1,12 +1,12 @@
 // Copyright 2020 Cognite AS
 import React, { useEffect } from 'react';
-
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import CSS from 'csstype';
 import { WidgetConfig } from 'components/grid/interfaces';
+import { useLocation } from 'react-router-dom';
+import { RouterPaths } from 'constants/router';
 import { getUniqueKey } from '../../utils/utils';
 import widgetConnector from '../../store/connectors/widgetConnector';
-
 import store from '../../store/index';
 
 /**
@@ -24,7 +24,11 @@ const pollingEndActions: PollingEndAction[] = [];
  *
  * Return widget element connected with state
  */
-const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
+const generateWidget = (
+  widgetConfig: WidgetConfig,
+  onRemoveItem: Function,
+  isOnSettingPage: boolean
+) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
   const requestKey = getUniqueKey(widgetConfig.queryParams);
@@ -33,13 +37,15 @@ const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
 
   return (
     <div key={widgetConfig.i} data-testid={widgetConfig.i}>
-      <button
-        type="button"
-        style={removeStyle}
-        onClick={() => onRemoveItem(widgetConfig.i)}
-      >
-        x
-      </button>
+      {isOnSettingPage && (
+        <button
+          type="button"
+          style={removeStyle}
+          onClick={() => onRemoveItem(widgetConfig.i)}
+        >
+          x
+        </button>
+      )}
       {widgetSetting !== undefined
         ? widgetConnector(
             widgetSetting.mapStateToProps(widgetConfig.valueMapping, actionKey),
@@ -56,10 +62,11 @@ const generateWidget = (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
  */
 const generateWidgets = (
   widgetConfigs: WidgetConfig[],
-  onRemoveItem: Function
+  onRemoveItem: Function,
+  isOnSettingPage: boolean
 ) => {
   return widgetConfigs.map((widgetConfig: WidgetConfig) =>
-    generateWidget(widgetConfig, onRemoveItem)
+    generateWidget(widgetConfig, onRemoveItem, isOnSettingPage)
   );
 };
 
@@ -125,12 +132,17 @@ const endPolling = () => {
 };
 
 const WidgetContainer = (props: Props) => {
+  const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   useEffect(() => {
     dispatchDistinctActions(props.widgetConfigs);
     return endPolling;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return generateWidgets(props.widgetConfigs, props.onRemoveItem);
+  return generateWidgets(
+    props.widgetConfigs,
+    props.onRemoveItem,
+    isOnSettingPage
+  );
 };
 
 export default WidgetContainer;

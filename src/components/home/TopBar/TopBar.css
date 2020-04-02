@@ -2,6 +2,24 @@
   padding-left: 12px;
 }
 
+.TopBar .inline {
+  display: table-cell;
+  vertical-align: middle;
+  display: inline-block;
+  padding-left: 20px;
+  color: #000;
+}
+.TopBar .MuiButton-outlinedPrimary {
+  color: #88693e;
+  width: 8vw;
+  border-radius: 5px;
+  height: 4vh;
+  border: 1px solid #88693e;
+}
+
+.TopBar .MuiInputBase-root {
+  color: white !important;
+}
 .Notification-icon {
   margin-right: 20px !important;
   padding: 0 !important;
