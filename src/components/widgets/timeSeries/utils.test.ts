@@ -1,8 +1,8 @@
 // Copyright 2020 Cognite AS
 import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
-import { generateXAxisVals } from './utills';
+import { generateXAxisVals } from './utils';
 
-describe('time series utills', () => {
+describe('time series utils', () => {
   const xAxisPointsNumber = 10;
 
   it('should not give empty results when input correct data', () => {

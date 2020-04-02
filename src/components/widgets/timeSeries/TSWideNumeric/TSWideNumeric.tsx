@@ -2,7 +2,7 @@
 import React, { FC, useMemo } from 'react';
 import './TSWideNumeric.css';
 import Chart from '../Chart/Chart';
-import { generateXAxisVals } from '../utills';
+import { generateXAxisVals } from '../utils';
 import { AggregateDatapoint } from '../interfaces';
 
 const X_DATAPOINTS_NUMBER = 25;

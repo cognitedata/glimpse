@@ -15,7 +15,7 @@ import {
   getUserCapabilities,
   hasPermissions,
   isAdmin,
-} from '../../utills/utills';
+} from '../../utils/utils';
 
 import { MESSAGES } from '../../constants/messages';
 

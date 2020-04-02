@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import CSS from 'csstype';
 import { WidgetConfig } from 'components/grid/interfaces';
-import { getUniqueKey } from '../../utills/utills';
+import { getUniqueKey } from '../../utils/utils';
 import widgetConnector from '../../store/connectors/widgetConnector';
 
 import store from '../../store/index';

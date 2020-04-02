@@ -4,7 +4,7 @@ import './TSTallNumeric.css';
 import Chart from '../Chart/Chart';
 import TSBasicNumeric from '../TSBasicNumeric/TSBasicNumeric';
 import { TSBasicNumericProps } from '../TSBasicNumeric/interfaces';
-import { generateXAxisVals } from '../utills';
+import { generateXAxisVals } from '../utils';
 import { AggregateDatapoint } from '../interfaces';
 
 const X_DATAPOINTS_NUMBER = 9;

@@ -1,6 +1,6 @@
 // Copyright 2020 Cognite AS
 import React, { FC, useState } from 'react';
-import { generateRandomKey } from 'utills/utills';
+import { generateRandomKey } from 'utils/utils';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
 import { mockedWidgetConfigs, initialLayoutMocked } from 'mocks/gridMocks';
