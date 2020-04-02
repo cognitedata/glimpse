@@ -15,7 +15,7 @@ import './Home.css';
 
 import NavList, { NavListItem } from './NavList/NavList';
 import TopBar from './TopBar/TopBar';
-import ComponentRouter from './ComponentRouter/ComponetRouter';
+import ComponentRouter from './ComponentRouter/ComponentRouter';
 
 const drawerWidth = 240;
 

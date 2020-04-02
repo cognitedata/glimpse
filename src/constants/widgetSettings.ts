@@ -9,7 +9,7 @@ import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicSt
 import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasicNumeric';
 import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNumeric';
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
-import { getChildValue } from '../utills/utills';
+import get from 'lodash/get';
 
 import * as actionTypes from '../store/actions/actionTypes';
 
@@ -113,7 +113,7 @@ const WIDGET_SETTINGS: any = {
       return {
         field1: {
           field: valueMapping.field1.label,
-          value: getChildValue(widgetState.asset, valueMapping.field1.key),
+          value: get(widgetState.asset, valueMapping.field1.key, ''),
         },
       };
     },
@@ -131,7 +131,7 @@ const WIDGET_SETTINGS: any = {
       return {
         field1: {
           field: valueMapping.field1.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field1.key),
+          value: get(widgetState[statePath], valueMapping.field1.key, ''),
         },
       };
     },
@@ -149,15 +149,15 @@ const WIDGET_SETTINGS: any = {
       return {
         field1: {
           field: valueMapping.field1.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field1.key),
+          value: get(widgetState[statePath], valueMapping.field1.key, ''),
         },
         field2: {
           field: valueMapping.field2.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field2.key),
+          value: get(widgetState[statePath], valueMapping.field2.key, ''),
         },
         field3: {
           field: valueMapping.field3.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field3.key),
+          value: get(widgetState[statePath], valueMapping.field3.key, ''),
         },
       };
     },
@@ -175,19 +175,19 @@ const WIDGET_SETTINGS: any = {
       return {
         field1: {
           field: valueMapping.field1.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field1.key),
+          value: get(widgetState[statePath], valueMapping.field1.key, ''),
         },
         field2: {
           field: valueMapping.field2.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field2.key),
+          value: get(widgetState[statePath], valueMapping.field2.key, ''),
         },
         field3: {
           field: valueMapping.field3.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field3.key),
+          value: get(widgetState[statePath], valueMapping.field3.key, ''),
         },
         field4: {
           field: valueMapping.field4.label,
-          value: getChildValue(widgetState[statePath], valueMapping.field4.key),
+          value: get(widgetState[statePath], valueMapping.field4.key, ''),
         },
       };
     },
@@ -275,7 +275,7 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
       state: RootState
     ) => {
-      const data = getChildValue(state.widgetState, statePath);
+      const data = get(state.widgetState, statePath, '');
       return {
         ...valueMapping,
         data,
@@ -296,7 +296,7 @@ const WIDGET_SETTINGS: any = {
     ) => {
       return {
         ...valueMapping,
-        data: getChildValue(state.widgetState, statePath),
+        data: get(state.widgetState, statePath, ''),
       };
     },
   },

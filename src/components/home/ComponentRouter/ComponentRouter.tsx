@@ -9,7 +9,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
  *
  * This is the Home component where components are mapped to routing
  */
-const ComponetRouter = () => (
+const ComponentRouter = () => (
   <Switch>
     <Route name="overview" exact path="/overview">
       <WithAddGridComponents />
@@ -28,4 +28,4 @@ const ComponetRouter = () => (
   </Switch>
 );
 
-export default ComponetRouter;
+export default ComponentRouter;
