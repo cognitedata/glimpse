@@ -15,9 +15,12 @@ const ComponentRouter = () => (
     <Route name="overview" exact path={RouterPaths.OVERVIEW}>
       <GridAddons />
     </Route>
-    <Route name="settings" exact path={RouterPaths.SETTINGS}>
-      <GridAddons />
-    </Route>
+    <Route
+      name="settings"
+      exact
+      path={RouterPaths.SETTINGS}
+      render={() => <GridAddons />}
+    />
     <Route
       name="feedback"
       exact

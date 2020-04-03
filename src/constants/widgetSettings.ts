@@ -11,6 +11,7 @@ import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNum
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
 import get from 'lodash/get';
 
+import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import * as actionTypes from '../store/actions/actionTypes';
 
 /**
@@ -117,6 +118,14 @@ const WIDGET_SETTINGS: any = {
         },
       };
     },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSONE) => () => {
+      return {
+        field1: {
+          field: valueMapping.field1.label,
+          value: 'test value',
+        },
+      };
+    },
   },
   [WIDGET_TYPE_IDS.EVENT_BASIC]: {
     component: ShowFieldsOne,
@@ -132,6 +141,16 @@ const WIDGET_SETTINGS: any = {
         field1: {
           field: valueMapping.field1.label,
           value: get(widgetState[statePath], valueMapping.field1.key, ''),
+        },
+      };
+    },
+    mapStateToMockProps: (
+      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE
+    ) => () => {
+      return {
+        field1: {
+          field: valueMapping.field1.label,
+          value: 'test value',
         },
       };
     },
@@ -158,6 +177,24 @@ const WIDGET_SETTINGS: any = {
         field3: {
           field: valueMapping.field3.label,
           value: get(widgetState[statePath], valueMapping.field3.key, ''),
+        },
+      };
+    },
+    mapStateToMockProps: (
+      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE
+    ) => () => {
+      return {
+        field1: {
+          field: valueMapping.field1.label,
+          value: 'test value 1',
+        },
+        field2: {
+          field: valueMapping.field2.label,
+          value: 'test value 2',
+        },
+        field3: {
+          field: valueMapping.field3.label,
+          value: 'test value 3',
         },
       };
     },
@@ -191,6 +228,26 @@ const WIDGET_SETTINGS: any = {
         },
       };
     },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSFOUR) => () => {
+      return {
+        field1: {
+          field: valueMapping.field1.label,
+          value: 'test value 1',
+        },
+        field2: {
+          field: valueMapping.field2.label,
+          value: 'test value 2',
+        },
+        field3: {
+          field: valueMapping.field3.label,
+          value: 'test value 3',
+        },
+        field4: {
+          field: valueMapping.field4.label,
+          value: 'test value 4',
+        },
+      };
+    },
   },
   [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
     component: ToolWidget,
@@ -205,6 +262,13 @@ const WIDGET_SETTINGS: any = {
       return {
         field: valueMapping.assetInfo,
         value: widgetState[statePath]?.value,
+        name: valueMapping.label,
+      };
+    },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TOOLWIDGET) => () => {
+      return {
+        field: valueMapping.assetInfo,
+        value: 'test value',
         name: valueMapping.label,
       };
     },
@@ -231,6 +295,15 @@ const WIDGET_SETTINGS: any = {
             : 1),
       };
     },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSFANCYNUMERIC) => () => {
+      return {
+        title: valueMapping.title,
+        value: 'test value',
+        timestamp: Date.now(),
+        timeDisplayKey: valueMapping.timeDisplayKey,
+        precentage: Math.floor(Math.random() * 100),
+      };
+    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING]: {
     component: TSBasicString,
@@ -249,6 +322,14 @@ const WIDGET_SETTINGS: any = {
         isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
       };
     },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSBASICSTRING) => () => {
+      return {
+        name: valueMapping.label,
+        value: 'test value',
+        timestamp: Date.now(),
+        isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
+      };
+    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC]: {
     component: TSBasicNumeric,
@@ -263,6 +344,13 @@ const WIDGET_SETTINGS: any = {
       return {
         name: valueMapping.label,
         value: widgetState[statePath]?.value,
+        unit: valueMapping.unit,
+      };
+    },
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSBASICSTRING) => () => {
+      return {
+        name: valueMapping.label,
+        value: Math.floor(Math.random() * 50),
         unit: valueMapping.unit,
       };
     },
@@ -285,6 +373,14 @@ const WIDGET_SETTINGS: any = {
           Math.round(data[data.length - 1].average).toString(),
       };
     },
+    mapStateToMockProps: (valueMapping: TsWideNumericValMap) => () => {
+      const data = mockDataPoints;
+      return {
+        ...valueMapping,
+        data,
+        value: Math.floor(Math.random() * 50),
+      };
+    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC]: {
     component: TSWideNumeric,
@@ -297,6 +393,12 @@ const WIDGET_SETTINGS: any = {
       return {
         ...valueMapping,
         data: get(state.widgetState, statePath, ''),
+      };
+    },
+    mapStateToMockProps: (valueMapping: TsWideNumericValMap) => () => {
+      return {
+        ...valueMapping,
+        data: mockDataPoints,
       };
     },
   },
