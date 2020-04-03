@@ -5,6 +5,7 @@ import { initialLayoutMocked, mockedWidgetConfigs } from 'mocks/gridMocks';
 import sizeMe from 'react-sizeme';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import rootReducer from '../../../store/reducers/root-reducer';
 import {
   AuthState,
@@ -15,6 +16,12 @@ import {
   initialState as appInitialState,
 } from '../../../store/reducers/app';
 import GridLayout from './GridLayout';
+
+jest.mock('react-router-dom', () => ({
+  useLocation: jest.fn(() => ({
+    pathname: '/settings',
+  })),
+}));
 
 sizeMe.noPlaceholders = true;
 
@@ -32,15 +39,8 @@ const renderWithRedux = (
   };
 };
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useLocation: () => ({
-    pathname: '/settings',
-  }),
-}));
-
 describe('GridLayout', () => {
-  it('should initialize components correctly', () => {
+  it('should initialize components correctly in setting/overview tabs', () => {
     const { getByTestId } = renderWithRedux(
       <GridLayout
         layouts={initialLayoutMocked}
@@ -58,7 +58,7 @@ describe('GridLayout', () => {
     );
   });
 
-  it('should call onRemoveItem callback function correctly', () => {
+  it('should call onRemoveItem callback function correctly on settings', () => {
     const { getByTestId } = renderWithRedux(
       <GridLayout
         layouts={initialLayoutMocked}
@@ -77,5 +77,30 @@ describe('GridLayout', () => {
       ) as HTMLInputElement
     );
     expect(onRemoveItem).toBeCalledTimes(1);
+  });
+  it('No remove buttons in the overview page', () => {
+    // @ts-ignore
+    useLocation.mockImplementation(() => ({
+      pathname: '/overview',
+    }));
+    console.log(useLocation().pathname);
+    const { queryByTestId, getByTestId } = renderWithRedux(
+      <GridLayout
+        layouts={initialLayoutMocked}
+        widgetConfigs={mockedWidgetConfigs}
+        onRemoveItem={onRemoveItem}
+        onLayoutChange={onLayoutChange}
+      />,
+      {
+        appState: { ...appInitialState },
+        authState: { ...authInitialState, loggedIn: true },
+      }
+    );
+    initialLayoutMocked.forEach((val, index) => {
+      expect(queryByTestId(initialLayoutMocked[index].i)).not.toBeNull();
+      expect(
+        getByTestId(initialLayoutMocked[index].i).querySelector('button')
+      ).toBeNull();
+    });
   });
 });

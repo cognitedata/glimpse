@@ -35,6 +35,21 @@ const generateWidget = (
 
   const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
 
+  const renderWidget = () => {
+    if (isOnSettingPage && widgetSetting !== undefined) {
+      return widgetConnector(
+        widgetSetting.mapStateToMockProps(widgetConfig.valueMapping),
+        widgetSetting.component
+      );
+    }
+    if (widgetSetting !== undefined) {
+      return widgetConnector(
+        widgetSetting.mapStateToProps(widgetConfig.valueMapping, actionKey),
+        widgetSetting.component
+      );
+    }
+    return null;
+  };
   return (
     <div key={widgetConfig.i} data-testid={widgetConfig.i}>
       {isOnSettingPage && (
@@ -46,12 +61,7 @@ const generateWidget = (
           x
         </button>
       )}
-      {widgetSetting !== undefined
-        ? widgetConnector(
-            widgetSetting.mapStateToProps(widgetConfig.valueMapping, actionKey),
-            widgetSetting.component
-          )
-        : null}
+      {renderWidget()}
     </div>
   );
 };
@@ -90,7 +100,12 @@ const updatePollingEndActionList = (
  *
  * Identify distinct dispatch actions and fire
  */
-const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
+const dispatchDistinctActions = (
+  widgetConfigs: WidgetConfig[],
+  isOnSettingPage: boolean
+) => {
+  console.log('path', isOnSettingPage);
+  if (isOnSettingPage) return;
   const dispatchedActions: string[] = [];
   widgetConfigs.forEach(widgetConfig => {
     const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
@@ -131,12 +146,12 @@ const endPolling = () => {
   });
 };
 
-const WidgetContainer = (props: Props) => {
+export default (props: Props) => {
   const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   useEffect(() => {
-    dispatchDistinctActions(props.widgetConfigs);
+    dispatchDistinctActions(props.widgetConfigs, isOnSettingPage);
     return endPolling;
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isOnSettingPage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return generateWidgets(
     props.widgetConfigs,
@@ -144,8 +159,6 @@ const WidgetContainer = (props: Props) => {
     isOnSettingPage
   );
 };
-
-export default WidgetContainer;
 
 type Props = {
   widgetConfigs: WidgetConfig[];
