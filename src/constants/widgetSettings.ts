@@ -1,8 +1,6 @@
 // Copyright 2020 Cognite AS
 import { RootState } from 'StoreTypes';
-import ShowFieldsOne from 'components/widgets/showFields/ShowFieldsOne/ShowFieldsOne';
-import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowFieldsThree';
-import ShowFieldsFour from 'components/widgets/showFields/ShowFieldsFour/ShowFieldsFour';
+import ShowFieldsFour from 'components/widgets/showFields/ShowFields';
 import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicString';
@@ -20,9 +18,7 @@ import * as actionTypes from '../store/actions/actionTypes';
 
 export enum WIDGET_TYPE_IDS {
   ASSET_INFO,
-  EVENT_BASIC,
-  EVENT_3_META_FIELDS,
-  EVENT_4_META_FIELDS,
+  EVENT_META_FIELDS,
   TOOL_WIDGET,
   TIMESERIES_BASIC_STRING,
   TIMESERIES_FANCY_NUMERIC,
@@ -43,21 +39,8 @@ type FieldMapping = {
   key: string;
 };
 
-type VALUE_MAPPING_SHOWFIELDSONE = {
-  field1: FieldMapping;
-};
-
-type VALUE_MAPPING_SHOWFIELDSTHREE = {
-  field1: FieldMapping;
-  field2: FieldMapping;
-  field3: FieldMapping;
-};
-
-type VALUE_MAPPING_SHOWFIELDSFOUR = {
-  field1: FieldMapping;
-  field2: FieldMapping;
-  field3: FieldMapping;
-  field4: FieldMapping;
+type VALUE_MAPPING_SHOWFIELDS = {
+  fields: FieldMapping[];
 };
 
 type VALUE_MAPPING_TOOLWIDGET = {
@@ -82,9 +65,7 @@ type VALUE_MAPPING_TSBASICNUMERIC = {
 };
 
 export type ValueMapping =
-  | VALUE_MAPPING_SHOWFIELDSONE
-  | VALUE_MAPPING_SHOWFIELDSTHREE
-  | VALUE_MAPPING_SHOWFIELDSFOUR
+  | VALUE_MAPPING_SHOWFIELDS
   | TsWideNumericValMap
   | TsTallNumericValMap
   | VALUE_MAPPING_TOOLWIDGET
@@ -104,148 +85,53 @@ export type QueryParams = {
   limit?: number;
 };
 
+const extractFields = (asset: any, fields: any[]) => {
+  return fields.map(fieldObj => ({
+    ...fieldObj,
+    value: get(asset, fieldObj.key, ''),
+  }));
+};
+const extractMockFields = (fields: any[]) => {
+  return fields.map((fieldObj, index) => ({
+    ...fieldObj,
+    value: `test value ${index + 1}`,
+  }));
+};
+
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
-    component: ShowFieldsOne,
-    mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSONE) => (
+    component: ShowFieldsFour,
+    mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
       state: RootState
     ) => {
       const { widgetState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(widgetState.asset, valueMapping.field1.key, ''),
-        },
+        fields: extractFields(widgetState.asset, valueMapping.fields),
       };
     },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSONE) => () => {
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => () => {
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: 'test value',
-        },
+        fields: extractMockFields(valueMapping.fields),
       };
     },
   },
-  [WIDGET_TYPE_IDS.EVENT_BASIC]: {
-    component: ShowFieldsOne,
-    dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
-    pollingInterval: 10000,
-    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
-    mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE,
-      statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
-      return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(widgetState[statePath], valueMapping.field1.key, ''),
-        },
-      };
-    },
-    mapStateToMockProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE
-    ) => () => {
-      return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: 'test value',
-        },
-      };
-    },
-  },
-  [WIDGET_TYPE_IDS.EVENT_3_META_FIELDS]: {
-    component: ShowFieldsThree,
-    dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
-    pollingInterval: 10000,
-    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
-    mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE,
-      statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
-      return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(widgetState[statePath], valueMapping.field1.key, ''),
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: get(widgetState[statePath], valueMapping.field2.key, ''),
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: get(widgetState[statePath], valueMapping.field3.key, ''),
-        },
-      };
-    },
-    mapStateToMockProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE
-    ) => () => {
-      return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: 'test value 1',
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: 'test value 2',
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: 'test value 3',
-        },
-      };
-    },
-  },
-  [WIDGET_TYPE_IDS.EVENT_4_META_FIELDS]: {
+  [WIDGET_TYPE_IDS.EVENT_META_FIELDS]: {
     component: ShowFieldsFour,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
     mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSFOUR,
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
     ) => (state: any) => {
       const { widgetState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(widgetState[statePath], valueMapping.field1.key, ''),
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: get(widgetState[statePath], valueMapping.field2.key, ''),
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: get(widgetState[statePath], valueMapping.field3.key, ''),
-        },
-        field4: {
-          field: valueMapping.field4.label,
-          value: get(widgetState[statePath], valueMapping.field4.key, ''),
-        },
+        fields: extractFields(widgetState[statePath], valueMapping.fields),
       };
     },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSFOUR) => () => {
+    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => () => {
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: 'test value 1',
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: 'test value 2',
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: 'test value 3',
-        },
-        field4: {
-          field: valueMapping.field4.label,
-          value: 'test value 4',
-        },
+        fields: extractMockFields(valueMapping.fields),
       };
     },
   },
@@ -260,7 +146,7 @@ const WIDGET_SETTINGS: any = {
     ) => (state: any) => {
       const { widgetState } = state;
       return {
-        field: valueMapping.assetInfo,
+        label: valueMapping.assetInfo,
         value: widgetState[statePath]?.value,
         name: valueMapping.label,
       };

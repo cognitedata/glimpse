@@ -83,7 +83,6 @@ describe('GridLayout', () => {
     useLocation.mockImplementation(() => ({
       pathname: '/overview',
     }));
-    console.log(useLocation().pathname);
     const { queryByTestId, getByTestId } = renderWithRedux(
       <GridLayout
         layouts={initialLayoutMocked}

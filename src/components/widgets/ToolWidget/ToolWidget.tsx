@@ -9,11 +9,11 @@ type Toolwidget = ShowFieldProps & {
 };
 
 const ToolWidget: FC<Toolwidget> = (props: Toolwidget) => {
-  const { field, value, name } = props;
+  const { label, value, name } = props;
   return (
     <div className="tool-widget">
       <label className="name">{name}</label>
-      <ShowField field={value} value={field} />
+      <ShowField label={value} value={label} />
     </div>
   );
 };
