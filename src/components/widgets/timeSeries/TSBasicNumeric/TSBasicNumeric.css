@@ -25,13 +25,11 @@
   padding: 2vh 2vh 0vh 0vh;
   color: black;
   float: right;
-  /* clear: both; */
   font-size: 2em;
   font-weight: 500;
 }
 
 .basic-numeric .val-unit .unit {
-  /* padding: 0vw 0vw 0vw 0vw; */
   font-size: 0.5em;
   font-weight: 500;
 }

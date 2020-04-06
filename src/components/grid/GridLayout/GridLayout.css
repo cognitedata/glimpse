@@ -42,7 +42,6 @@
   background-position: bottom right;
   padding: 0 3px 3px 0;
   background-repeat: no-repeat;
-  /* background-origin: content-box; */
   box-sizing: border-box;
   cursor: se-resize;
 }
@@ -50,9 +49,6 @@
 .gridLayout #content {
   width: 100%;
 }
-/* .gridLayout .react-grid-layout {
-    background: #eee;
-  } */
 .gridLayout .layoutJSON {
   background: #ddd;
   border: 1px solid black;
