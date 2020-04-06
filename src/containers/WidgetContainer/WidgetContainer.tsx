@@ -104,7 +104,6 @@ const dispatchDistinctActions = (
   widgetConfigs: WidgetConfig[],
   isOnSettingPage: boolean
 ) => {
-  console.log('path', isOnSettingPage);
   if (isOnSettingPage) return;
   const dispatchedActions: string[] = [];
   widgetConfigs.forEach(widgetConfig => {

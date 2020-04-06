@@ -22,10 +22,12 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'a',
     widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
     valueMapping: {
-      field1: {
-        label: 'Current Machine',
-        key: 'name',
-      },
+      fields: [
+        {
+          label: 'Current Machine',
+          key: 'name',
+        },
+      ],
     },
   },
   {
@@ -75,52 +77,56 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'c',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Event Sub Type',
-        key: 'subtype',
-      },
-      field3: {
-        label: 'Metadata Source Id',
-        key: 'metadata.sourceId',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Event Sub Type',
+          key: 'subtype',
+        },
+        {
+          label: 'Metadata Source Id',
+          key: 'metadata.sourceId',
+        },
+      ],
     },
   },
   {
     i: 'g',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Event Sub Type',
-        key: 'subtype',
-      },
-      field3: {
-        label: 'Metadata Source Id',
-        key: 'metadata.sourceId',
-      },
-      field4: {
-        label: 'Metadata Source',
-        key: 'metadata.source',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Event Sub Type',
+          key: 'subtype',
+        },
+        {
+          label: 'Metadata Source Id',
+          key: 'metadata.sourceId',
+        },
+        {
+          label: 'Metadata Source',
+          key: 'metadata.source',
+        },
+      ],
     },
   },
   {
@@ -154,40 +160,44 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'b',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+      ],
     },
   },
   {
     i: 'k',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Source Id',
-        key: 'metadata.sourceId',
-      },
-      field3: {
-        label: 'Source',
-        key: 'metadata.source',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Source Id',
+          key: 'metadata.sourceId',
+        },
+        {
+          label: 'Source',
+          key: 'metadata.source',
+        },
+      ],
     },
   },
 ];

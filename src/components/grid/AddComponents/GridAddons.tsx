@@ -41,10 +41,12 @@ const WrapperObject: FC<Props> = (props: Props) => {
       const key = generateRandomKey();
       setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) => {
         const valueMapping = {
-          field1: {
-            label: 'Current Machine',
-            key: 'asset.description',
-          },
+          fields: [
+            {
+              label: 'Current Machine',
+              key: 'asset.description',
+            },
+          ],
         };
         prevWidgetConfigs.push({
           i: key,
