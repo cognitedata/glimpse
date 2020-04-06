@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+// Copyright 2020 Cognite AS
+import React, { FC } from 'react';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,8 +9,10 @@ import Menu from '@material-ui/core/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { connect } from 'react-redux';
+import { RootState } from 'StoreTypes';
+
 import MachineSelector from '../../MachineSelector/MachineSelector';
-import { AppContext, AppContextType } from '../../../context/AppContextManager';
 import './TopBar.css';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,9 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
  * App header component
  */
 
-const TopBar = () => {
-  const appContext = useContext<AppContextType>(AppContext);
-
+const TopBar: FC<Props> = (props: Props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
@@ -116,7 +117,7 @@ const TopBar = () => {
   );
 
   return (
-    <div className={classes.grow}>
+    <div className={`${classes.grow} TopBar`}>
       <AppBar position="static">
         <Toolbar>
           <MachineSelector />
@@ -142,7 +143,7 @@ const TopBar = () => {
             >
               <AccountCircle />
             </IconButton>
-            <p>{appContext ? appContext.userInfo?.name : ''}</p>
+            <p>{props.userInfo?.name}</p>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -163,4 +164,10 @@ const TopBar = () => {
   );
 };
 
-export default TopBar;
+const mapStateToProps = (state: RootState) => ({
+  userInfo: state.authState.userInfo,
+});
+
+type Props = ReturnType<typeof mapStateToProps>;
+
+export default connect(mapStateToProps)(TopBar);

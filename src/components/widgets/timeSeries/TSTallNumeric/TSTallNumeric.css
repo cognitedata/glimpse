@@ -1,0 +1,25 @@
+.ts-tall-numeric {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background-color: #f4ac3d;
+}
+
+.ts-tall-numeric .content {
+  padding-top: 5%;
+  height: 75%;
+  color: black;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.ts-tall-numeric .content .unit-label {
+  padding-top: 3%;
+  color: #936f27;
+  text-align: center;
+}
+.ts-tall-numeric .ts-basic-numeric {
+  height: 25%;
+}

@@ -5,7 +5,7 @@ module.exports = {
     'plugin:lodash/recommended',
     'plugin:testcafe/recommended',
   ],
-  plugins: ['testing-library', 'lodash', 'testcafe'],
+  plugins: ['testing-library', 'lodash', 'testcafe', 'header'],
   rules: {
     'max-classes-per-file': ['off'],
     'lines-between-class-members': ['off'],
@@ -25,6 +25,8 @@ module.exports = {
     'lodash/prefer-is-nil': ['off'],
     'lodash/prefer-get': ['off'],
     'lodash/prefer-noop': ['off'],
+    'lodash/prefer-lodash-typecheck': ['off'],
+    'lodash/prefer-includes': ['off'],
 
     // '@typescript-eslint/no-unused-vars': [
     //   'error',
@@ -32,6 +34,16 @@ module.exports = {
     // ],
     '@typescript-eslint/no-unused-vars': ['off'],
     'no-console': ['off'],
+    'header/header': [
+      2,
+      'line',
+      [
+        {
+          pattern: ' Copyright \\d{4} Cognite AS',
+          template: ` Copyright ${new Date().getFullYear()} Cognite AS`,
+        },
+      ],
+    ],
     'jsx-a11y/label-has-associated-control': [
       2,
       {

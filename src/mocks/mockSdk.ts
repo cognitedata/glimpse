@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { CogniteClient } from '@cognite/sdk';
 
 export class MockCogniteClient extends CogniteClient {
@@ -100,6 +101,18 @@ export class MockCogniteClient extends CogniteClient {
       value: {},
     });
     Object.defineProperty(this, 'login', {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      value: {},
+    });
+    Object.defineProperty(this, 'logout', {
+      writable: true,
+      enumerable: true,
+      configurable: true,
+      value: {},
+    });
+    Object.defineProperty(this, 'datapoints', {
       writable: true,
       enumerable: true,
       configurable: true,

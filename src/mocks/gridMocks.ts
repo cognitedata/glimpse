@@ -1,5 +1,7 @@
-import { ComponentDetail } from 'components/grid/interfaces';
+// Copyright 2020 Cognite AS
+import { WidgetConfig } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
+import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -7,20 +9,185 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'c', x: 0, y: 2, w: 1, h: 2 },
   { i: 'd', x: 0, y: 4, w: 1, h: 1, static: true },
   { i: 'e', x: 0, y: 5, w: 1, h: 1 },
-  { i: 'f', x: 1, y: 0, w: 1, h: 4 },
-  { i: 'g', x: 2, y: 0, w: 1, h: 4 },
-  { i: 'h', x: 3, y: 0, w: 1, h: 4 },
-  // { i: 'i', x: 1, y: 4, w: 3, h: 2, component: '' },
+  { i: 'f', x: 1, y: 0, w: 1, h: 1 },
+  { i: 'g', x: 1, y: 1, w: 1, h: 3 },
+  { i: 'h', x: 1, y: 4, w: 3, h: 2 },
+  { i: 'i', x: 2, y: 0, w: 1, h: 2 },
+  { i: 'j', x: 3, y: 0, w: 1, h: 4 },
+  { i: 'k', x: 2, y: 2, w: 1, h: 2 },
 ];
 
-export const initialcomponentsMocked: ComponentDetail[] = [
-  { i: 'a', compName: 'a' },
-  { i: 'b', compName: 'a' },
-  { i: 'c', compName: 'a' },
-  { i: 'd', compName: 'a' },
-  { i: 'e', compName: 'a' },
-  { i: 'f', compName: 'a' },
-  { i: 'g', compName: 'a' },
-  { i: 'h', compName: 'a' },
-  // { i: 'i', compName: 'a' },
+export const mockedWidgetConfigs: WidgetConfig[] = [
+  {
+    i: 'a',
+    widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
+    valueMapping: {
+      field1: {
+        label: 'Current Machine',
+        key: 'name',
+      },
+    },
+  },
+  {
+    i: 'f',
+    widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      assetInfo: 'Description   84mm',
+      label: 'Tool Id',
+    },
+  },
+  {
+    i: 'i',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
+    queryParams: {
+      externalId: 'VAL_23-LIC-92521:Z.Y.Value',
+    },
+    valueMapping: {
+      maxPrecentageVal: 1,
+      title: 'Shift Utilization',
+      timeDisplayKey: 'Elapsed Time - job',
+    },
+  },
+  {
+    i: 'd',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      label: 'Machine State',
+      isElapsedTimeEnabled: true,
+    },
+  },
+  {
+    i: 'e',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      label: 'Machine Temperature',
+      unit: '°c',
+    },
+  },
+  {
+    i: 'c',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    queryParams: {
+      type: '***',
+      subtype: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+      field2: {
+        label: 'Event Sub Type',
+        key: 'subtype',
+      },
+      field3: {
+        label: 'Metadata Source Id',
+        key: 'metadata.sourceId',
+      },
+    },
+  },
+  {
+    i: 'g',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
+    queryParams: {
+      type: '***',
+      subtype: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+      field2: {
+        label: 'Event Sub Type',
+        key: 'subtype',
+      },
+      field3: {
+        label: 'Metadata Source Id',
+        key: 'metadata.sourceId',
+      },
+      field4: {
+        label: 'Metadata Source',
+        key: 'metadata.source',
+      },
+    },
+  },
+  {
+    i: 'j',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
+    queryParams: {
+      id: 303782999296110,
+      start: '15d-ago',
+      end: 'now',
+      granularity: '4h',
+      limit: 1000,
+    },
+    valueMapping: {
+      name: 'Machine Temperature',
+      unit: '°c',
+    },
+  },
+  {
+    i: 'h',
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
+    queryParams: {
+      id: 303782999296110,
+      start: '15d-ago',
+      end: 'now',
+      granularity: '4h',
+      limit: 1000,
+    },
+    valueMapping: {
+      title: '24 Hour Utilization',
+    },
+  },
+  {
+    i: 'b',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
+    queryParams: {
+      type: '***',
+      subtype: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+    },
+  },
+  {
+    i: 'k',
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    queryParams: {
+      type: '***',
+      subtype: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      field1: {
+        label: 'Work Order',
+        key: 'metadata.WORKORDER_NUMBER',
+      },
+      field2: {
+        label: 'Source Id',
+        key: 'metadata.sourceId',
+      },
+      field3: {
+        label: 'Source',
+        key: 'metadata.source',
+      },
+    },
+  },
 ];
