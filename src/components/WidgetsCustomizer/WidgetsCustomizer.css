@@ -1,0 +1,152 @@
+.WidgetsCustomizer .Add-button {
+  border-color: #b78b37;
+  color: #b78b37;
+  width: 200px;
+  border-style: dotted;
+  font-family: inherit;
+}
+
+.WidgetsCustomizer .Add-button:hover {
+  border-color: #b78b37;
+}
+.WidgetsCustomizer .Add-button span {
+  font-size: 30px;
+  height: 30px;
+  font-weight: 100;
+  line-height: 25px;
+  align-items: normal;
+}
+
+.WidgetsCustomizer-Modal .MuiDialog-paper {
+  height: calc(100% - 64px);
+  width: calc(100% - 64px);
+  max-width: calc(100% - 64px);
+}
+
+.WidgetsCustomizer-Modal .WidgetList-Column {
+  border-radius: 10px;
+  background-color: #3a4177;
+}
+
+.WidgetsCustomizer-Modal .WidgetConfig-Column {
+  border-radius: 10px;
+  background-color: #3a4177;
+  overflow-y: auto;
+}
+
+.WidgetsCustomizer-Modal .MuiDialogContent-root {
+  padding: 4px;
+}
+
+.WidgetsCustomizer-Modal .MuiDialogActions-root button {
+  color: #ffffff;
+  background-color: #394177;
+}
+
+.WidgetsCustomizer-Modal .MuiDialogActions-root button:hover {
+  background-color: #3f51b5;
+}
+
+.WidgetList-Column .Name-holder {
+  margin-bottom: 10px;
+  color: #86adad;
+}
+
+.WidgetList-Column .WidgetInfo-holder {
+  width: 100%;
+}
+
+.WidgetList-Column .Mui-selected {
+  background-color: #272c58 !important;
+}
+
+.WidgetList-Column .MuiListItem-root {
+  margin-bottom: 10px;
+  border-radius: 15px;
+  border: 1px solid #272c58;
+  border-style: dotted;
+}
+
+.Widget-filter {
+  margin-bottom: 10px;
+}
+
+.Widget-filter .MuiInputBase-input {
+  border-bottom: none !important;
+  padding: 12px;
+  color: #f8f8fa;
+}
+
+.Widget-filter .MuiFormLabel-root {
+  color: #9297b6;
+}
+
+.Widget-filter .MuiFormLabel-root.Mui-focused {
+  color: #9297b6;
+}
+
+.Widget-filter .MuiFormControl-root {
+  min-width: 150px;
+  margin-top: 8px;
+}
+
+.Widget-filter
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #9297b6;
+  border-width: 1px;
+}
+
+.WidgetList-Column .WidgetList-holder {
+  overflow-y: auto;
+  padding-right: 10px;
+  height: calc(100% - 64px);
+
+  scrollbar-face-color: #367cd2;
+  scrollbar-shadow-color: #ffffff;
+  scrollbar-highlight-color: #ffffff;
+  scrollbar-3dlight-color: #ffffff;
+  scrollbar-darkshadow-color: #ffffff;
+  scrollbar-track-color: #ffffff;
+  scrollbar-arrow-color: #ffffff;
+}
+
+.WidgetList-holder::-webkit-scrollbar {
+  width: 12px;
+}
+
+/* Track */
+.WidgetList-holder::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+/* Handle */
+.WidgetList-holder::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: rgba(255, 0, 0, 0.8);
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+.WidgetConfig-Column .title {
+  padding: 10px;
+  font-size: 20px;
+  color: #acc7ca;
+}
+
+.WidgetConfig-Column .preview {
+  padding: 20px;
+  text-align: center;
+}
+
+.WidgetConfig-Column .preview img {
+  max-height: 200px;
+}
+
+.WidgetConfig-Column .title span {
+  margin-left: 10px;
+}

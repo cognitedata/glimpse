@@ -7,6 +7,18 @@ import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicSt
 import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasicNumeric';
 import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNumeric';
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
+
+import assetInfoImg from 'assets/widget-previews/asset-info.png';
+import eventBasicImg from 'assets/widget-previews/event-basic.png';
+import event3MetadataFieldsImg from 'assets/widget-previews/event-3-metadata-fields.png';
+import event4MetadataFieldsImg from 'assets/widget-previews/event-4-metadata-fields.png';
+import toolWidgetImg from 'assets/widget-previews/tool-widget.png';
+import timeseriesBasicStringImg from 'assets/widget-previews/timeseries-basic-string.png';
+import timeseriesFancyNumericImg from 'assets/widget-previews/timeseries-fancy-numeric.png';
+import timeseriesBasicNumericImg from 'assets/widget-previews/timeseries-basic-numeric.png';
+import timeseriesTallNumericImg from 'assets/widget-previews/timeseries-tall-numeric.png';
+import timeseriesWideNumericImg from 'assets/widget-previews/timeseries-wide-numeric.png';
+
 import get from 'lodash/get';
 import * as actionTypes from '../store/actions/actionTypes';
 
@@ -16,7 +28,9 @@ import * as actionTypes from '../store/actions/actionTypes';
 
 export enum WIDGET_TYPE_IDS {
   ASSET_INFO,
-  EVENT_META_FIELDS,
+  EVENT_BASIC,
+  EVENT_3_META_FIELDS,
+  EVENT_4_META_FIELDS,
   TOOL_WIDGET,
   TIMESERIES_BASIC_STRING,
   TIMESERIES_FANCY_NUMERIC,
@@ -92,6 +106,9 @@ const extractFields = (asset: any, fields: any[]) => {
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
+    name: 'Asset info',
+    image: assetInfoImg,
+    size: [1, 1],
     component: ShowFields,
     mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
       state: RootState
@@ -102,7 +119,46 @@ const WIDGET_SETTINGS: any = {
       };
     },
   },
-  [WIDGET_TYPE_IDS.EVENT_META_FIELDS]: {
+  [WIDGET_TYPE_IDS.EVENT_BASIC]: {
+    name: 'Event - basic',
+    image: eventBasicImg,
+    size: [1, 1],
+    component: ShowFields,
+    dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
+      return {
+        fields: extractFields(widgetState[statePath], valueMapping.fields),
+      };
+    },
+  },
+  [WIDGET_TYPE_IDS.EVENT_3_META_FIELDS]: {
+    name: 'Event - 3 metadata fields',
+    image: event3MetadataFieldsImg,
+    size: [1, 2],
+    component: ShowFields,
+    dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
+    pollingInterval: 10000,
+    pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
+    mapStateToProps: (
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
+      statePath: string
+    ) => (state: any) => {
+      const { widgetState } = state;
+      return {
+        fields: extractFields(widgetState[statePath], valueMapping.fields),
+      };
+    },
+  },
+  [WIDGET_TYPE_IDS.EVENT_4_META_FIELDS]: {
+    name: 'Event - 4 metadata fields',
+    image: event4MetadataFieldsImg,
+    size: [1, 3],
     component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
@@ -118,6 +174,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
+    name: 'Tool widget',
+    image: toolWidgetImg,
+    size: [1, 1],
     component: ToolWidget,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -135,6 +194,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC]: {
+    name: 'Timeseries - Fancy numeric',
+    image: timeseriesFancyNumericImg,
+    size: [1, 2],
     component: TSFancyNumeric,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -158,6 +220,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING]: {
+    name: 'Timeseries - Basic string',
+    image: timeseriesBasicStringImg,
+    size: [1, 1],
     component: TSBasicString,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -176,6 +241,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC]: {
+    name: 'Timeseries - Basic numeric',
+    image: timeseriesBasicNumericImg,
+    size: [1, 1],
     component: TSBasicNumeric,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -193,6 +261,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC]: {
+    name: 'Timeseries - Tall numeric',
+    image: timeseriesTallNumericImg,
+    size: [1, 4],
     component: TSTallNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
@@ -212,6 +283,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC]: {
+    name: 'Timeseries - Wide numeric',
+    image: timeseriesWideNumericImg,
+    size: [3, 2],
     component: TSWideNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
