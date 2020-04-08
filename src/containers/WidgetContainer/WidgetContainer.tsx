@@ -3,7 +3,7 @@ import { useEffect, useMemo } from 'react';
 import { WidgetConfig } from 'components/grid/interfaces';
 import { useLocation } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
-import generateWidget from './widgetgenerator/generateWidget';
+import generateWidget from './widgetGenerator/generateWidget';
 import dispatchDistinctActions from './actionDispatcher/actionDispatcher';
 
 type Props = {
