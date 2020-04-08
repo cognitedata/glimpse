@@ -2,7 +2,10 @@
 import { WidgetConfig } from 'components/grid/interfaces';
 import generateWidgetsWithSettings from './generateWidgetWithSettings';
 import generateStaticWidget from './generateStaticWidget';
-// Copyright 2020 Cognite AS
+
+/**
+ * Return widget based on the current page
+ */
 export default (
   widgetConfig: WidgetConfig,
   onRemoveItem: Function,

@@ -6,6 +6,9 @@ import widgetConnector from 'store/connectors/widgetConnector';
 import React from 'react';
 import CSS from 'csstype';
 
+/**
+ * Return a widget with settins (adding remove button)
+ */
 export default (widgetConfig: WidgetConfig, onRemoveItem: Function) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
