@@ -5,6 +5,9 @@ import { getUniqueKey } from 'utils/utils';
 import widgetConnector from 'store/connectors/widgetConnector';
 import React from 'react';
 
+/**
+ * Return a widget without settings.
+ */
 export default (widgetConfig: WidgetConfig) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
