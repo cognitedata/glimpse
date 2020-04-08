@@ -8,8 +8,6 @@ import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasic
 import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNumeric';
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
 import get from 'lodash/get';
-
-import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import * as actionTypes from '../store/actions/actionTypes';
 
 /**
@@ -91,12 +89,6 @@ const extractFields = (asset: any, fields: any[]) => {
     value: get(asset, fieldObj.key, ''),
   }));
 };
-const extractMockFields = (fields: any[]) => {
-  return fields.map((fieldObj, index) => ({
-    ...fieldObj,
-    value: `test value ${index + 1}`,
-  }));
-};
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
@@ -107,11 +99,6 @@ const WIDGET_SETTINGS: any = {
       const { widgetState } = state;
       return {
         fields: extractFields(widgetState.asset, valueMapping.fields),
-      };
-    },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => () => {
-      return {
-        fields: extractMockFields(valueMapping.fields),
       };
     },
   },
@@ -129,11 +116,6 @@ const WIDGET_SETTINGS: any = {
         fields: extractFields(widgetState[statePath], valueMapping.fields),
       };
     },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => () => {
-      return {
-        fields: extractMockFields(valueMapping.fields),
-      };
-    },
   },
   [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
     component: ToolWidget,
@@ -148,13 +130,6 @@ const WIDGET_SETTINGS: any = {
       return {
         label: valueMapping.assetInfo,
         value: widgetState[statePath]?.value,
-        name: valueMapping.label,
-      };
-    },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TOOLWIDGET) => () => {
-      return {
-        field: valueMapping.assetInfo,
-        value: 'test value',
         name: valueMapping.label,
       };
     },
@@ -181,15 +156,6 @@ const WIDGET_SETTINGS: any = {
             : 1),
       };
     },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSFANCYNUMERIC) => () => {
-      return {
-        title: valueMapping.title,
-        value: 'test value',
-        timestamp: Date.now(),
-        timeDisplayKey: valueMapping.timeDisplayKey,
-        precentage: Math.floor(Math.random() * 100),
-      };
-    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING]: {
     component: TSBasicString,
@@ -208,14 +174,6 @@ const WIDGET_SETTINGS: any = {
         isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
       };
     },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSBASICSTRING) => () => {
-      return {
-        name: valueMapping.label,
-        value: 'test value',
-        timestamp: Date.now(),
-        isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
-      };
-    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC]: {
     component: TSBasicNumeric,
@@ -230,13 +188,6 @@ const WIDGET_SETTINGS: any = {
       return {
         name: valueMapping.label,
         value: widgetState[statePath]?.value,
-        unit: valueMapping.unit,
-      };
-    },
-    mapStateToMockProps: (valueMapping: VALUE_MAPPING_TSBASICSTRING) => () => {
-      return {
-        name: valueMapping.label,
-        value: Math.floor(Math.random() * 50),
         unit: valueMapping.unit,
       };
     },
@@ -259,14 +210,6 @@ const WIDGET_SETTINGS: any = {
           Math.round(data[data.length - 1].average).toString(),
       };
     },
-    mapStateToMockProps: (valueMapping: TsWideNumericValMap) => () => {
-      const data = mockDataPoints;
-      return {
-        ...valueMapping,
-        data,
-        value: Math.floor(Math.random() * 50),
-      };
-    },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC]: {
     component: TSWideNumeric,
@@ -279,12 +222,6 @@ const WIDGET_SETTINGS: any = {
       return {
         ...valueMapping,
         data: get(state.widgetState, statePath, ''),
-      };
-    },
-    mapStateToMockProps: (valueMapping: TsWideNumericValMap) => () => {
-      return {
-        ...valueMapping,
-        data: mockDataPoints,
       };
     },
   },
