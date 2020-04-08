@@ -6,6 +6,7 @@ import sizeMe from 'react-sizeme';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { useLocation } from 'react-router-dom';
+import { RouterPaths } from 'constants/router';
 import rootReducer from '../../../store/reducers/root-reducer';
 import {
   AuthState,
@@ -17,11 +18,13 @@ import {
 } from '../../../store/reducers/app';
 import GridLayout from './GridLayout';
 
-jest.mock('react-router-dom', () => ({
-  useLocation: jest.fn(() => ({
-    pathname: '/settings',
-  })),
-}));
+jest.mock('react-router-dom', () => {
+  return {
+    useLocation: jest.fn(() => ({
+      pathname: '',
+    })),
+  };
+});
 
 sizeMe.noPlaceholders = true;
 
@@ -40,6 +43,10 @@ const renderWithRedux = (
 };
 
 describe('GridLayout', () => {
+  // @ts-ignore
+  useLocation.mockImplementation(() => ({
+    pathname: RouterPaths.SETTINGS,
+  }));
   it('should initialize components correctly in setting/overview tabs', () => {
     const { getByTestId } = renderWithRedux(
       <GridLayout
@@ -81,7 +88,7 @@ describe('GridLayout', () => {
   it('No remove buttons in the overview page', () => {
     // @ts-ignore
     useLocation.mockImplementation(() => ({
-      pathname: '/overview',
+      pathname: RouterPaths.OVERVIEW,
     }));
     const { queryByTestId, getByTestId } = renderWithRedux(
       <GridLayout

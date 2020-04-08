@@ -4,12 +4,14 @@ import './ShowFields.css';
 import ShowField from './ShowField/ShowField';
 import { ShowFieldProps } from './ShowField/interfaces';
 
-type ShowFieldsFourProps = {
+type ShowFieldsProps = {
   fields: ShowFieldProps[];
 };
-const ShowFieldsFour: FC<ShowFieldsFourProps> = (
-  props: ShowFieldsFourProps
-) => {
+/**
+ * Used to display one or more propertie values of an object With custom names.
+ * @param props ShowFieldsProps
+ */
+const ShowFields: FC<ShowFieldsProps> = (props: ShowFieldsProps) => {
   const { fields } = props;
 
   const mapToShowFields = fields.map(showField => (
@@ -23,4 +25,4 @@ const ShowFieldsFour: FC<ShowFieldsFourProps> = (
   return <div className="show-fields-four">{mapToShowFields}</div>;
 };
 
-export default ShowFieldsFour;
+export default ShowFields;

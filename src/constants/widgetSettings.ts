@@ -1,6 +1,6 @@
 // Copyright 2020 Cognite AS
 import { RootState } from 'StoreTypes';
-import ShowFieldsFour from 'components/widgets/showFields/ShowFields';
+import ShowFields from 'components/widgets/showFields/ShowFields';
 import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicString';
@@ -100,7 +100,7 @@ const extractMockFields = (fields: any[]) => {
 
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
-    component: ShowFieldsFour,
+    component: ShowFields,
     mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
       state: RootState
     ) => {
@@ -116,7 +116,7 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.EVENT_META_FIELDS]: {
-    component: ShowFieldsFour,
+    component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,

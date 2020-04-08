@@ -3,6 +3,10 @@ import React, { FC } from 'react';
 import './ShowField.css';
 import { ShowFieldProps } from './interfaces';
 
+/**
+ * Used to display one propertie value of an object With custom name.
+ * @param props ShowFieldProps
+ */
 const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
   const { label, value } = props;
   return (

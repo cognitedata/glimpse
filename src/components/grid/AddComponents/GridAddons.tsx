@@ -15,8 +15,11 @@ import GridLayout from '../GridLayout/GridLayout';
 import AddComponent from './AddComponent';
 import { WidgetConfig } from '../interfaces';
 import { setAlerts } from '../../../store/actions/root-action';
-
-const WrapperObject: FC<Props> = (props: Props) => {
+/**
+ * Used to Add widgets to the GridLayOut with extra Features as remove.
+ * @param props GridAddonsProps
+ */
+const GridAddons: FC<GridAddonsProps> = (props: GridAddonsProps) => {
   const [widgetConfigs, setWidgetConfigs] = useState(mockedWidgetConfigs);
   const [layouts, setLayouts] = useState(initialLayoutMocked);
   const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
@@ -113,5 +116,5 @@ const dispatchProps = {
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-type Props = ReturnType<typeof mapDispatchToProps>;
-export default connect(null, dispatchProps)(WrapperObject);
+type GridAddonsProps = ReturnType<typeof mapDispatchToProps>;
+export default connect(null, dispatchProps)(GridAddons);
