@@ -81,9 +81,8 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 export default function WidgetsCustomizer() {
   const [open, setOpen] = useState(false);
   const [selectedWidgetKey, setSelectedWidgetKey] = useState('0');
-  const [sizeItemList, setSizeItemList] = useState<JSX.Element[] | null>([]);
-  const [widgetSizeFilter, setWidgetSizeFilter] = useState('all');
-  const [defaultWidgetSizeFilter, setDefaultWidgetSizeFilter] = useState('all');
+  const [widgetSizeFilter, setWidgetSizeFilter] = useState('All');
+  const [defaultWidgetSizeFilter, setDefaultWidgetSizeFilter] = useState('All');
   const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
     SizeWidgetKeyMapping
   >();
@@ -94,8 +93,8 @@ export default function WidgetsCustomizer() {
 
   const handleClickOpen = () => {
     setOpen(true);
-    setDefaultWidgetSizeFilter('all');
-    setWidgetSizeFilter('all');
+    setDefaultWidgetSizeFilter('All');
+    setWidgetSizeFilter('All');
     setSelectedWidgetKey('0');
   };
 
@@ -121,28 +120,20 @@ export default function WidgetsCustomizer() {
   };
 
   /**
-   * Get distinct size list from widget settings and create list elements for size filter
-   * and update size widget key mapping
+   * Get distinct size list from widget settings and update size widget key mapping
    */
   const updateSizeMapping = () => {
-    const tempSizeWidgetKeyMapping: SizeWidgetKeyMapping = { all: [] };
-    const tempSizeItemList: JSX.Element[] = [];
+    const tempSizeWidgetKeyMapping: SizeWidgetKeyMapping = { All: [] };
     Object.keys(WIDGET_SETTINGS).forEach((key, index) => {
       const sizeString = getSizeString(WIDGET_SETTINGS, key);
-      tempSizeWidgetKeyMapping.all.push(key);
+      tempSizeWidgetKeyMapping.All.push(key);
       if (tempSizeWidgetKeyMapping[sizeString]) {
         tempSizeWidgetKeyMapping[sizeString].push(key);
       } else {
         tempSizeWidgetKeyMapping[sizeString] = [key];
-        tempSizeItemList.push(
-          <MenuItem key={sizeString} value={sizeString}>
-            {sizeString}
-          </MenuItem>
-        );
       }
     });
     setSizeWidgetKeyMapping(tempSizeWidgetKeyMapping);
-    setSizeItemList(tempSizeItemList);
   };
 
   useEffect(() => {
@@ -186,10 +177,13 @@ export default function WidgetsCustomizer() {
                     onChange={filterChange}
                     labelWidth={FILTER_LABEL_WIDTH}
                   >
-                    <MenuItem key="all" value="all">
-                      All
-                    </MenuItem>
-                    {sizeItemList}
+                    {sizeWidgetKeyMapping
+                      ? Object.keys(sizeWidgetKeyMapping).map(key => (
+                          <MenuItem key={key} value={key}>
+                            {key}
+                          </MenuItem>
+                        ))
+                      : null}
                   </Select>
                 </FormControl>
               </div>
@@ -197,29 +191,27 @@ export default function WidgetsCustomizer() {
               <div className="WidgetList-holder">
                 <List component="nav" aria-label="main mailbox folders">
                   {sizeWidgetKeyMapping
-                    ? sizeWidgetKeyMapping[widgetSizeFilter].map(
-                        (key, index) => (
-                          <ListItem
-                            key={key}
-                            button
-                            selected={selectedWidgetKey === key}
-                            onClick={() => handleListItemClick(key)}
-                          >
-                            <div className="WidgetInfo-holder">
-                              <div className="Name-holder">
-                                {WIDGET_SETTINGS[key].name}
-                              </div>
-                              <div>
-                                <img
-                                  src={WIDGET_SETTINGS[key].image}
-                                  alt={WIDGET_SETTINGS[key].name}
-                                  width="100%"
-                                />
-                              </div>
+                    ? sizeWidgetKeyMapping[widgetSizeFilter].map(key => (
+                        <ListItem
+                          key={key}
+                          button
+                          selected={selectedWidgetKey === key}
+                          onClick={() => handleListItemClick(key)}
+                        >
+                          <div className="WidgetInfo-holder">
+                            <div className="Name-holder">
+                              {WIDGET_SETTINGS[key].name}
                             </div>
-                          </ListItem>
-                        )
-                      )
+                            <div>
+                              <img
+                                src={WIDGET_SETTINGS[key].image}
+                                alt={WIDGET_SETTINGS[key].name}
+                                width="100%"
+                              />
+                            </div>
+                          </div>
+                        </ListItem>
+                      ))
                     : null}
                 </List>
               </div>
