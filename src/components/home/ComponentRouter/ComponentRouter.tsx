@@ -5,6 +5,7 @@ import GridAddons from 'components/grid/AddComponents/GridAddons';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
+import EventConfig from 'components/widgetConfigs/EventConfig';
 
 /**
  *
@@ -25,7 +26,7 @@ const ComponentRouter = () => (
       name="feedback"
       exact
       path={RouterPaths.FEEDBACK}
-      render={() => <h2>Feedback screen is in progress</h2>}
+      render={() => <EventConfig />}
     />
     <Route
       path={RouterPaths.LOGOUT}
