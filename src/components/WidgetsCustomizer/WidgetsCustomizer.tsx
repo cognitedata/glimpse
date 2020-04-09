@@ -43,6 +43,10 @@ const styles = (theme: Theme) =>
     },
   });
 
+type SizeWidgetKeyMapping = {
+  [key: string]: string[];
+};
+
 export interface DialogTitleProps extends WithStyles<typeof styles> {
   id: string;
   children: React.ReactNode;
@@ -74,12 +78,15 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   );
 });
 
-export default function CustomizedDialogs() {
+export default function WidgetsCustomizer() {
   const [open, setOpen] = useState(false);
   const [selectedWidgetKey, setSelectedWidgetKey] = useState('0');
   const [sizeItemList, setSizeItemList] = useState<JSX.Element[] | null>([]);
-  const [filterSize, setFilterSize] = useState('all');
-  const [defaultFilterSize, setDefaultFilterSize] = useState('all');
+  const [widgetSizeFilter, setWidgetSizeFilter] = useState('all');
+  const [defaultWidgetSizeFilter, setDefaultWidgetSizeFilter] = useState('all');
+  const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
+    SizeWidgetKeyMapping
+  >();
 
   const handleListItemClick = (key: string) => {
     setSelectedWidgetKey(key);
@@ -87,8 +94,8 @@ export default function CustomizedDialogs() {
 
   const handleClickOpen = () => {
     setOpen(true);
-    setDefaultFilterSize('all');
-    setFilterSize('all');
+    setDefaultWidgetSizeFilter('all');
+    setWidgetSizeFilter('all');
     setSelectedWidgetKey('0');
   };
 
@@ -102,43 +109,44 @@ export default function CustomizedDialogs() {
   const getSizeString = (widgetSettings: typeof WIDGET_SETTINGS, key: string) =>
     `${widgetSettings[key].size[0]} x ${widgetSettings[key].size[1]}`;
 
-  /**
-   * Filter function to filter widget list based on the selected size
-   */
-  const widgetsKeyFilter = (value: string) => (key: string) =>
-    value === 'all' || value === getSizeString(WIDGET_SETTINGS, key);
-
   const filterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (event.target.value) {
-      const tempFilterSize = event.target.value as string;
-      setFilterSize(tempFilterSize);
-      const topWidgetKey = Object.keys(WIDGET_SETTINGS).filter(
-        widgetsKeyFilter(tempFilterSize)
-      )[0];
-      setSelectedWidgetKey(topWidgetKey);
+      const selectedSize = event.target.value as string;
+      setWidgetSizeFilter(selectedSize);
+      if (sizeWidgetKeyMapping) {
+        const topWidgetKey = sizeWidgetKeyMapping[selectedSize][0];
+        setSelectedWidgetKey(topWidgetKey);
+      }
     }
   };
 
   /**
    * Get distinct size list from widget settings and create list elements for size filter
+   * and update size widget key mapping
    */
-  const updateSizeList = () => {
-    const sizeList = new Set<string>();
+  const updateSizeMapping = () => {
+    const tempSizeWidgetKeyMapping: SizeWidgetKeyMapping = { all: [] };
+    const tempSizeItemList: JSX.Element[] = [];
     Object.keys(WIDGET_SETTINGS).forEach((key, index) => {
-      sizeList.add(getSizeString(WIDGET_SETTINGS, key));
+      const sizeString = getSizeString(WIDGET_SETTINGS, key);
+      tempSizeWidgetKeyMapping.all.push(key);
+      if (tempSizeWidgetKeyMapping[sizeString]) {
+        tempSizeWidgetKeyMapping[sizeString].push(key);
+      } else {
+        tempSizeWidgetKeyMapping[sizeString] = [key];
+        tempSizeItemList.push(
+          <MenuItem key={sizeString} value={sizeString}>
+            {sizeString}
+          </MenuItem>
+        );
+      }
     });
-    const tempSizeItemList = Array.from(sizeList).map(size => {
-      return (
-        <MenuItem key={size} value={size}>
-          {size}
-        </MenuItem>
-      );
-    });
+    setSizeWidgetKeyMapping(tempSizeWidgetKeyMapping);
     setSizeItemList(tempSizeItemList);
   };
 
   useEffect(() => {
-    updateSizeList();
+    updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -174,7 +182,7 @@ export default function CustomizedDialogs() {
                   <Select
                     labelId="widgetFilter-label"
                     id="widgetFilter"
-                    defaultValue={defaultFilterSize}
+                    defaultValue={defaultWidgetSizeFilter}
                     onChange={filterChange}
                     labelWidth={FILTER_LABEL_WIDTH}
                   >
@@ -188,29 +196,31 @@ export default function CustomizedDialogs() {
               <Divider />
               <div className="WidgetList-holder">
                 <List component="nav" aria-label="main mailbox folders">
-                  {Object.keys(WIDGET_SETTINGS)
-                    .filter(widgetsKeyFilter(filterSize))
-                    .map((key, index) => (
-                      <ListItem
-                        key={key}
-                        button
-                        selected={selectedWidgetKey === key}
-                        onClick={() => handleListItemClick(key)}
-                      >
-                        <div className="WidgetInfo-holder">
-                          <div className="Name-holder">
-                            {WIDGET_SETTINGS[key].name}
-                          </div>
-                          <div>
-                            <img
-                              src={WIDGET_SETTINGS[key].image}
-                              alt={WIDGET_SETTINGS[key].name}
-                              width="100%"
-                            />
-                          </div>
-                        </div>
-                      </ListItem>
-                    ))}
+                  {sizeWidgetKeyMapping
+                    ? sizeWidgetKeyMapping[widgetSizeFilter].map(
+                        (key, index) => (
+                          <ListItem
+                            key={key}
+                            button
+                            selected={selectedWidgetKey === key}
+                            onClick={() => handleListItemClick(key)}
+                          >
+                            <div className="WidgetInfo-holder">
+                              <div className="Name-holder">
+                                {WIDGET_SETTINGS[key].name}
+                              </div>
+                              <div>
+                                <img
+                                  src={WIDGET_SETTINGS[key].image}
+                                  alt={WIDGET_SETTINGS[key].name}
+                                  width="100%"
+                                />
+                              </div>
+                            </div>
+                          </ListItem>
+                        )
+                      )
+                    : null}
                 </List>
               </div>
             </Box>
