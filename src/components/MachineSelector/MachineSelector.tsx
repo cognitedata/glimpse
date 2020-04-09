@@ -79,7 +79,7 @@ const MachineSelector: FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => {
   return {
-    asset: state.widgetState.asset,
+    asset: state.appState.asset,
     assets: state.appState.assets,
   };
 };

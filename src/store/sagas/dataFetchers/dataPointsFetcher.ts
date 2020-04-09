@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import { RootState } from 'StoreTypes';
 import { select, put, race, delay, take } from 'redux-saga/effects';
-import { setTsDps } from 'store/actions/widget';
+import { setTsDps } from 'store/actions/root-action';
 import * as actionTypes from '../../actions/actionTypes';
 
 /**
@@ -10,7 +10,7 @@ import * as actionTypes from '../../actions/actionTypes';
  */
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
-export function* pollUpdateTsDps(action: any) {
+export default function* pollUpdateTsDps(action: any) {
   while (true) {
     const { actionKey } = action.payload;
     const cdfClient = yield select(getCdfClient);

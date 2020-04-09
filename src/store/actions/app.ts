@@ -26,3 +26,15 @@ export const updateAssets = () => action(actionTypes.UPDATE_ASSETS);
 
 export const setAssets = (assets: Asset[]) =>
   action(actionTypes.SET_ASSETS, assets);
+
+export const setAsset = (machine: Asset) =>
+  action(actionTypes.SET_ASSET, machine);
+
+export const setEvent = (eventMapping: any) =>
+  action(actionTypes.SET_EVENT, eventMapping);
+
+export const setTsDps = (tsDpsMapping: any) =>
+  action(actionTypes.SET_TS_DPS, tsDpsMapping);
+
+export const setLatestDataPoint = (dataPointMapping: any) =>
+  action(actionTypes.SET_LATEST_DATAPOINT, dataPointMapping);
