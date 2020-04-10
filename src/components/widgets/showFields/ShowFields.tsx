@@ -8,7 +8,7 @@ type ShowFieldsProps = {
   fields: ShowFieldProps[];
 };
 /**
- * Used to display one or more propertie values of an object With custom names.
+ * Used to display one or more property values of an object With custom names
  * @param props ShowFieldsProps
  */
 const ShowFields: FC<ShowFieldsProps> = (props: ShowFieldsProps) => {
