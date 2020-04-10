@@ -77,7 +77,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'c',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
@@ -102,7 +102,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'g',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',
@@ -160,7 +160,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'b',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
     queryParams: {
       type: '***',
       subtype: 'VAL',
@@ -177,7 +177,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
   },
   {
     i: 'k',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_META_FIELDS,
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
     queryParams: {
       type: '***',
       subtype: 'VAL',

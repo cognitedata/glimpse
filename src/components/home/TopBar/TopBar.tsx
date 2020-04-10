@@ -14,8 +14,7 @@ import { RootState } from 'StoreTypes';
 import { RouterPaths } from 'constants/router';
 import { useLocation } from 'react-router-dom';
 import './TopBar.css';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
+import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
 import MachineSelector from '../../MachineSelector/MachineSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -120,23 +119,11 @@ const TopBar: FC<Props> = (props: Props) => {
     </Menu>
   );
 
-  const addButton = (
-    <div className="inline center">
-      <Button
-        variant="outlined"
-        color="primary"
-        onClick={() => console.log('Button click')}
-      >
-        <AddIcon />
-      </Button>
-    </div>
-  );
-
   return (
     <div className={`${classes.grow} TopBar`}>
       <AppBar position="static">
         <Toolbar>
-          {isOnSettingPage ? addButton : <MachineSelector />}
+          {isOnSettingPage ? <WidgetsCustomizer /> : <MachineSelector />}
           <div className={classes.grow} />
           <div className={`${classes.sectionDesktop} Right-iconHolder`}>
             <IconButton
