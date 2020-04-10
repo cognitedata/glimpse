@@ -8,21 +8,18 @@ import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction } from 'StoreTypes';
-import { useLocation } from 'react-router-dom';
-import { RouterPaths } from 'constants/router';
-import { getEmptyPositions } from '../GridLayout/gridOperations/gridOperations';
-import GridLayout from '../GridLayout/GridLayout';
-import AddComponent from './AddComponent';
-import { WidgetConfig } from '../interfaces';
-import { setAlerts } from '../../../store/actions/root-action';
+import { getEmptyPositions } from './GridLayout/gridOperations/gridOperations';
+import GridLayout from './GridLayout/GridLayout';
+import AddComponent from './AddComponents/AddComponent';
+import { WidgetConfig } from './interfaces';
+import { setAlerts } from '../../store/actions/root-action';
 /**
  * Used to Add widgets to the GridLayOut with extra Features as remove.
- * @param props GridAddonsProps
+ * @param props GridContainerProps
  */
-const GridAddons: FC<GridAddonsProps> = (props: GridAddonsProps) => {
+const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const [widgetConfigs, setWidgetConfigs] = useState(mockedWidgetConfigs);
   const [layouts, setLayouts] = useState(initialLayoutMocked);
-  const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   const addElement = (height: number, width: number) => {
     if (height > 0 && height <= 6 && width > 0 && width <= 4) {
       const cordinates = getEmptyPositions(
@@ -96,7 +93,7 @@ const GridAddons: FC<GridAddonsProps> = (props: GridAddonsProps) => {
 
   return (
     <>
-      {isOnSettingPage && <AddComponent addElement={addElement} />}
+      <AddComponent addElement={addElement} />
       <div style={{ height: '85vh', padding: '10px' }}>
         <GridLayout
           layouts={layouts}
@@ -116,5 +113,5 @@ const dispatchProps = {
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-type GridAddonsProps = ReturnType<typeof mapDispatchToProps>;
-export default connect(null, dispatchProps)(GridAddons);
+type GridContainerProps = ReturnType<typeof mapDispatchToProps>;
+export default connect(null, dispatchProps)(GridContainer);

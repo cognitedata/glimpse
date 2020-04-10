@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import React from 'react';
 
-import GridAddons from 'components/grid/AddComponents/GridAddons';
+import GridContainer from 'components/grid/GridContainer';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
@@ -13,13 +13,13 @@ import { RouterPaths } from 'constants/router';
 const ComponentRouter = () => (
   <Switch>
     <Route name="overview" exact path={RouterPaths.OVERVIEW}>
-      <GridAddons />
+      <GridContainer />
     </Route>
     <Route
       name="settings"
       exact
       path={RouterPaths.SETTINGS}
-      render={() => <GridAddons />}
+      render={() => <GridContainer />}
     />
     <Route
       name="feedback"
