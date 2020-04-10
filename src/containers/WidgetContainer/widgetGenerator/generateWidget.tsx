@@ -1,14 +1,19 @@
 // Copyright 2020 Cognite AS
 import { WidgetConfig } from 'components/grid/interfaces';
+import widgetConnector from 'store/connectors/widgetConnector';
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import { getUniqueKey } from 'utils/utils';
-import widgetConnector from 'store/connectors/widgetConnector';
 import React from 'react';
+import addRemoveBtn from './addRemoveButton/addRemoveBtn';
 
 /**
- * Return a widget without settings.
+ * Return widget based on the current page
  */
-export default (widgetConfig: WidgetConfig) => {
+export default (
+  widgetConfig: WidgetConfig,
+  onRemoveItem: Function,
+  isOnSettingPage: boolean
+) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
   const requestKey = getUniqueKey(widgetConfig.queryParams);
@@ -22,11 +27,13 @@ export default (widgetConfig: WidgetConfig) => {
         widgetSetting.component
       );
     }
-    return null;
+    return <></>;
   };
   return (
     <div key={widgetConfig.i} data-testid={widgetConfig.i}>
-      {renderWidget()}
+      {isOnSettingPage
+        ? addRemoveBtn(widgetConfig.i, onRemoveItem, renderWidget())
+        : renderWidget()}
     </div>
   );
 };
