@@ -5,7 +5,7 @@ import GridContainer from 'components/grid/GridContainer';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
-import EventConfig from 'components/widgetConfigs/EventConfig';
+import EventConfig from 'components/widgetConfigs/event/EventConfig';
 
 /**
  *
