@@ -1,18 +1,18 @@
 // Copyright 2020 Cognite AS
-// import { select } from 'redux-saga/effects';
-import { CogniteEvent } from '@cognite/sdk';
+import { CogniteEvent, CogniteClient } from '@cognite/sdk';
 import { RootState } from 'StoreTypes';
 import store from 'store';
+import { FetchEvent } from './interfaces';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 const getAssetId = (state: RootState) => state.widgetState.asset?.id;
 
 /**
  *
- * Event fetcher
+ * Fetch events list from cognite client based on input values.
  */
-export const fetchEvents = async (props: any) => {
-  const cdfClient: any = getCdfClient(store.getState());
+export const fetchEvents = async (props: FetchEvent) => {
+  const cdfClient: CogniteClient = getCdfClient(store.getState());
   const assetId = getAssetId(store.getState());
   console.log(cdfClient, assetId);
   const { ongoing, type, subtype } = props;
