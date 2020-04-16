@@ -213,6 +213,7 @@ const AlarmConfig: FC<Props> = (props: Props) => {
     <div className="AlarmConfig">
       <IconButton
         className="Config-button"
+        data-testid="config-button"
         edge="end"
         aria-label="Config"
         onClick={handleClickOpen}
@@ -235,7 +236,9 @@ const AlarmConfig: FC<Props> = (props: Props) => {
           <form noValidate autoComplete="off">
             {Object.keys(formFields).map(key => (
               <TextField
-                id={key.toString()}
+                key={key}
+                id={key}
+                data-testid={key}
                 label={formFields[key].label}
                 variant="outlined"
                 type={formFields[key].type}
