@@ -52,30 +52,19 @@
   border-bottom: 2px solid white;
 }
 
-.event_config .MuiInputLabel-animated {
-  color: white !important;
-}
-
-/* .event_config .MuiButton-containedPrimary {
-  color: #fff;
-  background-color: #444b77;
-  margin-top: 15px;
-  margin-right: 15px;
-}
-
 .event_config .MuiInputBase-root {
   color: white !important;
 }
 
-.event_config .MuiInputBase-input {
-  border-bottom: 1px solid white !important;
+.event_config .MuiInputLabel-animated {
+  color: white !important;
 }
 
 .event_config
   .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon
   .MuiAutocomplete-inputRoot {
   padding-right: 0px;
-} */
+}
 
 .event_config .MuiButton-containedPrimary {
   color: #fff;
