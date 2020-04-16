@@ -6,6 +6,7 @@ import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import * as actionTypes from '../actions/actionTypes';
 
 import * as actions from '../actions/app';
+import { AlarmType } from 'components/Alarm/interfaces';
 
 export type AppAction = ActionType<typeof actions>;
 
@@ -15,11 +16,13 @@ export type AppState = {
   alerts?: AlertsPropsType;
   selectedMachine?: Asset;
   assets: Asset[];
+  alarms?: AlarmType[];
 };
 
 export const initialState: AppState = {
   loading: false,
   assets: [],
+  alarms: [],
 };
 
 const appReducer = (state = initialState, action: AppAction): AppState => {
@@ -53,6 +56,11 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
       return {
         ...state,
         assets: action.payload,
+      };
+    case actionTypes.SET_ALARMS:
+      return {
+        ...state,
+        alarms: action.payload,
       };
   }
   return state;
