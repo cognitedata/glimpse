@@ -5,7 +5,6 @@ import GridContainer from 'components/grid/GridContainer';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
-import EventConfig from 'components/widgetConfigs/event/EventConfig';
 
 /**
  *
@@ -26,7 +25,7 @@ const ComponentRouter = () => (
       name="feedback"
       exact
       path={RouterPaths.FEEDBACK}
-      render={() => <EventConfig />}
+      render={() => <>To Be Implemented</>}
     />
     <Route
       path={RouterPaths.LOGOUT}

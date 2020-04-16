@@ -3,9 +3,8 @@
 }
 
 .event_config .textField {
-  display: inline-block;
   margin-right: 20px;
-  width: 30vw;
+  width: 80%;
 }
 
 .event_config .switch {
@@ -31,14 +30,21 @@
 }
 
 .event_config .validation_msg {
-  font-size: 0.5em;
+  font-size: 0.8em;
   color: red;
-  padding-top: 5px;
+  padding-top: 10px;
+  padding-left: 10px;
 }
+.event_config .paperbox {
+  padding: 30px;
+  border-radius: 10px;
+}
+
 .event_config .event_details_disabled {
   margin-right: 20px;
-  padding: 10px 10px 10px 10px;
-  background-color: #3b4069;
+  padding: 20px 10px 10px 10px;
+  background-color: #3a4177;
+  border-radius: 10px;
 }
 
 .event_config .MuiInputBase-input:invalid {
@@ -50,7 +56,7 @@
   color: white !important;
 }
 
-.event_config .MuiButton-containedPrimary {
+/* .event_config .MuiButton-containedPrimary {
   color: #fff;
   background-color: #444b77;
   margin-top: 15px;
@@ -69,7 +75,7 @@
   .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon
   .MuiAutocomplete-inputRoot {
   padding-right: 0px;
-}
+} */
 
 .event_config .MuiButton-containedPrimary {
   color: #fff;
@@ -89,4 +95,34 @@
 
 .event_config .MuiSwitch-colorPrimary.Mui-disabled + .MuiSwitch-track {
   background-color: #efeff3;
+}
+
+.event_configer {
+  margin-bottom: 10px;
+}
+
+.event_configer .MuiInputBase-input {
+  border-bottom: none !important;
+  padding: 12px;
+  color: #f8f8fa;
+}
+
+.event_configer .MuiFormLabel-root {
+  color: #9297b6;
+}
+
+.event_configer .MuiFormLabel-root.Mui-focused {
+  color: #9297b6;
+}
+
+.event_configer .MuiFormControl-root {
+  min-width: 150px;
+  margin-top: 8px;
+}
+
+.event_configer
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #9297b6;
+  border-width: 1px;
 }
