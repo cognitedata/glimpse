@@ -15,9 +15,9 @@ import { RouterPaths } from 'constants/router';
 import { useLocation } from 'react-router-dom';
 import './TopBar.css';
 import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
-import MachineSelector from '../../MachineSelector/MachineSelector';
 import Alarm from 'components/Alarm/Alarm';
 import AlarmConfig from 'components/Alarm/AlarmConfig/AlarmConfig';
+import MachineSelector from '../../MachineSelector/MachineSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
