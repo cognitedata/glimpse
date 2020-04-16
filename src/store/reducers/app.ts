@@ -54,19 +54,19 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
         ...state,
         assets: action.payload,
       };
-    /** Set asset in widget state */
+    /** Set asset in app state */
     case actionTypes.SET_ASSET:
       return {
         ...state,
         asset: action.payload,
       };
-    /** Set event in widget state */
+    /** Set event in app state */
     case actionTypes.SET_EVENT:
       return {
         ...state,
         ...action.payload,
       };
-    /** Set time Series aggreagation data points arrays in widget state */
+    /** Set time Series aggreagation data points arrays in app state */
     case actionTypes.SET_TS_DPS:
       return {
         ...state,
