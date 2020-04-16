@@ -86,6 +86,7 @@ export default function WidgetsCustomizer() {
   const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
     SizeWidgetKeyMapping
   >();
+  const [clickSubmitCount, setClickSubmitCount] = useState(0);
 
   const handleListItemClick = (key: string) => {
     setSelectedWidgetKey(key);
@@ -99,7 +100,8 @@ export default function WidgetsCustomizer() {
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setClickSubmitCount(clickSubmitCount + 1);
+    // setOpen(false);
   };
 
   /**
@@ -118,7 +120,7 @@ export default function WidgetsCustomizer() {
       }
     }
   };
-
+  const onCreate = (data: any) => console.log('on parent', data);
   /**
    * Get distinct size list from widget settings and update size widget key mapping
    */
@@ -140,6 +142,7 @@ export default function WidgetsCustomizer() {
     updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const Configurator = WIDGET_SETTINGS[selectedWidgetKey].configurator;
   return (
     <div className="WidgetsCustomizer">
       <Button
@@ -229,6 +232,14 @@ export default function WidgetsCustomizer() {
                   alt={WIDGET_SETTINGS[selectedWidgetKey].name}
                 />
               </div>
+              <Box width="80%" p={1} my={0.5}>
+                {Configurator && (
+                  <Configurator
+                    clickSumbmitCount={clickSubmitCount}
+                    onCreate={onCreate}
+                  />
+                )}
+              </Box>
             </Box>
           </Box>
         </MuiDialogContent>
