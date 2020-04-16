@@ -20,9 +20,9 @@ import timeseriesTallNumericImg from 'assets/widget-previews/timeseries-tall-num
 import timeseriesWideNumericImg from 'assets/widget-previews/timeseries-wide-numeric.png';
 import get from 'lodash/get';
 import {
-  EventOneMeta,
-  EventThreeMeta,
-  EventFourMeta,
+  EventOneMetaConfigurator,
+  EventThreeMetaConfigurator,
+  EventFourMetaConfigurator,
 } from 'components/widgetConfigs/event/Configurator';
 import * as actionTypes from '../store/actions/actionTypes';
 
@@ -112,7 +112,7 @@ const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
     name: 'Asset info',
     image: assetInfoImg,
-    configurator: EventOneMeta,
+    configurator: EventOneMetaConfigurator,
     size: [1, 1],
     component: ShowFields,
     mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
@@ -128,7 +128,7 @@ const WIDGET_SETTINGS: any = {
     name: 'Event - basic',
     image: eventBasicImg,
     size: [1, 1],
-    configurator: EventOneMeta,
+    configurator: EventOneMetaConfigurator,
     component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
@@ -147,7 +147,7 @@ const WIDGET_SETTINGS: any = {
     name: 'Event - 3 metadata fields',
     image: event3MetadataFieldsImg,
     size: [1, 2],
-    configurator: EventThreeMeta,
+    configurator: EventThreeMetaConfigurator,
     component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
@@ -166,7 +166,7 @@ const WIDGET_SETTINGS: any = {
     name: 'Event - 4 metadata fields',
     image: event4MetadataFieldsImg,
     size: [1, 3],
-    configurator: EventFourMeta,
+    configurator: EventFourMetaConfigurator,
     component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
