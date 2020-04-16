@@ -18,6 +18,9 @@ type EventFieldsProps = {
   errors?: NestDataObject<EventConfigData, FieldError>;
   fields: FieldObj[];
 };
+/**
+ * Nested Form, Generate based on the number of fields.
+ */
 export default (props: EventFieldsProps) => {
   const { control, errors } = props;
   const { fields } = useFieldArray({
@@ -27,7 +30,7 @@ export default (props: EventFieldsProps) => {
 
   return (
     <div>
-      {fields.map((item, k) => {
+      {fields.map((item, index) => {
         return (
           <div key={item.id} className="inner_form event_config">
             <Grid container spacing={3}>
@@ -36,7 +39,7 @@ export default (props: EventFieldsProps) => {
                   className="textField"
                   as={
                     <Autocomplete
-                      id={`fields[${k}].fieldObj`}
+                      id={`fields[${index}].fieldObj`}
                       options={props.fields}
                       groupBy={option => option.type}
                       getOptionLabel={option => option.field}
@@ -45,20 +48,20 @@ export default (props: EventFieldsProps) => {
                         <TextField
                           variant="outlined"
                           {...params}
-                          label={`Select Field ${k + 1}`}
+                          label={`Select Field ${index + 1}`}
                           placeholder="Search Field"
                         />
                       )}
                     />
                   }
-                  name={`fields[${k}].fieldObj`}
+                  name={`fields[${index}].fieldObj`}
                   onChange={data => {
                     return data[1];
                   }}
                   rules={{ required: true }}
                   control={control}
                 />
-                {errors?.fields && errors.fields[k] && (
+                {errors?.fields && errors.fields[index] && (
                   <span className="validation_msg">Your input is required</span>
                 )}
               </Grid>
@@ -72,7 +75,7 @@ export default (props: EventFieldsProps) => {
                       placeholder="Enter Name"
                     />
                   }
-                  name={`fields[${k}].customName`}
+                  name={`fields[${index}].customName`}
                   control={control}
                 />
               </Grid>

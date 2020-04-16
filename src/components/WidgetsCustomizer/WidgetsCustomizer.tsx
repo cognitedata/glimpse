@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC } from 'react';
 import {
   createStyles,
   Theme,
@@ -26,6 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './WidgetsCustomizer.css';
 
 import WIDGET_SETTINGS from 'constants/widgetSettings';
+import { WidgetConfigProps } from 'components/widgetConfigs/event/interfaces';
 
 const FILTER_LABEL_WIDTH = 95;
 
@@ -86,7 +87,6 @@ export default function WidgetsCustomizer() {
   const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
     SizeWidgetKeyMapping
   >();
-  const [clickSubmitCount, setClickSubmitCount] = useState(0);
 
   const handleListItemClick = (key: string) => {
     setSelectedWidgetKey(key);
@@ -100,8 +100,7 @@ export default function WidgetsCustomizer() {
   };
 
   const handleClose = () => {
-    setClickSubmitCount(clickSubmitCount + 1);
-    // setOpen(false);
+    setOpen(false);
   };
 
   /**
@@ -120,7 +119,10 @@ export default function WidgetsCustomizer() {
       }
     }
   };
-  const onCreate = (data: any) => console.log('on parent', data);
+  const onCreate = (data: any) => {
+    console.log('on parent', data);
+    setOpen(false);
+  };
   /**
    * Get distinct size list from widget settings and update size widget key mapping
    */
@@ -141,8 +143,8 @@ export default function WidgetsCustomizer() {
   useEffect(() => {
     updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const Configurator = WIDGET_SETTINGS[selectedWidgetKey].configurator;
+  const Configurator: FC<WidgetConfigProps> =
+    WIDGET_SETTINGS[selectedWidgetKey].configurator;
   return (
     <div className="WidgetsCustomizer">
       <Button
@@ -233,20 +235,12 @@ export default function WidgetsCustomizer() {
                 />
               </div>
               <Box width="80%" p={1} my={0.5}>
-                {Configurator && (
-                  <Configurator
-                    clickSumbmitCount={clickSubmitCount}
-                    onCreate={onCreate}
-                  />
-                )}
+                {Configurator && <Configurator onCreate={onCreate} />}
               </Box>
             </Box>
           </Box>
         </MuiDialogContent>
         <MuiDialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
-            Create
-          </Button>
           <Button
             data-testid="close-button"
             onClick={handleClose}

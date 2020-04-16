@@ -1,8 +1,6 @@
 // Copyright 2020 Cognite AS
 import { FieldMapping } from 'constants/widgetSettings';
-import { ShowFieldProps } from 'components/widgets/showFields/ShowField/interfaces';
 
-// Copyright 2020 Cognite AS
 export type FieldObj = {
   field: string;
   type: string;
@@ -30,4 +28,12 @@ export type ValueMapping = {
 export type EventConfReturn = {
   queryParams: FetchEvent;
   valueMapping: ValueMapping;
+};
+
+export type WidgetConfigProps = {
+  onCreate: Function;
+};
+
+export type EventWidgetConfigProps = WidgetConfigProps & {
+  noOfFields: number;
 };
