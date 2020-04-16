@@ -25,7 +25,7 @@ import {
 /**
  * Events widgets configuration
  */
-const EventMeta = (props: EventWidgetConfigProps) => {
+const Configurator = (props: EventWidgetConfigProps) => {
   const { onCreate, noOfFields } = props;
   const excludeFieldsArr = ['metadata', 'assetIds', 'type', 'subtype'];
   const [fields, setFields] = useState<FieldObj[]>([]);
@@ -194,11 +194,11 @@ const EventMeta = (props: EventWidgetConfigProps) => {
   );
 };
 
-export const EventOneMeta = (props: WidgetConfigProps) =>
-  EventMeta({ ...props, noOfFields: 1 });
+export const EventOneMetaConfigurator = (props: WidgetConfigProps) =>
+  Configurator({ ...props, noOfFields: 1 });
 
-export const EventThreeMeta = (props: WidgetConfigProps) =>
-  EventMeta({ ...props, noOfFields: 3 });
+export const EventThreeMetaConfigurator = (props: WidgetConfigProps) =>
+  Configurator({ ...props, noOfFields: 3 });
 
-export const EventFourMeta = (props: WidgetConfigProps) =>
-  EventMeta({ ...props, noOfFields: 4 });
+export const EventFourMetaConfigurator = (props: WidgetConfigProps) =>
+  Configurator({ ...props, noOfFields: 4 });
