@@ -3,8 +3,8 @@ import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { action } from 'typesafe-actions';
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
-import * as actionTypes from './actionTypes';
 import { AlarmType } from 'components/Alarm/interfaces';
+import * as actionTypes from './actionTypes';
 
 /**
  *

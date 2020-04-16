@@ -12,10 +12,10 @@ import Badge from '@material-ui/core/Badge';
 import CloseIcon from '@material-ui/icons/Close';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import './Alarm.css';
-import { AlarmType } from './interfaces';
 import { RootState, RootAction } from 'StoreTypes';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
+import { AlarmType } from './interfaces';
 import {
   startUpdateAlarms,
   stopUpdateAlarms,
@@ -25,12 +25,7 @@ import {
 /**
  * This is the alarm widget
  */
-const Alarm: FC<Props> = ({
-  alarms,
-  startUpdateAlarms,
-  stopUpdateAlarms,
-  removeAlarm,
-}: Props) => {
+const Alarm: FC<Props> = (props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const alarmElement = useRef<HTMLDivElement>(null);
@@ -54,7 +49,7 @@ const Alarm: FC<Props> = ({
     if (index !== 0 && index !== selectedIndex) {
       setSelectedIndex(0);
     }
-    removeAlarm(alarmId);
+    props.removeAlarm(alarmId);
   };
 
   const onMoreAlarmsClose = () => {
@@ -75,15 +70,15 @@ const Alarm: FC<Props> = ({
   };
 
   const onUnmount = () => {
-    stopUpdateAlarms();
+    props.stopUpdateAlarms();
   };
 
   useEffect(() => {
-    startUpdateAlarms();
+    props.startUpdateAlarms();
     return onUnmount;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return alarms && alarms.length > 0 ? (
+  return props.alarms && props.alarms.length > 0 ? (
     <div className="Alarm Alarm-list" ref={alarmElement}>
       <List component="nav" aria-label="Device settings">
         <ListItem aria-haspopup="true" aria-controls="lock-menu">
@@ -92,12 +87,12 @@ const Alarm: FC<Props> = ({
           </ListItemIcon>
           <ListItemText
             className="AlarmType-text"
-            primary={alarms[selectedIndex].type}
+            primary={props.alarms[selectedIndex].type}
           />
           <ListItemText
             className="AlarmSubType-text"
-            primary={alarms[selectedIndex].value}
-            secondary={alarms[selectedIndex].subType}
+            primary={props.alarms[selectedIndex].value}
+            secondary={props.alarms[selectedIndex].subType}
           />
           <ListItemSecondaryAction>
             <IconButton
@@ -105,7 +100,7 @@ const Alarm: FC<Props> = ({
               edge="end"
               aria-label="delete"
               onClick={() => {
-                removeAlarm(alarms[selectedIndex].id);
+                props.removeAlarm(props.alarms[selectedIndex].id);
               }}
             >
               <CloseIcon />
@@ -113,9 +108,9 @@ const Alarm: FC<Props> = ({
           </ListItemSecondaryAction>
           <ListItemSecondaryAction>
             <Badge
-              badgeContent={alarms.length}
+              badgeContent={props.alarms.length}
               color="secondary"
-              invisible={alarms.length < 2}
+              invisible={props.alarms.length < 2}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',
@@ -135,7 +130,7 @@ const Alarm: FC<Props> = ({
         open={Boolean(anchorEl)}
         onClose={onMoreAlarmsClose}
       >
-        {alarms.map((alarm: AlarmType, index: number) =>
+        {props.alarms.map((alarm: AlarmType, index: number) =>
           index !== selectedIndex ? (
             <MenuItem
               key={alarm.id}

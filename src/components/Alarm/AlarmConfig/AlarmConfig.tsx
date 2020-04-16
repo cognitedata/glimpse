@@ -29,7 +29,7 @@ import {
 import { APP_NAME } from 'constants/appData';
 import cloneDeep from 'lodash/cloneDeep';
 
-const ALARM_DOC_NAME = APP_NAME + '_ALARM_CONFIG';
+const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -113,22 +113,18 @@ const defaultFormfields = {
   },
 };
 
-const AlarmConfig: FC<Props> = ({
-  setAlerts,
-  startUpdateAlarms,
-  stopUpdateAlarms,
-}: Props) => {
+const AlarmConfig: FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [formFields, setFormFields] = useState<FormFields>({});
 
   const handleClickOpen = () => {
-    stopUpdateAlarms();
+    props.stopUpdateAlarms();
     setOpen(true);
     restoreAlarmConfig();
   };
 
   const handleClose = () => {
-    startUpdateAlarms();
+    props.startUpdateAlarms();
     setOpen(false);
   };
 
@@ -142,11 +138,11 @@ const AlarmConfig: FC<Props> = ({
       const savedAlarmConfig: { [key: string]: string } = JSON.parse(
         savedAlarmConfigStr
       );
-      for (let [key, value] of Object.entries(savedAlarmConfig)) {
-        if (value) {
-          initFormFields[key].value = value;
+      Object.keys(savedAlarmConfig).forEach(key => {
+        if (savedAlarmConfig[key]) {
+          initFormFields[key].value = savedAlarmConfig[key];
         }
-      }
+      });
     }
     setFormFields(initFormFields);
   };
@@ -158,10 +154,10 @@ const AlarmConfig: FC<Props> = ({
     const updatedFormFields: FormFields = {};
     const savingConfig: SavingConfig = {};
     let formInvalid = false;
-    for (let [key, formField] of Object.entries(formFields)) {
-      const fieldValue = formField.value;
+    Object.keys(formFields).forEach(key => {
+      const fieldValue = formFields[key].value;
       updatedFormFields[key] = {
-        ...formField,
+        ...formFields[key],
         invalid: fieldValue === '' || fieldValue === undefined,
       };
       if (fieldValue === '' || fieldValue === undefined) {
@@ -169,7 +165,7 @@ const AlarmConfig: FC<Props> = ({
       } else {
         savingConfig[key] = fieldValue;
       }
-    }
+    });
     setFormFields(updatedFormFields);
     if (!formInvalid) {
       saveAlarmConfig(savingConfig);
@@ -187,7 +183,7 @@ const AlarmConfig: FC<Props> = ({
     } catch (Error) {
       actionStatus = false;
     } finally {
-      setAlerts({
+      props.setAlerts({
         type: actionStatus ? 'success' : 'error',
         text: actionStatus ? 'Successfully saved!' : 'Error while saving!',
         hideApp: false,
@@ -227,7 +223,7 @@ const AlarmConfig: FC<Props> = ({
         data-testid="widgets-customizer-Modal"
         className="AlarmConfig-Modal"
         fullWidth
-        maxWidth={'sm'}
+        maxWidth="sm"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
@@ -248,7 +244,7 @@ const AlarmConfig: FC<Props> = ({
                 onChange={onInputChange}
                 helperText={
                   formFields[key].invalid
-                    ? formFields[key].label + ' is required!'
+                    ? `${formFields[key].label} is required!`
                     : ''
                 }
                 required

@@ -3,10 +3,10 @@ import { ActionType } from 'typesafe-actions';
 import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
+import { AlarmType } from 'components/Alarm/interfaces';
 import * as actionTypes from '../actions/actionTypes';
 
 import * as actions from '../actions/app';
-import { AlarmType } from 'components/Alarm/interfaces';
 
 export type AppAction = ActionType<typeof actions>;
 
