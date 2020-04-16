@@ -16,6 +16,8 @@ import { useLocation } from 'react-router-dom';
 import './TopBar.css';
 import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
 import MachineSelector from '../../MachineSelector/MachineSelector';
+import Alarm from 'components/Alarm/Alarm';
+import AlarmConfig from 'components/Alarm/AlarmConfig/AlarmConfig';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -123,7 +125,15 @@ const TopBar: FC<Props> = (props: Props) => {
     <div className={`${classes.grow} TopBar`}>
       <AppBar position="static">
         <Toolbar>
-          {isOnSettingPage ? <WidgetsCustomizer /> : <MachineSelector />}
+          {isOnSettingPage ? (
+            <>
+              <WidgetsCustomizer />
+              <AlarmConfig />
+            </>
+          ) : (
+            <MachineSelector />
+          )}
+          <Alarm />
           <div className={classes.grow} />
           <div className={`${classes.sectionDesktop} Right-iconHolder`}>
             <IconButton

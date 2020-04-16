@@ -11,6 +11,7 @@
 
 .Alarm-list .MuiList-root {
   padding: 0;
+  width: unset !important;
 }
 
 .Alarm-list .MuiList-root .MuiListItem-root {

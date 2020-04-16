@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import React, { useRef } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -12,45 +12,58 @@ import Badge from '@material-ui/core/Badge';
 import CloseIcon from '@material-ui/icons/Close';
 import RadioButtonCheckedIcon from '@material-ui/icons/RadioButtonChecked';
 import './Alarm.css';
+import { AlarmType } from './interfaces';
+import { RootState, RootAction } from 'StoreTypes';
+import { connect } from 'react-redux';
+import { Dispatch, bindActionCreators } from 'redux';
+import {
+  startUpdateAlarms,
+  stopUpdateAlarms,
+  removeAlarm,
+} from '../../store/actions/root-action';
 
-type AlarmType = {
-  id: number;
-  type: String;
-  subType: String;
-  value: String;
-};
-
-type AlarmProp = {
-  alarms: AlarmType[];
-};
-
-const alarms: AlarmType[] = [
-  { id: 1, type: 'Alarm', subType: 'Air Pressure Down', value: '203' },
-  { id: 2, type: 'Alarm 2', subType: 'Air Pressure Down 2', value: '233' },
-  { id: 3, type: 'Alarm 3', subType: 'Air Pressure Down 3', value: '888' },
-];
-
-export default function Alarm() {
+/**
+ * This is the alarm widget
+ */
+const Alarm: FC<Props> = ({
+  alarms,
+  startUpdateAlarms,
+  stopUpdateAlarms,
+  removeAlarm,
+}: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const alarmElement = useRef<HTMLDivElement>(null);
 
-  const handleClickListItem = (event: React.MouseEvent<HTMLElement>) => {
+  /**
+   * View more alarms
+   */
+  const onMoreAlarmsClick = () => {
     setAnchorEl(alarmElement.current);
   };
 
-  const handleMenuItemClick = (
-    event: React.MouseEvent<HTMLElement>,
-    index: number
-  ) => {
+  /**
+   * Select alarm
+   */
+  const handleMenuItemClick = (index: number) => {
     setSelectedIndex(index);
+    onMoreAlarmsClose();
+  };
+
+  const onRemoveAlarmClick = (index: number, alarmId: number) => {
+    if (index !== 0 && index !== selectedIndex) {
+      setSelectedIndex(0);
+    }
+    removeAlarm(alarmId);
+  };
+
+  const onMoreAlarmsClose = () => {
     setAnchorEl(null);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
+  /**
+   * Used to get same width and height of selected alarm div to alarms in the list
+   */
   const menuItemStyles = () => {
     const alarmEl = alarmElement.current;
     return alarmEl
@@ -61,7 +74,16 @@ export default function Alarm() {
       : {};
   };
 
-  return (
+  const onUnmount = () => {
+    stopUpdateAlarms();
+  };
+
+  useEffect(() => {
+    startUpdateAlarms();
+    return onUnmount;
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return alarms && alarms.length > 0 ? (
     <div className="Alarm Alarm-list" ref={alarmElement}>
       <List component="nav" aria-label="Device settings">
         <ListItem aria-haspopup="true" aria-controls="lock-menu">
@@ -78,22 +100,31 @@ export default function Alarm() {
             secondary={alarms[selectedIndex].subType}
           />
           <ListItemSecondaryAction>
-            <IconButton className="Close-btn" edge="end" aria-label="delete">
+            <IconButton
+              className="Close-btn"
+              edge="end"
+              aria-label="delete"
+              onClick={() => {
+                removeAlarm(alarms[selectedIndex].id);
+              }}
+            >
               <CloseIcon />
             </IconButton>
           </ListItemSecondaryAction>
-          <Badge
-            badgeContent={17}
-            color="secondary"
-            invisible={alarms.length < 2}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
-            }}
-            onClick={handleClickListItem}
-          >
-            {null}
-          </Badge>
+          <ListItemSecondaryAction>
+            <Badge
+              badgeContent={alarms.length}
+              color="secondary"
+              invisible={alarms.length < 2}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+              }}
+              onClick={onMoreAlarmsClick}
+            >
+              {null}
+            </Badge>
+          </ListItemSecondaryAction>
         </ListItem>
       </List>
       <Menu
@@ -102,14 +133,14 @@ export default function Alarm() {
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}
-        onClose={handleClose}
+        onClose={onMoreAlarmsClose}
       >
-        {alarms.map((alarm, index) =>
+        {alarms.map((alarm: AlarmType, index: number) =>
           index !== selectedIndex ? (
             <MenuItem
               key={alarm.id}
               selected={index === selectedIndex}
-              onClick={event => handleMenuItemClick(event, index)}
+              onClick={event => handleMenuItemClick(index)}
               style={menuItemStyles()}
             >
               <ListItemIcon>
@@ -126,7 +157,9 @@ export default function Alarm() {
                   className="Close-btn"
                   edge="end"
                   aria-label="delete"
-                  onClick={handleClickListItem}
+                  onClick={() => {
+                    onRemoveAlarmClick(index, alarm.id);
+                  }}
                 >
                   <CloseIcon />
                 </IconButton>
@@ -136,5 +169,23 @@ export default function Alarm() {
         )}
       </Menu>
     </div>
-  );
-}
+  ) : null;
+};
+
+const mapStateToProps = (state: RootState) => ({
+  alarms: state.appState.alarms,
+});
+
+const dispatchProps = {
+  startUpdateAlarms,
+  stopUpdateAlarms,
+  removeAlarm,
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators(dispatchProps, dispatch);
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+
+export default connect(mapStateToProps, dispatchProps)(Alarm);
