@@ -11,11 +11,12 @@ import { removeObjects } from 'utils/utils';
 import fill from 'lodash/fill';
 import Grid from '@material-ui/core/Grid';
 import { fetchEvents } from './eventFetcher';
-import Fields from './Fields';
+import Fields from '../common/Fields/Fields';
 import './Configurator.css';
+import '../common/matUIConfig.css';
 import {
   FieldObj,
-  EventConfigData,
+  EventConfigData as EventQueryData,
   FetchEvent,
   EventConfReturn,
   EventWidgetConfigProps,
@@ -23,7 +24,7 @@ import {
 } from './interfaces';
 
 /**
- * Events widgets configuration
+ * use to configure the event widget with selected multipe data/meta-data filelds
  */
 const Configurator = (props: EventWidgetConfigProps) => {
   const { onCreate, noOfFields } = props;
@@ -31,7 +32,7 @@ const Configurator = (props: EventWidgetConfigProps) => {
   const [fields, setFields] = useState<FieldObj[]>([]);
   const [isErrFetching, setIsErrFetching] = useState(false);
 
-  const defaultValues: EventConfigData = {
+  const defaultValues: EventQueryData = {
     ongoing: false,
     type: '***',
     subtype: 'VAL',
@@ -75,7 +76,7 @@ const Configurator = (props: EventWidgetConfigProps) => {
     defaultValues,
   });
 
-  const onSubmit: OnSubmit<EventConfigData> = data => {
+  const onSubmit: OnSubmit<EventQueryData> = data => {
     const { type, subtype, ongoing } = data;
     const returnObj = {} as EventConfReturn;
     returnObj.queryParams = { type, subtype, ongoing };
@@ -94,9 +95,15 @@ const Configurator = (props: EventWidgetConfigProps) => {
   };
 
   return (
-    <form className="event_config" onSubmit={handleSubmit(onSubmit)}>
+    <form
+      className="event_config mat_ui_config"
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <Paper variant="outlined" className="paperbox">
-        <section className={fields.length > 0 ? 'event_details_disabled' : ''}>
+        <section
+          data-testid="section1"
+          className={fields.length > 0 ? 'event_details_disabled' : ''}
+        >
           <Grid container spacing={3}>
             <Grid item xs={6}>
               <Controller
@@ -148,6 +155,7 @@ const Configurator = (props: EventWidgetConfigProps) => {
         </section>
         {fields.length === 0 && (
           <Button
+            data-testid="proceed-button"
             color="primary"
             variant="contained"
             onClick={() => fetchEventsArr(getValues())}
@@ -157,12 +165,12 @@ const Configurator = (props: EventWidgetConfigProps) => {
         )}
 
         {isErrFetching && (
-          <div className="error_msg">
+          <div className="error_msg" data-testid="error-msg">
             No events found for your input data. please check again!
           </div>
         )}
         {fields.length > 0 && (
-          <>
+          <div data-testid="section2">
             <section>
               <Fields
                 {...{
@@ -175,6 +183,7 @@ const Configurator = (props: EventWidgetConfigProps) => {
             <section>
               <div className="reset">
                 <Button
+                  data-testid="reset-button"
                   color="primary"
                   variant="contained"
                   type="button"
@@ -187,7 +196,7 @@ const Configurator = (props: EventWidgetConfigProps) => {
                 Create
               </Button>
             </section>
-          </>
+          </div>
         )}
       </Paper>
     </form>

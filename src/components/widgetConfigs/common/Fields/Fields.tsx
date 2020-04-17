@@ -9,9 +9,9 @@ import {
 } from 'react-hook-form';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
-import './Configurator.css';
+import './Fields.css';
 import Grid from '@material-ui/core/Grid';
-import { EventConfigData, FieldObj } from './interfaces';
+import { EventConfigData, FieldObj } from '../../event/interfaces';
 
 type EventFieldsProps = {
   control?: Control<EventConfigData>;
@@ -32,8 +32,8 @@ export default (props: EventFieldsProps) => {
     <div>
       {fields.map((item, index) => {
         return (
-          <div key={item.id} className="inner_form event_config">
-            <Grid container spacing={3}>
+          <div key={item.id} className="fields">
+            <Grid container spacing={3} className="inner_form event_config">
               <Grid item xs={6}>
                 <Controller
                   className="textField"
