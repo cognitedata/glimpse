@@ -40,6 +40,7 @@
   font-weight: bold;
   color: #242852;
   margin-right: 10px;
+  display: inline-block;
 }
 
 .Alarm-list .MuiList-root .AlarmSubType-text .MuiListItemText-secondary {
