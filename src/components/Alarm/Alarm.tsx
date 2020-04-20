@@ -23,7 +23,7 @@ import {
 } from '../../store/actions/root-action';
 
 /**
- * This is the alarm widget
+ * This is the main functional component renders the alarm widget
  */
 const Alarm: FC<Props> = (props: Props) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -31,20 +31,26 @@ const Alarm: FC<Props> = (props: Props) => {
   const alarmElement = useRef<HTMLDivElement>(null);
 
   /**
-   * View more alarms
+   * This will activate on alarms count badge click
+   * and display the alarm list in a dropdown menu
    */
   const onMoreAlarmsClick = () => {
     setAnchorEl(alarmElement.current);
   };
 
   /**
-   * Select alarm
+   * This will activate on alarm item click in the dropdown menu and
+   * set the clicked alarm as the selected alarm
    */
   const handleMenuItemClick = (index: number) => {
     setSelectedIndex(index);
     onMoreAlarmsClose();
   };
 
+  /**
+   * This will activate on remove icon click in the alarm list.
+   * 'Remove Alarm' dipatch action will be fired and list's first alarm will be selected as the default alarm.
+   */
   const onRemoveAlarmClick = (index: number, alarmId: number) => {
     if (index !== 0 && index !== selectedIndex) {
       setSelectedIndex(0);
@@ -52,12 +58,16 @@ const Alarm: FC<Props> = (props: Props) => {
     props.removeAlarm(alarmId);
   };
 
+  /**
+   * This is used to hide the alarm list dropdown menu
+   */
   const onMoreAlarmsClose = () => {
     setAnchorEl(null);
   };
 
   /**
-   * Used to get same width and height of selected alarm div to alarms in the list
+   * This is used to get the same width and height of selected alarm div
+   * to the alarm items in the dropdown list
    */
   const menuItemStyles = () => {
     const alarmEl = alarmElement.current;
@@ -69,11 +79,17 @@ const Alarm: FC<Props> = (props: Props) => {
       : {};
   };
 
+  /**
+   * Incase if component is umounted, alarms polling will be ended
+   */
   const onUnmount = () => {
     props.stopUpdateAlarms();
   };
 
   useEffect(() => {
+    /**
+     * Alarms polling dispatch action will be fired when the component is mounted
+     */
     props.startUpdateAlarms();
     return onUnmount;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -167,10 +183,16 @@ const Alarm: FC<Props> = (props: Props) => {
   ) : null;
 };
 
+/**
+ * Redux alarms state mapping to the component
+ */
 const mapStateToProps = (state: RootState) => ({
   alarms: state.appState.alarms,
 });
 
+/**
+ * Redux dispatch actions to connect to the component
+ */
 const dispatchProps = {
   startUpdateAlarms,
   stopUpdateAlarms,

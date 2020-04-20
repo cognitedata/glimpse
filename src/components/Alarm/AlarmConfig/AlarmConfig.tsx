@@ -52,7 +52,7 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
 }
 
 /**
- * This is the alarm configuration component
+ * This component is used as alarm configurator and enabled only in settings page
  */
 
 /**
@@ -88,7 +88,8 @@ type FormFields = { [key: string]: FormField };
 type SavingConfig = { [key: string]: string };
 
 /**
- * Field list in the form
+ * Fields list in the form.
+ * Form will be generated based on the items configured in this object.
  */
 const defaultFormfields = {
   eventType: {
@@ -113,23 +114,34 @@ const defaultFormfields = {
   },
 };
 
+/**
+ * This is the main functional component having the alarm configurator
+ */
 const AlarmConfig: FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [formFields, setFormFields] = useState<FormFields>({});
 
+  /**
+   * This will open the configurator popup on alarm settings icon click.
+   * Alarms polling will be stopped when the popup opens.
+   * restoreAlarmConfig function is used to fill the form fields with previously saved values
+   */
   const handleClickOpen = () => {
     props.stopUpdateAlarms();
     setOpen(true);
     restoreAlarmConfig();
   };
 
+  /**
+   * This will close the popup and start polling alarms
+   */
   const handleClose = () => {
     props.startUpdateAlarms();
     setOpen(false);
   };
 
   /**
-   * This is used to update the form fields with saved values
+   * This is used to update the form fields with previously saved values
    */
   const restoreAlarmConfig = () => {
     const savedAlarmConfigStr = localStorage.getItem(ALARM_DOC_NAME);
@@ -148,7 +160,9 @@ const AlarmConfig: FC<Props> = (props: Props) => {
   };
 
   /**
-   * This is used to validate form befor saving
+   * This is used to validate form before saving.
+   * Each field object will be updated with the validity status and error messages will be displayed accordingly.
+   * If form is valid, configurations saving function will be called.
    */
   const validateForm = () => {
     const updatedFormFields: FormFields = {};
@@ -173,7 +187,8 @@ const AlarmConfig: FC<Props> = (props: Props) => {
   };
 
   /**
-   * This is used to save alarm configurations
+   * This function is used to save alarm configurations.
+   * A alert will be displayed finally based on the saving status.
    */
   const saveAlarmConfig = (savingConfig: SavingConfig) => {
     let actionStatus = true;
@@ -192,7 +207,7 @@ const AlarmConfig: FC<Props> = (props: Props) => {
   };
 
   /**
-   * Update form fields on input change
+   * On input field value change, form fields state will be updated with the respective values and the validity status.
    */
   const onInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -272,6 +287,9 @@ const AlarmConfig: FC<Props> = (props: Props) => {
   );
 };
 
+/**
+ * Redux dispatch actions to connect to the component
+ */
 const dispatchProps = {
   setAlerts,
   startUpdateAlarms,

@@ -19,8 +19,8 @@ const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
 const REMOVED_ALARMS_DOC_NAME = `${APP_NAME}_REMOVED_ALARMS`;
 
 /**
- *
- * Alarms fetcher
+ * This is the alarms polling function which will be activated when the alarm widget is mounted.
+ * Alarm widget configurations will be used as query parameters to fetch events(Alarms)
  */
 export default function* pollUpdateAlarms(alarmConfig: {
   [key: string]: string;
@@ -63,7 +63,9 @@ export default function* pollUpdateAlarms(alarmConfig: {
   }
 }
 
-/* Watcher function for alarms update polling */
+/**
+ * This is a watcher function running to activate the alarms polling function when the Alarm widget is mounted
+ */
 export function* pollUpdateAlarmsWatcher() {
   while (true) {
     yield take(actionTypes.START_UPDATE_ALARMS);
@@ -74,7 +76,10 @@ export function* pollUpdateAlarmsWatcher() {
   }
 }
 
-// Set filtered alarms in the state
+/**
+ *
+ * This will filter out the removed alarms and other alarms will be set in the redux state.
+ */
 function* setFilteredAlarms(alarms?: AlarmType[]) {
   const rawAlarms = alarms || (yield select(getAlarms));
   let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
@@ -85,7 +90,12 @@ function* setFilteredAlarms(alarms?: AlarmType[]) {
   yield put(setAlarms(filteredAlarms));
 }
 
-// remove alarm ids from removed alarmids list if its not available in newly fetched event list
+/**
+ *
+ * "Removed Alarm Ids" list will be updated when the new events are fetched.
+ * If any of the removed alarm id is not available in the new events list,
+ * that id will be removed from the list to save the space.
+ */
 function* clearRemovedAlarmIds(alarms: AlarmType[]) {
   const fetchedAlarmIds = alarms.map(alarm => alarm.id);
   let removedAlarmIds = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
@@ -100,7 +110,8 @@ function* clearRemovedAlarmIds(alarms: AlarmType[]) {
 }
 
 /**
- * Remove alarm
+ * This is used to remove the alarms and will be fired on alarm item remove icon click.
+ * Removed alarms ids will be saved and when displaying the alarms, it will filter out the removed alarms.
  */
 export function* removeAlarm(action: any) {
   let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
