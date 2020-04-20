@@ -1,0 +1,72 @@
+.TimeseriesConfigurator {
+  margin: 10px;
+}
+
+.TimeseriesConfigurator .MuiPaper-root {
+  padding: 20px;
+}
+
+.TimeseriesConfigurator .Text-field {
+  width: 100%;
+}
+
+.TimeseriesConfigurator .Start-input {
+  width: 80px;
+  margin-right: 5px;
+}
+
+.TimeseriesConfigurator .StartUnit-input {
+  width: calc((100%) - (85px));
+}
+
+.TimeseriesConfigurator .Granularity-input {
+  width: 80px;
+  margin-right: 5px;
+}
+
+.TimeseriesConfigurator .GranularityUnit-input {
+  width: calc((100%) - (85px));
+}
+
+.TimeseriesConfigurator .Parent-label {
+  color: #ffffff;
+  margin-bottom: 5px;
+  padding-left: 2px;
+}
+
+.TimeseriesConfigurator .MuiInputBase-root {
+  color: #ffffff;
+}
+
+.TimeseriesConfigurator .MuiInputLabel-animated {
+  color: #ffffff !important;
+}
+
+.TimeseriesConfigurator .Timeseries-loader {
+  width: 25px !important;
+  height: 25px !important;
+  position: relative;
+  top: -40px;
+  margin-bottom: -25px;
+  float: right;
+  right: 10px;
+}
+
+.TimeseriesConfigurator .paperbox {
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.TimeseriesConfigurator .Button-holder {
+  margin-top: 15px;
+}
+
+.TimeseriesConfigurator .Button-holder .MuiButton-containedPrimary {
+  color: #fff;
+  background-color: #3f4777;
+  margin-right: 10px;
+}
+
+.TimeseriesConfigurator .Button-holder .Reset-button {
+  background-color: #259152;
+}
