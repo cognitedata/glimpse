@@ -15,13 +15,13 @@ import Fields from '../common/Fields/Fields';
 import './Configurator.css';
 import '../common/matUIConfig.css';
 import {
-  FieldObj,
   EventConfigData as EventQueryData,
   FetchEvent,
   EventConfReturn,
   EventWidgetConfigProps,
   WidgetConfigProps,
 } from './interfaces';
+import { FieldObj } from '../common/interfaces';
 
 /**
  * use to configure the event widget with selected multipe data/meta-data filelds

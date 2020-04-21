@@ -1,16 +1,6 @@
 // Copyright 2020 Cognite AS
 import { FieldMapping } from 'constants/widgetSettings';
-
-export type FieldObj = {
-  field: string;
-  type: string;
-  path: string;
-};
-
-export type CustomFields = {
-  fieldObj: FieldObj | null;
-  customName: string;
-};
+import { CustomFields } from '../common/interfaces';
 
 export type EventConfigData = FetchEvent & {
   fields: CustomFields[];
