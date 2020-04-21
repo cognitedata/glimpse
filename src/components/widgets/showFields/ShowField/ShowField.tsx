@@ -12,7 +12,9 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
   return (
     <div className="show-field">
       <span className="field">{label}</span>
-      <span className="value">{value}</span>
+      <span className="value">
+        {typeof value === 'object' ? JSON.stringify(value) : value}
+      </span>
     </div>
   );
 };

@@ -21,6 +21,7 @@ const renderWithRedux = (
 };
 
 describe('Widget Customizer', () => {
+  const keys = Object.keys(WIDGET_SETTINGS);
   test('Render add button intially ', async () => {
     const { getByText } = renderWithRedux(<WidgetCustomizer />, {
       appState: { ...appInitialState },
@@ -44,13 +45,13 @@ describe('Widget Customizer', () => {
       }
     );
     fireEvent.click(getByTestId('add-button'));
-    let items = await findAllByText(WIDGET_SETTINGS['1'].name);
+    let items = await findAllByText(WIDGET_SETTINGS[keys[1]].name);
     expect(items).toHaveLength(1);
-    items = await findAllByText(WIDGET_SETTINGS['2'].name);
+    items = await findAllByText(WIDGET_SETTINGS[keys[2]].name);
     expect(items).toHaveLength(1);
-    items = await findAllByText(WIDGET_SETTINGS['3'].name);
+    items = await findAllByText(WIDGET_SETTINGS[keys[3]].name);
     expect(items).toHaveLength(1);
-    items = await findAllByText(WIDGET_SETTINGS['4'].name);
+    items = await findAllByText(WIDGET_SETTINGS[keys[4]].name);
     expect(items).toHaveLength(1);
   });
 
@@ -62,7 +63,7 @@ describe('Widget Customizer', () => {
       }
     );
     fireEvent.click(getByTestId('add-button'));
-    const items = await findAllByText(WIDGET_SETTINGS['0'].name);
+    const items = await findAllByText(WIDGET_SETTINGS[keys[0]].name);
     expect(items).toHaveLength(2);
   });
 
@@ -74,11 +75,11 @@ describe('Widget Customizer', () => {
       }
     );
     fireEvent.click(getByTestId('add-button'));
-    let items = await findAllByText(WIDGET_SETTINGS['2'].name);
+    let items = await findAllByText(WIDGET_SETTINGS[keys[2]].name);
     const listItem = items[0].parentElement?.parentElement;
     if (listItem) {
       fireEvent.click(listItem);
-      items = await findAllByAltText(WIDGET_SETTINGS['2'].name);
+      items = await findAllByAltText(WIDGET_SETTINGS[keys[2]].name);
       expect(items).toHaveLength(2);
     }
   });

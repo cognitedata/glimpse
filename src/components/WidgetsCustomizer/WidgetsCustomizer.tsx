@@ -27,6 +27,9 @@ import './WidgetsCustomizer.css';
 
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import { WidgetConfigProps } from 'components/widgetConfigs/event/interfaces';
+import store from 'store';
+import { SET_NEW_WIDGET } from 'store/actions/actionTypes';
+import { WidgetConfig } from 'components/grid/interfaces';
 
 const FILTER_LABEL_WIDTH = 95;
 
@@ -81,7 +84,9 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 
 export default function WidgetsCustomizer() {
   const [open, setOpen] = useState(false);
-  const [selectedWidgetKey, setSelectedWidgetKey] = useState('0');
+  const [selectedWidgetKey, setSelectedWidgetKey] = useState(
+    Object.keys(WIDGET_SETTINGS)[0]
+  );
   const [widgetSizeFilter, setWidgetSizeFilter] = useState('All');
   const [defaultWidgetSizeFilter, setDefaultWidgetSizeFilter] = useState('All');
   const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
@@ -96,7 +101,6 @@ export default function WidgetsCustomizer() {
     setOpen(true);
     setDefaultWidgetSizeFilter('All');
     setWidgetSizeFilter('All');
-    setSelectedWidgetKey('0');
   };
 
   const handleClose = () => {
@@ -106,8 +110,8 @@ export default function WidgetsCustomizer() {
   /**
    * This returns formated widget size string
    */
-  const getSizeString = (widgetSettings: typeof WIDGET_SETTINGS, key: string) =>
-    `${widgetSettings[key].size[0]} x ${widgetSettings[key].size[1]}`;
+  const getSizeString = (key: string) =>
+    `${WIDGET_SETTINGS[key].size[0]} x ${WIDGET_SETTINGS[key].size[1]}`;
 
   const filterChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     if (event.target.value) {
@@ -119,8 +123,19 @@ export default function WidgetsCustomizer() {
       }
     }
   };
-  const onCreate = (data: any) => {
-    console.log('on parent', data);
+  const getWidgetSettingKey = (objKey: string | null = null) => {
+    if (!objKey) {
+      return WIDGET_SETTINGS[selectedWidgetKey];
+    }
+    return WIDGET_SETTINGS[objKey];
+  };
+  const onCreate = (data: WidgetConfig) => {
+    const widgetConf = { ...data };
+    widgetConf.widgetTypeId = selectedWidgetKey;
+    store.dispatch({
+      type: SET_NEW_WIDGET,
+      payload: widgetConf,
+    });
     setOpen(false);
   };
   /**
@@ -129,7 +144,7 @@ export default function WidgetsCustomizer() {
   const updateSizeMapping = () => {
     const tempSizeWidgetKeyMapping: SizeWidgetKeyMapping = { All: [] };
     Object.keys(WIDGET_SETTINGS).forEach((key, index) => {
-      const sizeString = getSizeString(WIDGET_SETTINGS, key);
+      const sizeString = getSizeString(key);
       tempSizeWidgetKeyMapping.All.push(key);
       if (tempSizeWidgetKeyMapping[sizeString]) {
         tempSizeWidgetKeyMapping[sizeString].push(key);
@@ -143,8 +158,8 @@ export default function WidgetsCustomizer() {
   useEffect(() => {
     updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const Configurator: FC<WidgetConfigProps> =
-    WIDGET_SETTINGS[selectedWidgetKey].configurator;
+  const Configurator: FC<WidgetConfigProps> = getWidgetSettingKey()
+    .configurator;
   return (
     <div className="WidgetsCustomizer">
       <Button
@@ -223,15 +238,13 @@ export default function WidgetsCustomizer() {
             </Box>
             <Box p={1} m={0.5} width="80%" className="WidgetConfig-Column">
               <div className="title">
-                {WIDGET_SETTINGS[selectedWidgetKey].name}
-                <span>
-                  ({getSizeString(WIDGET_SETTINGS, selectedWidgetKey)})
-                </span>
+                {getWidgetSettingKey().name}
+                {/* <span>({getSizeString(selectedWidgetKey)})</span> */}
               </div>
               <div className="preview">
                 <img
-                  src={WIDGET_SETTINGS[selectedWidgetKey].image}
-                  alt={WIDGET_SETTINGS[selectedWidgetKey].name}
+                  src={getWidgetSettingKey().image}
+                  alt={getWidgetSettingKey().name}
                 />
               </div>
               <Box width="100%">
