@@ -1,5 +1,7 @@
 // Copyright 2020 Cognite AS
 import { Layout } from 'react-grid-layout';
+import { WidgetConfig } from 'components/grid/interfaces';
+import WIDGET_SETTINGS from 'constants/widgetSettings';
 
 /**
  * Get calculated matrix related to the given layout
@@ -79,7 +81,7 @@ export const getEmptyPositions = (
   height: number,
   maxCols: number,
   maxRows: number
-) => {
+): [number, number] | null => {
   const matrix = getGridMap(layouts, maxCols, maxRows);
   for (let j = 0; j + height <= maxRows; j++) {
     for (let i = 0; i + width <= maxCols; i++) {
@@ -92,4 +94,11 @@ export const getEmptyPositions = (
     }
   }
   return null;
+};
+
+export const getGridLayout = (widgetConfig: WidgetConfig): Layout => {
+  const { i, cordinates, layout, widgetTypeId } = widgetConfig;
+  const isStatic = layout?.static;
+  const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
+  return { i, x: cordinates[0], y: cordinates[1], static: isStatic, w, h };
 };

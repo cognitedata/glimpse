@@ -20,6 +20,7 @@ export const initialLayoutMocked: Layout[] = [
 export const mockedWidgetConfigs: WidgetConfig[] = [
   {
     i: 'a',
+    cordinates: [0, 0],
     widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
     valueMapping: {
       fields: [
@@ -31,53 +32,9 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     },
   },
   {
-    i: 'f',
-    widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
-    queryParams: {
-      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
-    },
-    valueMapping: {
-      assetInfo: 'Description   84mm',
-      label: 'Tool Id',
-    },
-  },
-  {
-    i: 'i',
-    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
-    queryParams: {
-      externalId: 'VAL_23-LIC-92521:Z.Y.Value',
-    },
-    valueMapping: {
-      maxPrecentageValue: 1,
-      name: 'Shift Utilization',
-      timeDisplayKey: 'Elapsed Time - job',
-    },
-  },
-  {
-    i: 'd',
-    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
-    queryParams: {
-      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
-    },
-    valueMapping: {
-      name: 'Machine State',
-      isElapsedTimeEnabled: true,
-    },
-  },
-  {
-    i: 'e',
-    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
-    queryParams: {
-      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
-    },
-    valueMapping: {
-      name: 'Machine Temperature',
-      unit: '°c',
-    },
-  },
-  {
-    i: 'c',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    i: 'b',
+    cordinates: [0, 1],
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
     queryParams: {
       type: '***',
       subtype: 'VAL',
@@ -89,19 +46,64 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
           label: 'Work Order',
           key: 'metadata.WORKORDER_NUMBER',
         },
-        {
-          label: 'Event Sub Type',
-          key: 'subtype',
-        },
-        {
-          label: 'Metadata Source Id',
-          key: 'metadata.sourceId',
-        },
       ],
     },
   },
   {
+    i: 'c',
+    cordinates: [0, 2],
+    widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
+    queryParams: {
+      type: '***',
+      subtype: 'VAL',
+      ongoing: false,
+    },
+    valueMapping: {
+      maxPrecentageValue: 1,
+      name: 'Shift Utilization',
+      timeDisplayKey: 'Elapsed Time - job',
+    },
+  },
+  {
+    i: 'd',
+    cordinates: [0, 4],
+    layout: { static: true },
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      name: 'Machine State',
+      isElapsedTimeEnabled: true,
+    },
+  },
+  {
+    i: 'e',
+    cordinates: [0, 5],
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      name: 'Machine Temperature',
+      unit: '°c',
+    },
+  },
+  {
+    i: 'f',
+    cordinates: [1, 0],
+    widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
+    queryParams: {
+      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+    },
+    valueMapping: {
+      assetInfo: 'Description   84mm',
+      label: 'Tool Id',
+    },
+  },
+  {
     i: 'g',
+    cordinates: [1, 1],
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_4_META_FIELDS,
     queryParams: {
       type: '***',
@@ -130,7 +132,34 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     },
   },
   {
+    i: 'h',
+    cordinates: [1, 4],
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
+    queryParams: {
+      id: 303782999296110,
+      start: '15d-ago',
+      end: 'now',
+      granularity: '4h',
+      limit: 1000,
+    },
+    valueMapping: {
+      title: '24 Hour Utilization',
+    },
+  },
+  {
+    i: 'i',
+    cordinates: [2, 0],
+    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC,
+    queryParams: {
+      externalId: 'VAL_23-LIC-92521:Z.Y.Value',
+    },
+    valueMapping: {
+      nameWithRange: '24 Hour Utilization',
+    },
+  },
+  {
     i: 'j',
+    cordinates: [3, 0],
     widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC,
     queryParams: {
       id: 303782999296110,
@@ -145,38 +174,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     },
   },
   {
-    i: 'h',
-    widgetTypeId: WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC,
-    queryParams: {
-      id: 303782999296110,
-      start: '15d-ago',
-      end: 'now',
-      granularity: '4h',
-      limit: 1000,
-    },
-    valueMapping: {
-      nameWithRange: '24 Hour Utilization',
-    },
-  },
-  {
-    i: 'b',
-    widgetTypeId: WIDGET_TYPE_IDS.EVENT_BASIC,
-    queryParams: {
-      type: '***',
-      subtype: 'VAL',
-      ongoing: false,
-    },
-    valueMapping: {
-      fields: [
-        {
-          label: 'Work Order',
-          key: 'metadata.WORKORDER_NUMBER',
-        },
-      ],
-    },
-  },
-  {
     i: 'k',
+    cordinates: [2, 2],
     widgetTypeId: WIDGET_TYPE_IDS.EVENT_3_META_FIELDS,
     queryParams: {
       type: '***',

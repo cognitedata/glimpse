@@ -83,7 +83,8 @@ const Configurator = (props: EventWidgetConfigProps) => {
     returnObj.valueMapping = {
       fields: data.fields.map(field => ({
         key: field.fieldObj?.path,
-        label: field.customName,
+        label:
+          field.customName === '' ? field.fieldObj!.field : field.customName,
       })),
     };
     onCreate(returnObj);
