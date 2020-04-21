@@ -70,3 +70,8 @@
 .TimeseriesConfigurator .Button-holder .Reset-button {
   background-color: #259152;
 }
+
+.TimeseriesConfigurator .switch {
+  margin-left: 2px;
+  margin-bottom: 10px;
+}

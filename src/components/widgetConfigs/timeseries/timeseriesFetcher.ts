@@ -7,7 +7,7 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
 /**
  *
- * Fetch timeseries from cognite client based on input values.
+ * Fetch timeseries from cognite client based on the timeseries external id.
  */
 export const fetchTimeseries = async (tsExternalId: string) => {
   const cdfClient: CogniteClient = getCdfClient(store.getState());

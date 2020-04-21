@@ -2,6 +2,7 @@
 
 export type DefaultProps = {
   onCreate: Function;
+  configFields: string[];
 };
 
 export type FormValues = {
@@ -12,4 +13,15 @@ export type FormValues = {
   startUnit: string;
   granularityValue: number;
   granularityUnit: string;
+  elapsedTimeEnabler: boolean;
+  timeDisplayKey: string;
+  maxPrecentageValue: number;
+};
+
+export type QueryParams = {
+  [key: string]: string | number;
+};
+
+export type ValueMapping = {
+  [key: string]: string | boolean | number;
 };

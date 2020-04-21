@@ -3,34 +3,29 @@ import React, { useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import FormLabel from '@material-ui/core/FormLabel';
 import CircularProgress from '@material-ui/core/CircularProgress';
+
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { fetchTimeseries } from './tsFetcher';
 import './TimeseriesConfigurator.css';
-import { FormValues, DefaultProps } from './interfaces';
 import { RootAction } from 'StoreTypes';
 import { bindActionCreators, Dispatch } from 'redux';
-import { connect } from 'react-redux';
 
 import { setAlerts } from 'store/actions/root-action';
-
-const timeUnitMapping: { [key: string]: string } = {
-  w: 'Week',
-  d: 'Day',
-  h: 'Hour',
-  m: 'Minute',
-  s: 'Second',
-};
+import {
+  FormValues,
+  DefaultProps,
+  QueryParams,
+  ValueMapping,
+} from './interfaces';
+import { fetchTimeseries } from './timeseriesFetcher';
+import { getDynamicFields, timeUnitMapping } from './constants';
 
 /**
- * Events widgets configuration
+ * Base component for timeseries related widget configurators.
  */
-const TimeseriesConfigurator = (props: Props) => {
-  const { onCreate } = props;
+export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
+  const { onCreate, configFields } = props;
   const [timeseriesLoading, setTimeseriesLoading] = useState(false);
 
   const defaultValues: FormValues = {
@@ -41,18 +36,28 @@ const TimeseriesConfigurator = (props: Props) => {
     startUnit: 'd',
     granularityValue: 4,
     granularityUnit: 'd',
+    elapsedTimeEnabler: false,
+    timeDisplayKey: '',
+    maxPrecentageValue: 1,
   };
 
   const { handleSubmit, reset, control, getValues, setValue } = useForm({
     defaultValues,
   });
 
+  /**
+   * This activates when the Timeseries external id is entered and user leaves the text box.
+   * This passes user entered timeseries external id and fetch timeseries data.
+   * Timeseries name and unit is set in the form.
+   * If there is no timeseries for the entered timeseries external id, it will show an alert.
+   */
   const onTsExternalIdBlur = async () => {
     if (getValues().timeseriesExternalId) {
       setTimeseriesLoading(true);
       const timeseries = await fetchTimeseries(
         getValues().timeseriesExternalId
       );
+
       if (timeseries) {
         setValue('timeseriesName', timeseries.name);
         setValue('timeseriesUnit', timeseries.unit);
@@ -69,25 +74,54 @@ const TimeseriesConfigurator = (props: Props) => {
     }
   };
 
+  /**
+   *
+   * This activated when user submit the form.
+   * Return value is updated based on the required fields.
+   */
   const onSubmit = (data: FormValues) => {
+    const queryParams: QueryParams = {
+      id: data.timeseriesExternalId,
+    };
+
+    const valueMapping: ValueMapping = {
+      name: data.timeseriesName,
+    };
+
+    configFields.forEach(configField => {
+      switch (configField) {
+        case 'start':
+          queryParams.start = `${data.startValue + data.startUnit}-ago`;
+          queryParams.end = 'now';
+          queryParams.limit = 1000;
+          break;
+        case 'granularity':
+          queryParams.granularity =
+            data.granularityValue + data.granularityUnit;
+          break;
+        case 'unit':
+          valueMapping.unit = data.timeseriesUnit ? data.timeseriesUnit : '';
+          break;
+        case 'nameWithRange':
+          valueMapping.nameWithRange = `${data.startValue} ${
+            timeUnitMapping[data.startUnit]
+          } ${data.timeseriesName}`;
+          break;
+        case 'elapsedTimeEnabler':
+          valueMapping.isElapsedTimeEnabled = data.elapsedTimeEnabler;
+          break;
+        case 'timeDisplayKey':
+          valueMapping.timeDisplayKey = data.timeDisplayKey;
+          break;
+        case 'maxPrecentageValue':
+          valueMapping.maxPrecentageValue = data.maxPrecentageValue;
+          break;
+      }
+    });
+
     const returnObj = {
-      queryParams: {
-        id: data.timeseriesExternalId,
-        start: data.startValue + data.startUnit + '-ago',
-        end: 'now',
-        granularity: data.granularityValue + data.granularityUnit,
-        limit: 1000,
-      },
-      valueMapping: {
-        name: data.timeseriesName,
-        title:
-          data.startValue +
-          ' ' +
-          timeUnitMapping[data.startUnit] +
-          ' ' +
-          data.timeseriesName,
-        unit: data.timeseriesUnit ? data.timeseriesUnit : '',
-      },
+      queryParams,
+      valueMapping,
     };
     onCreate(returnObj);
   };
@@ -101,18 +135,26 @@ const TimeseriesConfigurator = (props: Props) => {
               <Controller
                 className="Text-field"
                 label="Timeseries External Id"
-                as={<TextField variant="outlined" required />}
+                as={
+                  <TextField
+                    id="timeseriesExternalId"
+                    variant="outlined"
+                    required
+                  />
+                }
                 name="timeseriesExternalId"
                 control={control}
                 onBlur={onTsExternalIdBlur}
               />
             </Grid>
+
             <Grid item xs={6}>
               <Controller
                 className="Text-field"
                 label="Timeseries Name"
                 as={
                   <TextField
+                    id="timeseriesName"
                     variant="outlined"
                     disabled={timeseriesLoading}
                     required
@@ -128,78 +170,21 @@ const TimeseriesConfigurator = (props: Props) => {
                 />
               ) : null}
             </Grid>
-            <Grid item xs={6}>
-              <FormLabel className="Parent-label" component="legend">
-                {' '}
-                Start Time{' '}
-              </FormLabel>
-              <Controller
-                className="Start-input"
-                as={
-                  <TextField
-                    type="number"
-                    inputProps={{ min: '0' }}
-                    variant="outlined"
-                  />
-                }
-                name="startValue"
-                control={control}
-              />
-              <Controller
-                className="StartUnit-input"
-                as={
-                  <Select id="startUnit" variant="outlined">
-                    {Object.keys(timeUnitMapping).map(key => (
-                      <MenuItem key={key} value={key}>
-                        {timeUnitMapping[key]}(s) ago
-                      </MenuItem>
-                    ))}
-                  </Select>
-                }
-                name="startUnit"
-                control={control}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <FormLabel className="Parent-label" component="legend">
-                {' '}
-                Granularity{' '}
-              </FormLabel>
-              <Controller
-                className="Granularity-input"
-                as={
-                  <TextField
-                    type="number"
-                    inputProps={{ min: '0' }}
-                    variant="outlined"
-                  />
-                }
-                name="granularityValue"
-                control={control}
-              />
-              <Controller
-                className="GranularityUnit-input"
-                as={
-                  <Select id="granularityUnit" variant="outlined">
-                    {Object.keys(timeUnitMapping).map(key =>
-                      key !== 'w' ? (
-                        <MenuItem key={key} value={key}>
-                          {timeUnitMapping[key]}(s)
-                        </MenuItem>
-                      ) : null
-                    )}
-                  </Select>
-                }
-                name="granularityUnit"
-                control={control}
-              />
-            </Grid>
+
+            {/**
+             *
+             * This loads additional form fields dynamically
+             */
+            configFields.map(configField =>
+              getDynamicFields(configField, control)
+            )}
           </Grid>
         </section>
         <section>
           <div className="Button-holder">
             <Button
               className="Reset-button"
+              data-testid="reset-button"
               color="primary"
               variant="contained"
               type="button"
@@ -207,7 +192,12 @@ const TimeseriesConfigurator = (props: Props) => {
             >
               Reset
             </Button>
-            <Button variant="contained" color="primary" type="submit">
+            <Button
+              data-testid="create-button"
+              variant="contained"
+              color="primary"
+              type="submit"
+            >
               Create
             </Button>
           </div>
@@ -217,13 +207,14 @@ const TimeseriesConfigurator = (props: Props) => {
   );
 };
 
-const dispatchProps = {
+export const dispatchProps = {
   setAlerts,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-type Props = ReturnType<typeof mapDispatchToProps> & DefaultProps;
-
-export default connect(null, dispatchProps)(TimeseriesConfigurator);
+export type TimeseriesConfiguratorProps = ReturnType<
+  typeof mapDispatchToProps
+> &
+  DefaultProps;
