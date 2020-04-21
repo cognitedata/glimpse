@@ -11,15 +11,16 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import TextField from '@material-ui/core/TextField';
 import './Fields.css';
 import Grid from '@material-ui/core/Grid';
-import { EventConfigData, FieldObj } from '../../event/interfaces';
+import { FieldControl, FieldObj } from '../interfaces';
 
 type EventFieldsProps = {
-  control?: Control<EventConfigData>;
-  errors?: NestDataObject<EventConfigData, FieldError>;
+  control?: Control<FieldControl>;
+  errors?: NestDataObject<FieldControl, FieldError>;
   fields: FieldObj[];
 };
 /**
- * Nested Form, Generate based on the number of fields.
+ * This is a nested form. Which can be used to show multiple number of inline
+ * property selection dropdown and customName fields with validation.
  */
 export default (props: EventFieldsProps) => {
   const { control, errors } = props;
