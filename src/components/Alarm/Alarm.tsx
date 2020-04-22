@@ -69,7 +69,7 @@ const Alarm: FC<Props> = (props: Props) => {
    * This is used to get the same width and height of selected alarm div
    * to the alarm items in the dropdown list
    */
-  const menuItemStyles = () => {
+  const getMenuDimensions = () => {
     const alarmEl = alarmElement.current;
     return alarmEl
       ? {
@@ -152,7 +152,7 @@ const Alarm: FC<Props> = (props: Props) => {
               key={alarm.id}
               selected={index === selectedIndex}
               onClick={event => handleMenuItemClick(index)}
-              style={menuItemStyles()}
+              style={getMenuDimensions()}
             >
               <ListItemIcon>
                 <RadioButtonCheckedIcon fontSize="small" />

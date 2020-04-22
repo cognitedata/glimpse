@@ -1,5 +1,6 @@
 // Copyright 2020 Cognite AS
 import React, { FC, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
 import {
   createStyles,
   Theme,
@@ -16,8 +17,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import AddAlarmIcon from '@material-ui/icons/AddAlarm';
 import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
 
-import './AlarmConfig.css';
+import './AlarmConfigurator.css';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction } from 'StoreTypes';
 import { connect } from 'react-redux';
@@ -27,7 +29,6 @@ import {
   stopUpdateAlarms,
 } from 'store/actions/root-action';
 import { APP_NAME } from 'constants/appData';
-import cloneDeep from 'lodash/cloneDeep';
 
 const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
 
@@ -77,49 +78,30 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
 });
 
 type FormField = {
-  label: string;
-  type: string;
-  value?: string;
-  invalid?: boolean;
+  eventType: string;
+  eventSubtype: string;
+  metafieldKey: string;
+  pollingInterval: number;
+  startTime: number;
 };
 
-type FormFields = { [key: string]: FormField };
-
-type SavingConfig = { [key: string]: string };
-
-/**
- * Fields list in the form.
- * Form will be generated based on the items configured in this object.
- */
-const defaultFormfields = {
-  eventType: {
-    label: 'Event Type',
-    type: 'text',
-    value: '',
-  },
-  eventSubtype: {
-    label: 'Event Subtype',
-    type: 'text',
-    value: '',
-  },
-  metafieldKey: {
-    label: 'Metafield Key',
-    type: 'text',
-    value: '',
-  },
-  pollingInterval: {
-    label: 'Polling Interval',
-    type: 'number',
-    value: '10000',
-  },
+const defaultValues = {
+  eventType: '',
+  eventSubtype: '',
+  metafieldKey: '',
+  pollingInterval: 10000,
+  startTime: 24,
 };
 
 /**
  * This is the main functional component having the alarm configurator
  */
-const AlarmConfig: FC<Props> = (props: Props) => {
+const AlarmConfigurator: FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
-  const [formFields, setFormFields] = useState<FormFields>({});
+
+  const { handleSubmit, control, setValue } = useForm({
+    defaultValues,
+  });
 
   /**
    * This will open the configurator popup on alarm settings icon click.
@@ -129,7 +111,9 @@ const AlarmConfig: FC<Props> = (props: Props) => {
   const handleClickOpen = () => {
     props.stopUpdateAlarms();
     setOpen(true);
-    restoreAlarmConfig();
+    setTimeout(() => {
+      restoreAlarmConfig();
+    }, 10);
   };
 
   /**
@@ -145,44 +129,15 @@ const AlarmConfig: FC<Props> = (props: Props) => {
    */
   const restoreAlarmConfig = () => {
     const savedAlarmConfigStr = localStorage.getItem(ALARM_DOC_NAME);
-    const initFormFields: FormFields = cloneDeep(defaultFormfields);
     if (savedAlarmConfigStr) {
       const savedAlarmConfig: { [key: string]: string } = JSON.parse(
         savedAlarmConfigStr
       );
       Object.keys(savedAlarmConfig).forEach(key => {
         if (savedAlarmConfig[key]) {
-          initFormFields[key].value = savedAlarmConfig[key];
+          setValue(key, savedAlarmConfig[key]);
         }
       });
-    }
-    setFormFields(initFormFields);
-  };
-
-  /**
-   * This is used to validate form before saving.
-   * Each field object will be updated with the validity status and error messages will be displayed accordingly.
-   * If form is valid, configurations saving function will be called.
-   */
-  const validateForm = () => {
-    const updatedFormFields: FormFields = {};
-    const savingConfig: SavingConfig = {};
-    let formInvalid = false;
-    Object.keys(formFields).forEach(key => {
-      const fieldValue = formFields[key].value;
-      updatedFormFields[key] = {
-        ...formFields[key],
-        invalid: fieldValue === '' || fieldValue === undefined,
-      };
-      if (fieldValue === '' || fieldValue === undefined) {
-        formInvalid = true;
-      } else {
-        savingConfig[key] = fieldValue;
-      }
-    });
-    setFormFields(updatedFormFields);
-    if (!formInvalid) {
-      saveAlarmConfig(savingConfig);
     }
   };
 
@@ -190,10 +145,10 @@ const AlarmConfig: FC<Props> = (props: Props) => {
    * This function is used to save alarm configurations.
    * A alert will be displayed finally based on the saving status.
    */
-  const saveAlarmConfig = (savingConfig: SavingConfig) => {
+  const onSubmit = (data: FormField) => {
     let actionStatus = true;
     try {
-      localStorage.setItem(ALARM_DOC_NAME, JSON.stringify(savingConfig));
+      localStorage.setItem(ALARM_DOC_NAME, JSON.stringify(data));
       handleClose();
     } catch (Error) {
       actionStatus = false;
@@ -206,26 +161,8 @@ const AlarmConfig: FC<Props> = (props: Props) => {
     }
   };
 
-  /**
-   * On input field value change, form fields state will be updated with the respective values and the validity status.
-   */
-  const onInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const fieldId = e.target.id;
-    const fieldValue = e.target.value;
-    setFormFields({
-      ...formFields,
-      [fieldId]: {
-        ...formFields[fieldId],
-        invalid: fieldValue === '',
-        value: fieldValue,
-      },
-    });
-  };
-
   return (
-    <div className="AlarmConfig">
+    <div className="AlarmConfigurator">
       <IconButton
         className="Config-button"
         data-testid="config-button"
@@ -237,51 +174,109 @@ const AlarmConfig: FC<Props> = (props: Props) => {
       </IconButton>
       <Dialog
         data-testid="widgets-customizer-Modal"
-        className="AlarmConfig-Modal"
+        className="AlarmConfigurator-Modal"
         fullWidth
         maxWidth="sm"
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Alarm Configuration
-        </DialogTitle>
-        <MuiDialogContent dividers>
-          <form noValidate autoComplete="off">
-            {Object.keys(formFields).map(key => (
-              <TextField
-                key={key}
-                id={key}
-                data-testid={key}
-                label={formFields[key].label}
-                variant="outlined"
-                type={formFields[key].type}
-                defaultValue={formFields[key].value}
-                error={formFields[key].invalid}
-                onChange={onInputChange}
-                helperText={
-                  formFields[key].invalid
-                    ? `${formFields[key].label} is required!`
-                    : ''
-                }
-                required
-              />
-            ))}
-          </form>
-        </MuiDialogContent>
-        <MuiDialogActions>
-          <Button autoFocus onClick={validateForm} color="primary">
-            Save
-          </Button>
-          <Button
-            data-testid="close-button"
-            onClick={handleClose}
-            color="primary"
-          >
-            Close
-          </Button>
-        </MuiDialogActions>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+            Alarm Configuration
+          </DialogTitle>
+          <MuiDialogContent dividers>
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <Controller
+                  label="Event Type"
+                  as={<TextField id="eventType" variant="outlined" required />}
+                  name="eventType"
+                  control={control}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  label="Event Subtype"
+                  as={
+                    <TextField id="eventSubtype" variant="outlined" required />
+                  }
+                  name="eventSubtype"
+                  control={control}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  label="Metafield Key"
+                  as={
+                    <TextField id="metafieldKey" variant="outlined" required />
+                  }
+                  name="metafieldKey"
+                  control={control}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Controller
+                  label="Polling Interval"
+                  as={
+                    <TextField
+                      id="pollingInterval"
+                      data-testid="pollingInterval"
+                      type="number"
+                      variant="outlined"
+                      inputProps={{ min: '1' }}
+                      required
+                    />
+                  }
+                  name="pollingInterval"
+                  control={control}
+                />
+              </Grid>
+
+              <Grid item xs={9}>
+                <Controller
+                  label="Start Time"
+                  as={
+                    <TextField
+                      id="startTime"
+                      data-testid="startTime"
+                      type="number"
+                      variant="outlined"
+                      inputProps={{ min: '1', max: '24' }}
+                      required
+                    />
+                  }
+                  name="startTime"
+                  control={control}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  variant="outlined"
+                  value="Hour(s) ago"
+                  disabled
+                  required
+                />
+              </Grid>
+            </Grid>
+          </MuiDialogContent>
+          <MuiDialogActions>
+            <Button autoFocus type="submit" color="primary">
+              Save
+            </Button>
+            <Button
+              data-testid="close-button"
+              onClick={handleClose}
+              color="primary"
+            >
+              Close
+            </Button>
+          </MuiDialogActions>
+        </form>
       </Dialog>
     </div>
   );
@@ -301,4 +296,4 @@ const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
 
 type Props = ReturnType<typeof mapDispatchToProps>;
 
-export default connect(null, dispatchProps)(AlarmConfig);
+export default connect(null, dispatchProps)(AlarmConfigurator);

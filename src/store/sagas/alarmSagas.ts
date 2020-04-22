@@ -8,6 +8,7 @@ import { AlarmType } from 'components/Alarm/interfaces';
 import { APP_NAME } from 'constants/appData';
 import { AppAction } from 'store/reducers/app';
 import includes from 'lodash/includes';
+import moment from 'moment';
 import * as actionTypes from '../actions/actionTypes';
 import { setAlarms } from '../actions/root-action';
 
@@ -19,8 +20,7 @@ const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
 const REMOVED_ALARMS_DOC_NAME = `${APP_NAME}_REMOVED_ALARMS`;
 
 /**
- * This is the alarms polling function which will be activated when the alarm widget is mounted.
- * Alarm widget configurations will be used as query parameters to fetch events(Alarms)
+ * This saga is used to poll alarms and set in the state
  */
 export default function* pollUpdateAlarms(alarmConfig: {
   [key: string]: string;
@@ -29,9 +29,14 @@ export default function* pollUpdateAlarms(alarmConfig: {
     const cdfClient = yield select(getCdfClient);
     const assetId = yield select(getAssetId);
     if (assetId != null) {
+      const minStartTime = moment()
+        .subtract(alarmConfig.startTime, 'hours')
+        .utc()
+        .toDate();
       const eventsResults = yield cdfClient.events.list({
-        sort: { lastUpdatedTime: 'desc' },
+        sort: { createdTime: 'desc' },
         filter: {
+          createdTime: { min: minStartTime },
           assetIds: [assetId],
           type: alarmConfig.eventType,
           subtype: alarmConfig.eventSubtype,
@@ -64,7 +69,7 @@ export default function* pollUpdateAlarms(alarmConfig: {
 }
 
 /**
- * This is a watcher function running to activate the alarms polling function when the Alarm widget is mounted
+ * This is a watcher function running to activate the alarms polling saga
  */
 export function* pollUpdateAlarmsWatcher() {
   while (true) {
@@ -78,7 +83,7 @@ export function* pollUpdateAlarmsWatcher() {
 
 /**
  *
- * This will filter out the removed alarms and other alarms will be set in the redux state.
+ * This will filter out the removed alarms and other alarms will be set in the state.
  */
 function* setFilteredAlarms(alarms?: AlarmType[]) {
   const rawAlarms = alarms || (yield select(getAlarms));
@@ -110,8 +115,7 @@ function* clearRemovedAlarmIds(alarms: AlarmType[]) {
 }
 
 /**
- * This is used to remove the alarms and will be fired on alarm item remove icon click.
- * Removed alarms ids will be saved and when displaying the alarms, it will filter out the removed alarms.
+ * This saga is used to save the removed alarms ids
  */
 export function* removeAlarm(action: any) {
   let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);

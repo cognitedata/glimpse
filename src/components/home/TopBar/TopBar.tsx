@@ -16,7 +16,7 @@ import { useLocation } from 'react-router-dom';
 import './TopBar.css';
 import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
 import Alarm from 'components/Alarm/Alarm';
-import AlarmConfig from 'components/Alarm/AlarmConfig/AlarmConfig';
+import AlarmConfigurator from 'components/Alarm/Configurator/AlarmConfigurator';
 import MachineSelector from '../../MachineSelector/MachineSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -128,7 +128,7 @@ const TopBar: FC<Props> = (props: Props) => {
           {isOnSettingPage ? (
             <>
               <WidgetsCustomizer />
-              <AlarmConfig />
+              <AlarmConfigurator />
             </>
           ) : (
             <MachineSelector />
