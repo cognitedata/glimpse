@@ -47,7 +47,7 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
         <ResponsiveGridLayout
           className="layout"
           compactType={null}
-          onLayoutChange={props.onLayoutChange}
+          onDragStop={props.onDragStop}
           isResizable={IS_RESIZABLE}
           margin={MARGIN}
           maxRows={MAXROWS}

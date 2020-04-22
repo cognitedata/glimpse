@@ -33,10 +33,11 @@ import TimeseriesFancyNumericConfigurator from 'components/widgetConfigs/timeser
 
 import * as actionTypes from '../store/actions/actionTypes';
 
+export const WIDGET_CONF_DB = 'widget-config';
+
 /**
  * This contains all the widget types settings
  */
-
 export const WIDGET_TYPE_IDS = {
   ASSET_INFO: 'ASSET_INFO',
   EVENT_BASIC: 'EVENT_BASIC',
