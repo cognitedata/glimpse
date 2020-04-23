@@ -55,6 +55,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
    * @param newLayouts
    */
   const onDragStop = async (newLayouts: Layout[]) => {
+    setLayouts(newLayouts);
     const isSuccess = await updateLayout(
       props.user,
       props.assetId,
@@ -129,6 +130,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     const { widgetTypeId } = widgetConfig;
     const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
     const widgetCordinates = getEmptyPositions(layouts, w, h, MAXCOLS, MAXROWS);
+    console.log(layouts, widgetCordinates);
     if (!widgetCordinates) {
       onError('There is no position for adding the component');
       return;
@@ -144,7 +146,9 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       onError
     );
     if (isSuccess) {
-      setLayouts(newWidgetConfs.map(widConf => getGridLayout(widConf)));
+      setLayouts(prevLayout =>
+        [...prevLayout].concat(getGridLayout(newWidgetConf))
+      );
       setWidgetConfigs(newWidgetConfs);
     }
   };

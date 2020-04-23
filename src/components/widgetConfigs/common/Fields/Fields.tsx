@@ -65,11 +65,13 @@ export default (props: EventFieldsProps) => {
                   rules={{ required: true }}
                   control={control}
                 />
-                {errors?.fields && errors.fields[index].fieldObj && (
-                  <span className="validation_msg">
-                    Field {fields.length > 1 ? index + 1 : ''} is required
-                  </span>
-                )}
+                {errors?.fields &&
+                  errors.fields[index] &&
+                  errors.fields[index].fieldObj && (
+                    <span className="validation_msg">
+                      Field {fields.length > 1 ? index + 1 : ''} is required
+                    </span>
+                  )}
               </Grid>
               <Grid item xs={6}>
                 <Controller
@@ -86,11 +88,13 @@ export default (props: EventFieldsProps) => {
                   rules={{ required: isCustomNameRequired }}
                   control={control}
                 />
-                {errors?.fields && errors.fields[index].customName && (
-                  <span className="validation_msg">
-                    Custom Name is required
-                  </span>
-                )}
+                {errors?.fields &&
+                  errors.fields[index] &&
+                  errors.fields[index].customName && (
+                    <span className="validation_msg">
+                      Custom Name is required
+                    </span>
+                  )}
               </Grid>
             </Grid>
           </div>
