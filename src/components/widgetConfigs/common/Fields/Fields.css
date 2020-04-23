@@ -1,8 +1,15 @@
 .fields .textField {
   margin-right: 20px;
-  width: 80%;
+  width: 100%;
 }
 
-.fields .inner_form {
-  margin: 30px 0 20px 0;
+.fields .error_msg {
+  margin-top: 20px;
+}
+
+.fields .validation_msg {
+  font-size: 0.8em;
+  color: red;
+  padding-top: 10px;
+  padding-left: 10px;
 }

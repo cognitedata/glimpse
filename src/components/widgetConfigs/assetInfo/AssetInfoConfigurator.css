@@ -1,0 +1,33 @@
+.AssetInfoConfigurator {
+  margin: 10px;
+}
+
+.AssetInfoConfigurator .MuiPaper-root {
+  padding: 20px;
+}
+
+.AssetInfoConfigurator .MuiInputBase-root {
+  color: #ffffff;
+}
+
+.AssetInfoConfigurator .MuiInputLabel-animated {
+  color: #ffffff !important;
+}
+
+.AssetInfoConfigurator .paperbox {
+  border-radius: 10px;
+}
+
+.AssetInfoConfigurator .Button-holder {
+  margin-top: 15px;
+}
+
+.AssetInfoConfigurator .Button-holder .MuiButton-containedPrimary {
+  color: #fff;
+  background-color: #3f4777;
+  margin-right: 10px;
+}
+
+.AssetInfoConfigurator .Button-holder .Reset-button {
+  background-color: #259152;
+}

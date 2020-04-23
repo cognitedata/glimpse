@@ -24,6 +24,7 @@ import {
   EventThreeMetaConfigurator,
   EventFourMetaConfigurator,
 } from 'components/widgetConfigs/event/Configurator';
+import AssetInfoConfigurator from 'components/widgetConfigs/assetInfo/AssetInfoConfigurator';
 import * as actionTypes from '../store/actions/actionTypes';
 
 /**
@@ -112,7 +113,7 @@ const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
     name: 'Asset info',
     image: assetInfoImg,
-    configurator: EventOneMetaConfigurator,
+    configurator: AssetInfoConfigurator,
     size: [1, 1],
     component: ShowFields,
     mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (

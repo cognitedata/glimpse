@@ -17,13 +17,14 @@ type EventFieldsProps = {
   control?: Control<FieldControl>;
   errors?: NestDataObject<FieldControl, FieldError>;
   fields: FieldObj[];
+  isCustomNameRequired?: boolean;
 };
 /**
  * This is a nested form. Which can be used to show multiple number of inline
  * property selection dropdown and customName fields with validation.
  */
 export default (props: EventFieldsProps) => {
-  const { control, errors } = props;
+  const { control, errors, isCustomNameRequired = false } = props;
   const { fields } = useFieldArray({
     control,
     name: `fields`,
@@ -34,7 +35,7 @@ export default (props: EventFieldsProps) => {
       {fields.map((item, index) => {
         return (
           <div key={item.id} className="fields">
-            <Grid container spacing={3} className="inner_form event_config">
+            <Grid container spacing={3} className="inner_form">
               <Grid item xs={6}>
                 <Controller
                   className="textField"
@@ -49,7 +50,9 @@ export default (props: EventFieldsProps) => {
                         <TextField
                           variant="outlined"
                           {...params}
-                          label={`Select Field ${index + 1}`}
+                          label={`Select Field ${
+                            fields.length > 1 ? index + 1 : ''
+                          }`}
                           placeholder="Search Field"
                         />
                       )}
@@ -62,8 +65,10 @@ export default (props: EventFieldsProps) => {
                   rules={{ required: true }}
                   control={control}
                 />
-                {errors?.fields && errors.fields[index] && (
-                  <span className="validation_msg">Your input is required</span>
+                {errors?.fields && errors.fields[index].fieldObj && (
+                  <span className="validation_msg">
+                    Field {fields.length > 1 ? index + 1 : ''} is required
+                  </span>
                 )}
               </Grid>
               <Grid item xs={6}>
@@ -71,14 +76,21 @@ export default (props: EventFieldsProps) => {
                   className="textField"
                   as={
                     <TextField
+                      id="customName"
                       label="Custom Name"
                       variant="outlined"
                       placeholder="Enter Name"
                     />
                   }
                   name={`fields[${index}].customName`}
+                  rules={{ required: isCustomNameRequired }}
                   control={control}
                 />
+                {errors?.fields && errors.fields[index].customName && (
+                  <span className="validation_msg">
+                    Custom Name is required
+                  </span>
+                )}
               </Grid>
             </Grid>
           </div>
