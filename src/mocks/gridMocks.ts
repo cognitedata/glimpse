@@ -48,8 +48,8 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       externalId: 'VAL_23-LIC-92521:Z.Y.Value',
     },
     valueMapping: {
-      maxPrecentageVal: 1,
-      title: 'Shift Utilization',
+      maxPrecentageValue: 1,
+      name: 'Shift Utilization',
       timeDisplayKey: 'Elapsed Time - job',
     },
   },
@@ -60,7 +60,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
     },
     valueMapping: {
-      label: 'Machine State',
+      name: 'Machine State',
       isElapsedTimeEnabled: true,
     },
   },
@@ -71,7 +71,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
     },
     valueMapping: {
-      label: 'Machine Temperature',
+      name: 'Machine Temperature',
       unit: '°c',
     },
   },
@@ -155,7 +155,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       limit: 1000,
     },
     valueMapping: {
-      title: '24 Hour Utilization',
+      nameWithRange: '24 Hour Utilization',
     },
   },
   {
