@@ -11,9 +11,13 @@ import NotificationsOutlined from '@material-ui/icons/NotificationsOutlined';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { RootState } from 'StoreTypes';
-
-import MachineSelector from '../../MachineSelector/MachineSelector';
+import { RouterPaths } from 'constants/router';
+import { useLocation } from 'react-router-dom';
 import './TopBar.css';
+import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
+import Alarm from 'components/Alarm/Alarm';
+import AlarmConfigurator from 'components/Alarm/Configurator/AlarmConfigurator';
+import MachineSelector from '../../MachineSelector/MachineSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
  */
 
 const TopBar: FC<Props> = (props: Props) => {
+  const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [
@@ -120,7 +125,15 @@ const TopBar: FC<Props> = (props: Props) => {
     <div className={`${classes.grow} TopBar`}>
       <AppBar position="static">
         <Toolbar>
-          <MachineSelector />
+          {isOnSettingPage ? (
+            <>
+              <WidgetsCustomizer />
+              <AlarmConfigurator />
+            </>
+          ) : (
+            <MachineSelector />
+          )}
+          <Alarm />
           <div className={classes.grow} />
           <div className={`${classes.sectionDesktop} Right-iconHolder`}>
             <IconButton

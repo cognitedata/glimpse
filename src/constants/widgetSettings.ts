@@ -1,16 +1,29 @@
 // Copyright 2020 Cognite AS
 import { RootState } from 'StoreTypes';
-import ShowFieldsOne from 'components/widgets/showFields/ShowFieldsOne/ShowFieldsOne';
-import ShowFieldsThree from 'components/widgets/showFields/ShowFieldsThree/ShowFieldsThree';
-import ShowFieldsFour from 'components/widgets/showFields/ShowFieldsFour/ShowFieldsFour';
+import ShowFields from 'components/widgets/showFields/ShowFields';
 import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicString';
 import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasicNumeric';
 import TSWideNumeric from 'components/widgets/timeSeries/TSWideNumeric/TSWideNumeric';
 import TSTallNumeric from 'components/widgets/timeSeries/TSTallNumeric/TSTallNumeric';
-import get from 'lodash/get';
 
+import assetInfoImg from 'assets/widget-previews/asset-info.png';
+import eventBasicImg from 'assets/widget-previews/event-basic.png';
+import event3MetadataFieldsImg from 'assets/widget-previews/event-3-metadata-fields.png';
+import event4MetadataFieldsImg from 'assets/widget-previews/event-4-metadata-fields.png';
+import toolWidgetImg from 'assets/widget-previews/tool-widget.png';
+import timeseriesBasicStringImg from 'assets/widget-previews/timeseries-basic-string.png';
+import timeseriesFancyNumericImg from 'assets/widget-previews/timeseries-fancy-numeric.png';
+import timeseriesBasicNumericImg from 'assets/widget-previews/timeseries-basic-numeric.png';
+import timeseriesTallNumericImg from 'assets/widget-previews/timeseries-tall-numeric.png';
+import timeseriesWideNumericImg from 'assets/widget-previews/timeseries-wide-numeric.png';
+import get from 'lodash/get';
+import {
+  EventOneMetaConfigurator,
+  EventThreeMetaConfigurator,
+  EventFourMetaConfigurator,
+} from 'components/widgetConfigs/event/Configurator';
 import * as actionTypes from '../store/actions/actionTypes';
 
 /**
@@ -37,26 +50,13 @@ type TsTallNumericValMap = {
   unit: string;
 };
 
-type FieldMapping = {
+export type FieldMapping = {
   label: string;
-  key: string;
+  key: string | undefined;
 };
 
-type VALUE_MAPPING_SHOWFIELDSONE = {
-  field1: FieldMapping;
-};
-
-type VALUE_MAPPING_SHOWFIELDSTHREE = {
-  field1: FieldMapping;
-  field2: FieldMapping;
-  field3: FieldMapping;
-};
-
-type VALUE_MAPPING_SHOWFIELDSFOUR = {
-  field1: FieldMapping;
-  field2: FieldMapping;
-  field3: FieldMapping;
-  field4: FieldMapping;
+type VALUE_MAPPING_SHOWFIELDS = {
+  fields: FieldMapping[];
 };
 
 type VALUE_MAPPING_TOOLWIDGET = {
@@ -81,9 +81,7 @@ type VALUE_MAPPING_TSBASICNUMERIC = {
 };
 
 export type ValueMapping =
-  | VALUE_MAPPING_SHOWFIELDSONE
-  | VALUE_MAPPING_SHOWFIELDSTHREE
-  | VALUE_MAPPING_SHOWFIELDSFOUR
+  | VALUE_MAPPING_SHOWFIELDS
   | TsWideNumericValMap
   | TsTallNumericValMap
   | VALUE_MAPPING_TOOLWIDGET
@@ -103,96 +101,90 @@ export type QueryParams = {
   limit?: number;
 };
 
+const extractFields = (asset: any, fields: any[]) => {
+  return fields.map(fieldObj => ({
+    ...fieldObj,
+    value: get(asset, fieldObj.key, ''),
+  }));
+};
+
 const WIDGET_SETTINGS: any = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
-    component: ShowFieldsOne,
-    mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDSONE) => (
+    name: 'Asset info',
+    image: assetInfoImg,
+    configurator: EventOneMetaConfigurator,
+    size: [1, 1],
+    component: ShowFields,
+    mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
       state: RootState
     ) => {
       const { appState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(appState.asset, valueMapping.field1.key, ''),
-        },
+        fields: extractFields(appState.asset, valueMapping.fields),
       };
     },
   },
   [WIDGET_TYPE_IDS.EVENT_BASIC]: {
-    component: ShowFieldsOne,
+    name: 'Event - basic',
+    image: eventBasicImg,
+    size: [1, 1],
+    configurator: EventOneMetaConfigurator,
+    component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
     mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE,
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(appState[statePath], valueMapping.field1.key, ''),
-        },
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
   [WIDGET_TYPE_IDS.EVENT_3_META_FIELDS]: {
-    component: ShowFieldsThree,
+    name: 'Event - 3 metadata fields',
+    image: event3MetadataFieldsImg,
+    size: [1, 2],
+    configurator: EventThreeMetaConfigurator,
+    component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
     mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSTHREE,
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(appState[statePath], valueMapping.field1.key, ''),
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: get(appState[statePath], valueMapping.field2.key, ''),
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: get(appState[statePath], valueMapping.field3.key, ''),
-        },
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
   [WIDGET_TYPE_IDS.EVENT_4_META_FIELDS]: {
-    component: ShowFieldsFour,
+    name: 'Event - 4 metadata fields',
+    image: event4MetadataFieldsImg,
+    size: [1, 3],
+    configurator: EventFourMetaConfigurator,
+    component: ShowFields,
     dataFetcher: actionTypes.START_UPDATE_EVENT_INFO,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_EVENT_INFO,
     mapStateToProps: (
-      valueMapping: VALUE_MAPPING_SHOWFIELDSFOUR,
+      valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        field1: {
-          field: valueMapping.field1.label,
-          value: get(appState[statePath], valueMapping.field1.key, ''),
-        },
-        field2: {
-          field: valueMapping.field2.label,
-          value: get(appState[statePath], valueMapping.field2.key, ''),
-        },
-        field3: {
-          field: valueMapping.field3.label,
-          value: get(appState[statePath], valueMapping.field3.key, ''),
-        },
-        field4: {
-          field: valueMapping.field4.label,
-          value: get(appState[statePath], valueMapping.field4.key, ''),
-        },
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
   [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
+    name: 'Tool widget',
+    image: toolWidgetImg,
+    size: [1, 1],
     component: ToolWidget,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -210,6 +202,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC]: {
+    name: 'Timeseries - Fancy numeric',
+    image: timeseriesFancyNumericImg,
+    size: [1, 2],
     component: TSFancyNumeric,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -233,6 +228,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_STRING]: {
+    name: 'Timeseries - Basic string',
+    image: timeseriesBasicStringImg,
+    size: [1, 1],
     component: TSBasicString,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -251,6 +249,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_BASIC_NUMERIC]: {
+    name: 'Timeseries - Basic numeric',
+    image: timeseriesBasicNumericImg,
+    size: [1, 1],
     component: TSBasicNumeric,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
@@ -268,6 +269,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_TALL_NUMERIC]: {
+    name: 'Timeseries - Tall numeric',
+    image: timeseriesTallNumericImg,
+    size: [1, 4],
     component: TSTallNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
@@ -287,6 +291,9 @@ const WIDGET_SETTINGS: any = {
     },
   },
   [WIDGET_TYPE_IDS.TIMESERIES_WIDE_NUMERIC]: {
+    name: 'Timeseries - Wide numeric',
+    image: timeseriesWideNumericImg,
+    size: [3, 2],
     component: TSWideNumeric,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,

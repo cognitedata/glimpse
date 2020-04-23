@@ -3,6 +3,7 @@ import { ActionType } from 'typesafe-actions';
 import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
+import { AlarmType } from 'components/Alarm/interfaces';
 import * as actionTypes from '../actions/actionTypes';
 
 import * as actions from '../actions/app';
@@ -15,11 +16,13 @@ export type AppState = {
   alerts?: AlertsPropsType;
   assets: Asset[];
   asset?: Asset;
+  alarms?: AlarmType[];
 };
 
 export const initialState: AppState = {
   loading: false,
   assets: [],
+  alarms: [],
 };
 
 const appReducer = (state = initialState, action: AppAction): AppState => {
@@ -76,6 +79,11 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
       return {
         ...state,
         ...action.payload,
+      };
+    case actionTypes.SET_ALARMS:
+      return {
+        ...state,
+        alarms: action.payload,
       };
   }
   return state;

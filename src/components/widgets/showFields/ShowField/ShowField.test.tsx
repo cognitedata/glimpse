@@ -7,7 +7,7 @@ import ShowField from './ShowField';
 describe('ShowField', () => {
   it('should render props correctly', () => {
     const { getByText } = render(<ShowField {...showFieldsMockProps[0]} />);
-    expect(getByText(showFieldsMockProps[0].field)).toBeInTheDocument();
+    expect(getByText(showFieldsMockProps[0].label)).toBeInTheDocument();
     expect(getByText(showFieldsMockProps[0].value)).toBeInTheDocument();
   });
   it('should update props correctly', () => {
@@ -15,7 +15,7 @@ describe('ShowField', () => {
       <ShowField {...showFieldsMockProps[0]} />
     );
     rerender(<ShowField {...showFieldsMockProps[1]} />);
-    expect(getByText(showFieldsMockProps[1].field)).toBeInTheDocument();
+    expect(getByText(showFieldsMockProps[1].label)).toBeInTheDocument();
     expect(getByText(showFieldsMockProps[1].value)).toBeInTheDocument();
   });
 });

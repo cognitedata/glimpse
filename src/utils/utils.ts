@@ -2,6 +2,8 @@
 import { Group } from '@cognite/sdk';
 import { Capability } from 'custom-types';
 import { QueryParams } from 'constants/widgetSettings';
+import filter from 'lodash/filter';
+import includes from 'lodash/includes';
 import { ADMIN_GROUPS, USER_REQUIRED_CAPABILITIES } from '../constants/appData';
 
 export const generateRandomKey = () =>
@@ -40,4 +42,15 @@ export const isAdmin = (groups: Group[]) =>
  */
 export const getUniqueKey = (source?: QueryParams) => {
   return source ? window.btoa(JSON.stringify(source)) : '';
+};
+
+/**
+ * return an Array Which removed all elemnts in excludeArr;
+ * @param originalArr any[]
+ * @param excludeArr any[]
+ */
+export const removeObjects = (originalArr: any[], excludeArr: any[]) => {
+  return filter(originalArr, key => {
+    return !includes(excludeArr, key);
+  });
 };

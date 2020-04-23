@@ -22,10 +22,12 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
     i: 'a',
     widgetTypeId: WIDGET_TYPE_IDS.ASSET_INFO,
     valueMapping: {
-      field1: {
-        label: 'Current Machine',
-        key: 'name',
-      },
+      fields: [
+        {
+          label: 'Current Machine',
+          key: 'name',
+        },
+      ],
     },
   },
   {
@@ -82,18 +84,20 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Event Sub Type',
-        key: 'subtype',
-      },
-      field3: {
-        label: 'Metadata Source Id',
-        key: 'metadata.sourceId',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Event Sub Type',
+          key: 'subtype',
+        },
+        {
+          label: 'Metadata Source Id',
+          key: 'metadata.sourceId',
+        },
+      ],
     },
   },
   {
@@ -105,22 +109,24 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Event Sub Type',
-        key: 'subtype',
-      },
-      field3: {
-        label: 'Metadata Source Id',
-        key: 'metadata.sourceId',
-      },
-      field4: {
-        label: 'Metadata Source',
-        key: 'metadata.source',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Event Sub Type',
+          key: 'subtype',
+        },
+        {
+          label: 'Metadata Source Id',
+          key: 'metadata.sourceId',
+        },
+        {
+          label: 'Metadata Source',
+          key: 'metadata.source',
+        },
+      ],
     },
   },
   {
@@ -161,10 +167,12 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+      ],
     },
   },
   {
@@ -176,18 +184,20 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      field1: {
-        label: 'Work Order',
-        key: 'metadata.WORKORDER_NUMBER',
-      },
-      field2: {
-        label: 'Source Id',
-        key: 'metadata.sourceId',
-      },
-      field3: {
-        label: 'Source',
-        key: 'metadata.source',
-      },
+      fields: [
+        {
+          label: 'Work Order',
+          key: 'metadata.WORKORDER_NUMBER',
+        },
+        {
+          label: 'Source Id',
+          key: 'metadata.sourceId',
+        },
+        {
+          label: 'Source',
+          key: 'metadata.source',
+        },
+      ],
     },
   },
 ];

@@ -1,0 +1,64 @@
+.mat_ui_config .MuiInputBase-input:invalid {
+  box-shadow: none;
+  border-bottom: 2px solid white;
+}
+
+.mat_ui_config .MuiInputBase-root {
+  color: white !important;
+}
+
+.mat_ui_config .MuiInputLabel-animated {
+  color: white !important;
+}
+
+.mat_ui_config
+  .MuiAutocomplete-hasPopupIcon.MuiAutocomplete-hasClearIcon
+  .MuiAutocomplete-inputRoot {
+  padding-right: 0px;
+}
+
+.mat_ui_config .MuiButton-containedPrimary {
+  color: #fff;
+  background-color: #3f4777;
+  margin-top: 15px;
+  margin-right: 15px;
+}
+
+.mat_ui_config .reset .MuiButton-containedPrimary {
+  background-color: #259152;
+}
+
+.mat_ui_config .MuiFormControlLabel-label.Mui-disabled,
+.mat_ui_config .MuiIconButton-root {
+  color: white;
+}
+
+.mat_ui_config .MuiSwitch-colorPrimary.Mui-disabled + .MuiSwitch-track {
+  background-color: #efeff3;
+}
+
+.mat_ui_configer .MuiInputBase-input {
+  border-bottom: none !important;
+  padding: 12px;
+  color: #f8f8fa;
+}
+
+.mat_ui_configer .MuiFormLabel-root {
+  color: #9297b6;
+}
+
+.mat_ui_configer .MuiFormLabel-root.Mui-focused {
+  color: #9297b6;
+}
+
+.mat_ui_configer .MuiFormControl-root {
+  min-width: 150px;
+  margin-top: 8px;
+}
+
+.mat_ui_configer
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #9297b6;
+  border-width: 1px;
+}

@@ -11,7 +11,7 @@ describe('Tool Widget', () => {
       <ToolWidget {...showFieldsMockProps[0]} name={name} />
     );
     expect(getByText(name)).toBeInTheDocument();
-    expect(getByText(showFieldsMockProps[0].field)).toBeInTheDocument();
+    expect(getByText(showFieldsMockProps[0].label)).toBeInTheDocument();
     expect(getByText(showFieldsMockProps[0].value)).toBeInTheDocument();
   });
 });

@@ -9,15 +9,19 @@ import {
 } from './app';
 import { login, logout } from './auth';
 
+import { pollUpdateAlarmsWatcher, saveRemovedAlarm } from './alarmSagas';
+
 /**
  * watch app related sagas and fire on action dispatch
  */
 export function* watchAppSagas() {
   yield takeEvery(actionTypes.UPDATE_ASSETS, updateAssets);
+  yield takeEvery(actionTypes.SAVE_REMOVED_ALARM, saveRemovedAlarm);
   yield all([
     pollUpdateEventInfoWatcher(),
     pollUpdateTsDpsWatcher(),
     pollUpdateDataLatestPointWatcher(),
+    pollUpdateAlarmsWatcher(),
   ]);
 }
 

@@ -1,0 +1,48 @@
+.event_config {
+  margin: 30px 0px 0px 30px;
+}
+
+.event_config .textField {
+  margin-right: 20px;
+  width: 80%;
+}
+
+.event_config .switch {
+  margin-top: 20px;
+  margin-left: 0px;
+}
+
+.event_config .proceed {
+  margin-top: 20px;
+}
+
+.event_config .inner_form {
+  margin: 30px 0 20px 0;
+}
+
+.event_config .error_msg {
+  margin-top: 20px;
+}
+
+.event_config .reset {
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.event_config .validation_msg {
+  font-size: 0.8em;
+  color: red;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+.event_config .paperbox {
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.event_config .event_details_disabled {
+  margin-right: 20px;
+  padding: 20px 10px 10px 10px;
+  background-color: #3a4177;
+  border-radius: 10px;
+}
