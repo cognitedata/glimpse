@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import logoImg from '../../../assets/aarbakke-logo.png';
 import './Logo.css';

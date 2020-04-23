@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
 import { initialLayoutMocked } from 'mocks/gridMocks';

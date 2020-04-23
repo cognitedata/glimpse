@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import './gridLayout.css';
-import { Responsive, Layout } from 'react-grid-layout';
+// Copyright 2020 Cognite AS
+import React, { FC, useEffect, useState, useRef, useCallback } from 'react';
+import './GridLayout.css';
+import { Responsive as ResponsiveGridLayout, Layout } from 'react-grid-layout';
 import sizeMe from 'react-sizeme';
 import {
   DUMMY_COMP_ID,
@@ -10,13 +11,12 @@ import {
   MAXCOLS,
   IS_RESIZABLE,
   MIN_WIDTH,
+  MIN_ROW_HEIGHT,
 } from 'constants/grid';
-import generateComponent from '../../componentFactory/componentsFactory';
-import { ComponentDetail, GridLayoutProps } from '../interfaces';
+import { GridLayoutProps } from '../interfaces';
+import WidgetContainer from '../../../containers/WidgetContainer/WidgetContainer';
 
-const ResponsiveGridLayout = Responsive;
-
-const GridLayout = (props: GridLayoutProps) => {
+const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
   const refGridLayout = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [height, setHeight] = useState(600);
   const [layout, setLayout] = useState(props.layouts);
@@ -39,14 +39,6 @@ const GridLayout = (props: GridLayoutProps) => {
     window.addEventListener('resize', updateWindowDimensions);
     return () => window.removeEventListener('resize', updateWindowDimensions);
   }, [updateWindowDimensions]);
-
-  const generateComponents = (components: ComponentDetail[]) => {
-    return components.map((comp: ComponentDetail) =>
-      generateComponent(comp.i, comp.compName, {
-        onRemoveItem: props.onRemoveItem,
-      })
-    );
-  };
 
   /**
    * For change grid layout to previous position, Need to change the layout array length (library implementation)
@@ -82,6 +74,13 @@ const GridLayout = (props: GridLayoutProps) => {
     );
   };
 
+  const getRowHeight = (): number => {
+    const currentRowHeight = height / MAXROWS - MARGIN[1];
+    return currentRowHeight < MIN_ROW_HEIGHT
+      ? MIN_ROW_HEIGHT
+      : currentRowHeight;
+  };
+
   return (
     <>
       <div ref={refGridLayout} className="gridLayout">
@@ -95,10 +94,10 @@ const GridLayout = (props: GridLayoutProps) => {
           layouts={{ lg: layout }}
           cols={{ lg: MAXCOLS }}
           preventCollision
-          rowHeight={height / MAXROWS - MARGIN[1]}
+          rowHeight={getRowHeight()}
           width={props.size.width < MIN_WIDTH ? MIN_WIDTH : props.size.width}
         >
-          {generateComponents(props.components)}
+          {WidgetContainer(props)}
         </ResponsiveGridLayout>
       </div>
     </>

@@ -1,0 +1,17 @@
+.elasped-time label {
+  display: block;
+}
+
+.elasped-time .title {
+  font-size: 1em;
+  color: #ffffff;
+  padding: 1vh 0vh 1vh 1vh;
+  text-align: left;
+}
+
+.elasped-time .time {
+  font-size: 0.6em;
+  color: #ffffff;
+  padding: 0vh 0vh 1vh 1vh;
+  text-align: left;
+}

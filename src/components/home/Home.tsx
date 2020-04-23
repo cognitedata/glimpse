@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
@@ -7,7 +8,6 @@ import IconButton from '@material-ui/core/IconButton';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-import WithAddGridComponents from 'components/grid/AddComponents/WithAddGridComponents';
 import Logo from '../UI/Logo/Logo';
 import CogniteLogo from '../UI/CogniteLogo/CogniteLogo';
 
@@ -15,6 +15,7 @@ import './Home.css';
 
 import NavList, { NavListItem } from './NavList/NavList';
 import TopBar from './TopBar/TopBar';
+import ComponentRouter from './ComponentRouter/ComponentRouter';
 
 const drawerWidth = 240;
 
@@ -100,7 +101,7 @@ const Home: FC<Props> = ({ navList }: Props) => {
           </IconButton>
         </div>
         <Divider />
-        <NavList navList={navList} />
+        <NavList navList={navList} expanded={open} />
         <CogniteLogo width={open ? '50px' : '20px'} />
       </Drawer>
       <main className="widgetsHolder">
@@ -108,7 +109,7 @@ const Home: FC<Props> = ({ navList }: Props) => {
           <TopBar />
         </div>
         <div style={{ height: '80vh', padding: '10px' }}>
-          <WithAddGridComponents />
+          <ComponentRouter />
         </div>
       </main>
     </div>

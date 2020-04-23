@@ -1,0 +1,35 @@
+.basic-numeric {
+  width: 100%;
+  height: 100%;
+  background-color: #f4ac3d;
+  border-radius: 10px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.basic-numeric label {
+  display: inline-block;
+}
+
+.basic-numeric .name {
+  width: 10vh;
+  font-size: 1em;
+  color: black;
+  clear: both;
+  float: left;
+  padding: 2vh 0vh 0vh 1vh;
+  text-align: left;
+}
+
+.basic-numeric .val-unit {
+  padding: 2vh 2vh 0vh 0vh;
+  color: black;
+  float: right;
+  font-size: 2em;
+  font-weight: 500;
+}
+
+.basic-numeric .val-unit .unit {
+  font-size: 0.5em;
+  font-weight: 500;
+}

@@ -1,16 +1,24 @@
+// Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert, { AlertProps, Color } from '@material-ui/lab/Alert';
 
+export type SnackBarProps = {
+  duration?: number;
+  handleClose: () => void;
+  type: Color;
+  text: String;
+};
+
 /**
  * Global alerts component
  */
-const Alerts: FC<AlertsPropsType> = ({
-  duration,
+const Alerts: FC<SnackBarProps> = ({
+  duration = 10000,
   handleClose,
   type,
   text,
-}: AlertsPropsType) => {
+}: SnackBarProps) => {
   const Alert = (alertProps: AlertProps) => (
     <MuiAlert elevation={6} variant="filled" {...alertProps} />
   );
@@ -24,11 +32,3 @@ const Alerts: FC<AlertsPropsType> = ({
 };
 
 export default Alerts;
-
-export type AlertsPropsType = {
-  hideApp?: boolean;
-  duration: number;
-  handleClose?: () => void;
-  type: Color;
-  text: string;
-};

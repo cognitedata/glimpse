@@ -1,3 +1,4 @@
+// Copyright 2020 Cognite AS
 import { Group } from '@cognite/sdk';
 
 export const groupList: Group[] = [
