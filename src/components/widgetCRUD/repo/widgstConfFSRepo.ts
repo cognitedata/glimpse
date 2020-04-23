@@ -8,7 +8,6 @@ export const save = async (
   widgetConf: any
 ) => {
   const gridConfDoc = await widgetConfFSDoc(userId).get();
-
   let gridConf: any = {};
   if (gridConfDoc.exists) {
     gridConf = gridConfDoc.data();
@@ -16,10 +15,10 @@ export const save = async (
       ? gridConf[assetId].concat(widgetConf)
       : [widgetConf];
     await widgetConfFSDoc(userId).update(gridConf);
+  } else {
+    gridConf[assetId] = [widgetConf];
+    await widgetConfFSDoc(userId).set(gridConf);
   }
-
-  gridConf[assetId] = [widgetConf];
-  await widgetConfFSDoc(userId).set(gridConf);
 };
 
 export const update = async (

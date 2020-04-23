@@ -2,7 +2,7 @@
 import { Layout } from 'react-grid-layout';
 import findIndex from 'lodash/findIndex';
 import { WidgetConfig } from 'components/grid/interfaces';
-import { getByUser, update, deleteOne, save } from '../repo/widgstConfFSRepo';
+import { getByUser, update, deleteOne, save } from '../repo/widgetConfLSRepo';
 
 export const getWidgetConfigs = async (userId: string, onError: Function) => {
   try {

@@ -14,7 +14,6 @@ const getAssetId = (state: RootState) => state.appState.asset?.id;
 export const fetchEvents = async (props: FetchEvent) => {
   const cdfClient: CogniteClient = getCdfClient(store.getState());
   const assetId = getAssetId(store.getState());
-  console.log(cdfClient, assetId);
   const { ongoing, type, subtype } = props;
   const eventsResults = await cdfClient.events.list({
     sort: { [ongoing ? 'startTime' : 'endTime']: 'desc' },

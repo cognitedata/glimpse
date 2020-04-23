@@ -94,3 +94,22 @@ export const eventList = {
   nextCursor:
     'hWHBx4CPewFTI411EQwFSwCI1Skvf7mr_AQQgIkZHeyt6-1NKZdcBefVoxPlfiCl',
 };
+
+export const eventValueMappingMock = [
+  {
+    label: 'field1',
+    key: 'value1',
+  },
+  {
+    label: 'field2',
+    key: 'value2',
+  },
+  {
+    label: 'field3',
+    key: 'value3',
+  },
+  {
+    label: 'field4',
+    key: 'value4',
+  },
+];
