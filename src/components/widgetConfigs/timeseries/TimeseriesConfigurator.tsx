@@ -81,7 +81,7 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
    */
   const onSubmit = (data: FormValues) => {
     const queryParams: QueryParams = {
-      id: data.timeseriesExternalId,
+      externalId: data.timeseriesExternalId,
     };
 
     const valueMapping: ValueMapping = {
