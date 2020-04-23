@@ -24,6 +24,13 @@ import {
   EventThreeMetaConfigurator,
   EventFourMetaConfigurator,
 } from 'components/widgetConfigs/event/Configurator';
+
+import TimeseriesWideNumericConfigurator from 'components/widgetConfigs/timeseries/TimeseriesWideNumericConfigurator';
+import TimeseriesTallNumericConfigurator from 'components/widgetConfigs/timeseries/TimeseriesTallNumericConfigurator';
+import TimeseriesBasicNumericConfigurator from 'components/widgetConfigs/timeseries/TimeseriesBasicNumericConfigurator';
+import TimeseriesBasicStringConfigurator from 'components/widgetConfigs/timeseries/TimeseriesBasicStringConfigurator';
+import TimeseriesFancyNumericConfigurator from 'components/widgetConfigs/timeseries/TimeseriesFancyNumericConfigurator';
+
 import * as actionTypes from '../store/actions/actionTypes';
 
 /**
@@ -43,7 +50,7 @@ export enum WIDGET_TYPE_IDS {
   TIMESERIES_WIDE_NUMERIC,
 }
 type TsWideNumericValMap = {
-  title: string;
+  nameWithRange: string;
 };
 type TsTallNumericValMap = {
   name: string;
@@ -65,19 +72,19 @@ type VALUE_MAPPING_TOOLWIDGET = {
 };
 
 type VALUE_MAPPING_TSBASICSTRING = {
-  label: string;
-  unit: string;
+  name: string;
   isElapsedTimeEnabled: boolean;
 };
 
 type VALUE_MAPPING_TSFANCYNUMERIC = {
-  maxPrecentageVal: number;
-  title: string;
+  maxPrecentageValue: number;
+  name: string;
   timeDisplayKey: string;
 };
 
 type VALUE_MAPPING_TSBASICNUMERIC = {
-  label: string;
+  name: string;
+  unit: string;
 };
 
 export type ValueMapping =
@@ -206,6 +213,7 @@ const WIDGET_SETTINGS: any = {
     image: timeseriesFancyNumericImg,
     size: [1, 2],
     component: TSFancyNumeric,
+    configurator: TimeseriesFancyNumericConfigurator,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
@@ -215,14 +223,14 @@ const WIDGET_SETTINGS: any = {
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        title: valueMapping.title,
+        title: valueMapping.name,
         value: appState[statePath]?.value,
         timestamp: appState[statePath]?.timestamp,
         timeDisplayKey: valueMapping.timeDisplayKey,
         precentage:
           (appState[statePath]?.value ? appState[statePath].value : 0) /
-          (valueMapping.maxPrecentageVal > 0
-            ? valueMapping.maxPrecentageVal
+          (valueMapping.maxPrecentageValue > 0
+            ? valueMapping.maxPrecentageValue
             : 1),
       };
     },
@@ -232,6 +240,7 @@ const WIDGET_SETTINGS: any = {
     image: timeseriesBasicStringImg,
     size: [1, 1],
     component: TSBasicString,
+    configurator: TimeseriesBasicStringConfigurator,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
@@ -241,7 +250,7 @@ const WIDGET_SETTINGS: any = {
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        name: valueMapping.label,
+        name: valueMapping.name,
         value: appState[statePath]?.value,
         timestamp: appState[statePath]?.timestamp,
         isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
@@ -253,16 +262,17 @@ const WIDGET_SETTINGS: any = {
     image: timeseriesBasicNumericImg,
     size: [1, 1],
     component: TSBasicNumeric,
+    configurator: TimeseriesBasicNumericConfigurator,
     dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
     mapStateToProps: (
-      valueMapping: VALUE_MAPPING_TSBASICSTRING,
+      valueMapping: VALUE_MAPPING_TSBASICNUMERIC,
       statePath: string
     ) => (state: RootState) => {
       const { appState } = state;
       return {
-        name: valueMapping.label,
+        name: valueMapping.name,
         value: appState[statePath]?.value,
         unit: valueMapping.unit,
       };
@@ -273,6 +283,7 @@ const WIDGET_SETTINGS: any = {
     image: timeseriesTallNumericImg,
     size: [1, 4],
     component: TSTallNumeric,
+    configurator: TimeseriesTallNumericConfigurator,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_TS_DPS,
@@ -295,6 +306,7 @@ const WIDGET_SETTINGS: any = {
     image: timeseriesWideNumericImg,
     size: [3, 2],
     component: TSWideNumeric,
+    configurator: TimeseriesWideNumericConfigurator,
     dataFetcher: actionTypes.START_UPDATE_TS_DPS,
     pollingInterval: 10000,
     pollingEndAction: actionTypes.STOP_UPDATE_TS_DPS,
@@ -302,7 +314,7 @@ const WIDGET_SETTINGS: any = {
       state: RootState
     ) => {
       return {
-        ...valueMapping,
+        title: valueMapping.nameWithRange,
         data: get(state.appState, statePath, ''),
       };
     },
