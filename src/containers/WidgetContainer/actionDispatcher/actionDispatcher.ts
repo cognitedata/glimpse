@@ -13,7 +13,7 @@ const pollingEndActions: PollingEndAction[] = [];
 /**
  * Dispactch distinct data fetching actions
  */
-export default (widgetConfigs: WidgetConfig[]): Function => {
+export const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
   const dispatchedActions: string[] = [];
   widgetConfigs.forEach(widgetConfig => {
     const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
@@ -62,7 +62,7 @@ const updatePollingEndActionList = (
 /**
  * Fire dispatch action to end all the polling
  */
-const endPolling = () => {
+export const endPolling = () => {
   pollingEndActions.forEach((pollingEndAction: PollingEndAction) => {
     store.dispatch({
       type: pollingEndAction.action,

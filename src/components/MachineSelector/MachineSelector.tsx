@@ -21,9 +21,7 @@ import { setAsset } from '../../store/actions/root-action';
 const MachineSelector: FC<Props> = (props: Props) => {
   const inputLabel = React.useRef<HTMLLabelElement>(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  const [selectItemList, setSelectItemList] = React.useState<
-    JSX.Element[] | null
-  >([]);
+  const [selectItemList, setSelectItemList] = React.useState<JSX.Element[]>([]);
 
   const updateContext = (machineId: number) => {
     const selectedMachine = props.assets.find(
@@ -66,7 +64,7 @@ const MachineSelector: FC<Props> = (props: Props) => {
         <Select
           labelId="machineSelector-label"
           id="machineSelector"
-          value={props.asset ? props.asset.id : ''}
+          value={props.asset && selectItemList.length > 0 ? props.asset.id : ''}
           onChange={handleChange}
           labelWidth={labelWidth}
         >
