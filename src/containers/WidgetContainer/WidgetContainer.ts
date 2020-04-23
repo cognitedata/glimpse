@@ -23,7 +23,7 @@ export default (props: Props) => {
   useEffect(() => {
     dispatchDistinctActions(props.widgetConfigs);
     return endPolling;
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [props.widgetConfigs]);
   return widgetConfigs.map(widgetConfig =>
     generateWidget(widgetConfig, onRemoveItem, isOnSettingPage)
   );
