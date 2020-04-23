@@ -8,8 +8,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction, RootState } from 'StoreTypes';
 import get from 'lodash/get';
-import differenceWith from 'lodash/differenceWith';
-import isEqual from 'lodash/isEqual';
+
 import {
   getWidgetConfigs,
   updateLayout,
@@ -32,21 +31,13 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const isMounted = useRef(true);
   const [widgetConfigs, setWidgetConfigs] = useState<WidgetConfig[]>([]);
   const [layouts, setLayouts] = useState<Layout[]>([]);
-  const [lastSavedlayouts, setLastSavedlayouts] = useState<Layout[]>([]);
+  const [lastSavedLayouts, setLastSavedLayouts] = useState<Layout[]>([]);
 
   /**
    * compare 2 layouts position is same or not
    * @param layOut1
    * @param layOut2
    */
-  const isEqualPosition = (layOut1: Layout, layOut2: Layout) => {
-    return (
-      isEqual(layOut1.i, layOut2.i) &&
-      isEqual(layOut1.x, layOut2.x) &&
-      isEqual(layOut1.y, layOut2.y)
-    );
-  };
-
   const onError = (msg: string) => {
     props.setAlerts({
       type: 'error',
@@ -64,20 +55,17 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
    * @param newLayouts
    */
   const onDragStop = async (newLayouts: Layout[]) => {
-    const layOutChanged = differenceWith(newLayouts, layouts, isEqualPosition);
-    if (layOutChanged && layOutChanged.length > 0) {
-      const isSuccess = await updateLayout(
-        props.user,
-        props.assetId,
-        layOutChanged,
-        widgetConfigs,
-        onError
-      );
-      if (isSuccess) {
-        setLastSavedlayouts(newLayouts);
-      } else {
-        setLayouts(lastSavedlayouts);
-      }
+    const isSuccess = await updateLayout(
+      props.user,
+      props.assetId,
+      newLayouts,
+      widgetConfigs,
+      onError
+    );
+    if (isSuccess) {
+      setLastSavedLayouts(newLayouts);
+    } else {
+      setLayouts(lastSavedLayouts);
     }
   };
 
@@ -108,7 +96,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
         getGridLayout(widConf)
       );
       setLayouts(generatedLayout);
-      setLastSavedlayouts(generatedLayout);
+      setLastSavedLayouts(generatedLayout);
     }
   };
   /**

@@ -2,6 +2,7 @@
 import { WidgetConfig } from 'components/grid/interfaces';
 import { Layout } from 'react-grid-layout';
 import { WIDGET_TYPE_IDS } from 'constants/widgetSettings';
+import { eventValueMappingMock } from './eventList';
 
 export const initialLayoutMocked: Layout[] = [
   { i: 'a', x: 0, y: 0, w: 1, h: 1 },
@@ -41,12 +42,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      fields: [
-        {
-          label: 'Work Order',
-          key: 'metadata.WORKORDER_NUMBER',
-        },
-      ],
+      fields: eventValueMappingMock.slice(0, 1),
     },
   },
   {
@@ -59,9 +55,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      maxPrecentageValue: 1,
-      name: 'Shift Utilization',
-      timeDisplayKey: 'Elapsed Time - job',
+      fields: eventValueMappingMock.slice(0, 3),
     },
   },
   {
@@ -111,24 +105,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       ongoing: false,
     },
     valueMapping: {
-      fields: [
-        {
-          label: 'Work Order',
-          key: 'metadata.WORKORDER_NUMBER',
-        },
-        {
-          label: 'Event Sub Type',
-          key: 'subtype',
-        },
-        {
-          label: 'Metadata Source Id',
-          key: 'metadata.sourceId',
-        },
-        {
-          label: 'Metadata Source',
-          key: 'metadata.source',
-        },
-      ],
+      fields: eventValueMappingMock.slice(0, 4),
     },
   },
   {
@@ -143,7 +120,7 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       limit: 1000,
     },
     valueMapping: {
-      title: '24 Hour Utilization',
+      nameWithRange: '24 Hour Utilization',
     },
   },
   {
