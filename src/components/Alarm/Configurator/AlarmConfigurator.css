@@ -1,0 +1,57 @@
+.AlarmConfigurator {
+  margin: 0 5px;
+}
+
+.AlarmConfigurator .Config-button {
+  color: #ffffff;
+}
+
+.AlarmConfigurator-Modal .AlarmConfigurator-Column {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #3a4177;
+  overflow-y: auto;
+}
+
+.AlarmConfigurator-Modal .MuiDialogContent-root {
+  padding: 30px 10px 10px;
+}
+
+.AlarmConfigurator-Modal .MuiDialogActions-root button {
+  color: #ffffff;
+  background-color: #394177;
+}
+
+.AlarmConfigurator-Modal .MuiDialogActions-root button:hover {
+  background-color: #3f51b5;
+}
+
+.AlarmConfigurator-Modal .MuiFormControl-root {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.AlarmConfigurator-Modal .MuiInputBase-root {
+  background-color: #3a4177;
+  color: #ffffff;
+}
+
+.AlarmConfigurator-Modal .MuiFormLabel-root {
+  color: #8a8a98;
+}
+
+.AlarmConfigurator-Modal .MuiFormLabel-root.Mui-focused {
+  color: #8a8a98;
+}
+
+.AlarmConfigurator-Modal
+  .MuiOutlinedInput-root
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #8a8a98;
+}
+
+.AlarmConfigurator-Modal
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #8a8a98;
+}
