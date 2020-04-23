@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import { put, select } from 'redux-saga/effects';
+import { put, select, fork, take } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
 import {
   setLoading,
@@ -11,6 +11,12 @@ import {
 import { MACHINE_EXTERNAL_IDS } from '../../constants/appData';
 
 import { MESSAGES } from '../../constants/messages';
+
+import * as actionTypes from '../actions/actionTypes';
+
+import pollUpdateEventInfo from './dataFetchers/eventsFetcher';
+import pollUpdateDataLatestPoint from './dataFetchers/latestDataPointFetcher';
+import pollUpdateTsDps from './dataFetchers/dataPointsFetcher';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 
@@ -37,5 +43,29 @@ export function* updateAssets() {
     );
   } finally {
     yield put(setLoaded());
+  }
+}
+
+/* Watcher function for TSDps update polling */
+export function* pollUpdateTsDpsWatcher() {
+  while (true) {
+    const action = yield take(actionTypes.START_UPDATE_TS_DPS);
+    yield fork(pollUpdateTsDps, action);
+  }
+}
+
+/* Watcher function for event update polling */
+export function* pollUpdateEventInfoWatcher() {
+  while (true) {
+    const action = yield take(actionTypes.START_UPDATE_EVENT_INFO);
+    yield fork(pollUpdateEventInfo, action);
+  }
+}
+
+/* Watcher function for event update polling */
+export function* pollUpdateDataLatestPointWatcher() {
+  while (true) {
+    const action = yield take(actionTypes.START_UPDATE_LATEST_DATAPOINT);
+    yield fork(pollUpdateDataLatestPoint, action);
   }
 }

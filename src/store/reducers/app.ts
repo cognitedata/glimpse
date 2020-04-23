@@ -14,8 +14,8 @@ export type AppState = {
   cdfClient?: CogniteClient;
   loading: boolean;
   alerts?: AlertsPropsType;
-  selectedMachine?: Asset;
   assets: Asset[];
+  asset?: Asset;
   alarms?: AlarmType[];
 };
 
@@ -56,6 +56,29 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
       return {
         ...state,
         assets: action.payload,
+      };
+    /** Set asset in app state */
+    case actionTypes.SET_ASSET:
+      return {
+        ...state,
+        asset: action.payload,
+      };
+    /** Set event in app state */
+    case actionTypes.SET_EVENT:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    /** Set time Series aggreagation data points arrays in app state */
+    case actionTypes.SET_TS_DPS:
+      return {
+        ...state,
+        ...action.payload,
+      };
+    case actionTypes.SET_LATEST_DATAPOINT:
+      return {
+        ...state,
+        ...action.payload,
       };
     case actionTypes.SET_ALARMS:
       return {

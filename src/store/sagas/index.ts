@@ -1,13 +1,14 @@
 // Copyright 2020 Cognite AS
 import { takeEvery, all } from 'redux-saga/effects';
 import * as actionTypes from '../actions/actionTypes';
-import { updateAssets } from './app';
-import { login, logout } from './auth';
 import {
+  updateAssets,
   pollUpdateEventInfoWatcher,
   pollUpdateTsDpsWatcher,
   pollUpdateDataLatestPointWatcher,
-} from './widget';
+} from './app';
+import { login, logout } from './auth';
+
 import { pollUpdateAlarmsWatcher, saveRemovedAlarm } from './alarmSagas';
 
 /**
@@ -16,7 +17,12 @@ import { pollUpdateAlarmsWatcher, saveRemovedAlarm } from './alarmSagas';
 export function* watchAppSagas() {
   yield takeEvery(actionTypes.UPDATE_ASSETS, updateAssets);
   yield takeEvery(actionTypes.SAVE_REMOVED_ALARM, saveRemovedAlarm);
-  yield all([pollUpdateAlarmsWatcher()]);
+  yield all([
+    pollUpdateEventInfoWatcher(),
+    pollUpdateTsDpsWatcher(),
+    pollUpdateDataLatestPointWatcher(),
+    pollUpdateAlarmsWatcher(),
+  ]);
 }
 
 /**
@@ -25,15 +31,4 @@ export function* watchAppSagas() {
 export function* watchAuthSagas() {
   yield takeEvery(actionTypes.LOGIN, login);
   yield takeEvery(actionTypes.LOGOUT, logout);
-}
-
-/**
- * watch widgets related sagas and fire on action dispatch
- */
-export function* watchWidgetSagas() {
-  yield all([
-    pollUpdateEventInfoWatcher(),
-    pollUpdateTsDpsWatcher(),
-    pollUpdateDataLatestPointWatcher(),
-  ]);
 }

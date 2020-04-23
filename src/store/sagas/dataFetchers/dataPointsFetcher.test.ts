@@ -3,7 +3,7 @@ import { testSaga } from 'redux-saga-test-plan';
 import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { setTsDps } from 'store/actions/root-action';
 import { MockCogniteClient } from '../../../mocks';
-import { pollUpdateTsDps } from './dataPointsFetcher';
+import pollUpdateTsDps from './dataPointsFetcher';
 
 class CogniteClient extends MockCogniteClient {
   loginWithOAuth: any = jest.fn();

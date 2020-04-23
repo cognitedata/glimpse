@@ -118,9 +118,9 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (valueMapping: VALUE_MAPPING_SHOWFIELDS) => (
       state: RootState
     ) => {
-      const { widgetState } = state;
+      const { appState } = state;
       return {
-        fields: extractFields(widgetState.asset, valueMapping.fields),
+        fields: extractFields(appState.asset, valueMapping.fields),
       };
     },
   },
@@ -136,10 +136,10 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
-        fields: extractFields(widgetState[statePath], valueMapping.fields),
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
@@ -155,10 +155,10 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
-        fields: extractFields(widgetState[statePath], valueMapping.fields),
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
@@ -174,10 +174,10 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_SHOWFIELDS,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
-        fields: extractFields(widgetState[statePath], valueMapping.fields),
+        fields: extractFields(appState[statePath], valueMapping.fields),
       };
     },
   },
@@ -192,11 +192,11 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_TOOLWIDGET,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
-        label: valueMapping.assetInfo,
-        value: widgetState[statePath]?.value,
+        field: valueMapping.assetInfo,
+        value: appState[statePath]?.value,
         name: valueMapping.label,
       };
     },
@@ -212,15 +212,15 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_TSFANCYNUMERIC,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
         title: valueMapping.title,
-        value: widgetState[statePath]?.value,
-        timestamp: widgetState[statePath]?.timestamp,
+        value: appState[statePath]?.value,
+        timestamp: appState[statePath]?.timestamp,
         timeDisplayKey: valueMapping.timeDisplayKey,
         precentage:
-          (widgetState[statePath]?.value ? widgetState[statePath].value : 0) /
+          (appState[statePath]?.value ? appState[statePath].value : 0) /
           (valueMapping.maxPrecentageVal > 0
             ? valueMapping.maxPrecentageVal
             : 1),
@@ -238,12 +238,12 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_TSBASICSTRING,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
         name: valueMapping.label,
-        value: widgetState[statePath]?.value,
-        timestamp: widgetState[statePath]?.timestamp,
+        value: appState[statePath]?.value,
+        timestamp: appState[statePath]?.timestamp,
         isElapsedTimeEnabled: valueMapping.isElapsedTimeEnabled,
       };
     },
@@ -259,11 +259,11 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (
       valueMapping: VALUE_MAPPING_TSBASICSTRING,
       statePath: string
-    ) => (state: any) => {
-      const { widgetState } = state;
+    ) => (state: RootState) => {
+      const { appState } = state;
       return {
         name: valueMapping.label,
-        value: widgetState[statePath]?.value,
+        value: appState[statePath]?.value,
         unit: valueMapping.unit,
       };
     },
@@ -279,7 +279,7 @@ const WIDGET_SETTINGS: any = {
     mapStateToProps: (valueMapping: TsWideNumericValMap, statePath: string) => (
       state: RootState
     ) => {
-      const data = get(state.widgetState, statePath, '');
+      const data = get(state.appState, statePath, '');
       return {
         ...valueMapping,
         data,
@@ -303,7 +303,7 @@ const WIDGET_SETTINGS: any = {
     ) => {
       return {
         ...valueMapping,
-        data: get(state.widgetState, statePath, ''),
+        data: get(state.appState, statePath, ''),
       };
     },
   },
