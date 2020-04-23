@@ -34,11 +34,16 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const [layouts, setLayouts] = useState<Layout[]>([]);
   const [lastSavedlayouts, setLastSavedlayouts] = useState<Layout[]>([]);
 
-  const isequalPosition = (obj1: Layout, obj2: Layout) => {
+  /**
+   * compare 2 layouts position is same or not
+   * @param layOut1
+   * @param layOut2
+   */
+  const isEqualPosition = (layOut1: Layout, layOut2: Layout) => {
     return (
-      isEqual(obj1.i, obj2.i) &&
-      isEqual(obj1.x, obj2.x) &&
-      isEqual(obj1.y, obj2.y)
+      isEqual(layOut1.i, layOut2.i) &&
+      isEqual(layOut1.x, layOut2.x) &&
+      isEqual(layOut1.y, layOut2.y)
     );
   };
 
@@ -50,11 +55,16 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       hideApp: false,
     });
   };
+
   const onLayoutChange = (newLayouts: Layout[]) => {
     setLayouts(newLayouts);
   };
+  /**
+   * fire when a widget is moved and place in a different position
+   * @param newLayouts
+   */
   const onDragStop = async (newLayouts: Layout[]) => {
-    const layOutChanged = differenceWith(newLayouts, layouts, isequalPosition);
+    const layOutChanged = differenceWith(newLayouts, layouts, isEqualPosition);
     if (layOutChanged && layOutChanged.length > 0) {
       const isSuccess = await updateLayout(
         props.user,
@@ -70,6 +80,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       }
     }
   };
+
   useEffect(() => {
     return () => {
       isMounted.current = false;
@@ -100,8 +111,11 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       setLastSavedlayouts(generatedLayout);
     }
   };
-
-  const onRemoveItem = async (widgetId: string) => {
+  /**
+   * Fires when a remove button click on a widget
+   * @param widgetId
+   */
+  const onRemoveWidget = async (widgetId: string) => {
     const isSuccess = await deleteWidget(
       props.user,
       props.assetId,
@@ -119,7 +133,10 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       );
     }
   };
-
+  /**
+   * save a widget-configuration with generated id. and add it to the grid.
+   * @param widgetConfig
+   */
   const addWidget = async (widgetConfig: WidgetConfig) => {
     const { widgetTypeId } = widgetConfig;
     const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
@@ -151,7 +168,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
           layouts={layouts}
           onLayoutChange={onLayoutChange}
           widgetConfigs={widgetConfigs}
-          onRemoveItem={onRemoveItem}
+          onRemoveItem={onRemoveWidget}
           onDragStop={onDragStop}
         />
       </div>

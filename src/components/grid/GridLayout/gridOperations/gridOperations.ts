@@ -95,7 +95,10 @@ export const getEmptyPositions = (
   }
   return null;
 };
-
+/**
+ * return gridLayout for a given widget-config
+ * @param widgetConfig
+ */
 export const getGridLayout = (widgetConfig: WidgetConfig): Layout => {
   const { i, cordinates, layout, widgetTypeId } = widgetConfig;
   const isStatic = layout?.static;
