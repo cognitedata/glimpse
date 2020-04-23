@@ -5,7 +5,7 @@ import store from 'store';
 import { FetchEvent } from './interfaces';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
-const getAssetId = (state: RootState) => state.widgetState.asset?.id;
+const getAssetId = (state: RootState) => state.appState.asset?.id;
 
 /**
  *

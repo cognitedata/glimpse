@@ -53,4 +53,3 @@ export const saveRemovedAlarm = (alarmId: number) =>
   action(actionTypes.SAVE_REMOVED_ALARM, alarmId);
 
 /** --------------------------------------------------- */
-

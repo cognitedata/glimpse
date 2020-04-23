@@ -13,7 +13,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { setAlarms } from '../actions/root-action';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
-const getAssetId = (state: RootState) => state.widgetState.asset?.id;
+const getAssetId = (state: RootState) => state.appState.asset?.id;
 const getAlarms = (state: RootState) => state.appState.alarms;
 
 const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
