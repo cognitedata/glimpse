@@ -19,7 +19,7 @@ import { AlarmType } from './interfaces';
 import {
   startUpdateAlarms,
   stopUpdateAlarms,
-  removeAlarm,
+  saveRemovedAlarm,
 } from '../../store/actions/root-action';
 
 /**
@@ -55,7 +55,7 @@ const Alarm: FC<Props> = (props: Props) => {
     if (index !== 0 && index !== selectedIndex) {
       setSelectedIndex(0);
     }
-    props.removeAlarm(alarmId);
+    props.saveRemovedAlarm(alarmId);
   };
 
   /**
@@ -116,7 +116,7 @@ const Alarm: FC<Props> = (props: Props) => {
               edge="end"
               aria-label="delete"
               onClick={() => {
-                props.removeAlarm(props.alarms[selectedIndex].id);
+                props.saveRemovedAlarm(props.alarms[selectedIndex].id);
               }}
             >
               <CloseIcon />
@@ -196,7 +196,7 @@ const mapStateToProps = (state: RootState) => ({
 const dispatchProps = {
   startUpdateAlarms,
   stopUpdateAlarms,
-  removeAlarm,
+  saveRemovedAlarm,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>

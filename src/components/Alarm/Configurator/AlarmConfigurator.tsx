@@ -145,7 +145,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
    * This function is used to save alarm configurations.
    * A alert will be displayed finally based on the saving status.
    */
-  const onSubmit = (data: FormField) => {
+  const saveAlarmConfig = (data: FormField) => {
     let actionStatus = true;
     try {
       localStorage.setItem(ALARM_DOC_NAME, JSON.stringify(data));
@@ -159,6 +159,13 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
         hideApp: false,
       });
     }
+  };
+
+  /**
+   * This function fires on form submit
+   */
+  const onSubmit = (data: FormField) => {
+    saveAlarmConfig(data);
   };
 
   return (

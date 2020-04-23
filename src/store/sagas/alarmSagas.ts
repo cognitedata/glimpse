@@ -117,7 +117,7 @@ function* clearRemovedAlarmIds(alarms: AlarmType[]) {
 /**
  * This saga is used to save the removed alarms ids
  */
-export function* removeAlarm(action: any) {
+export function* saveRemovedAlarm(action: any) {
   let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
   removedAlarms = removedAlarms ? removedAlarms.split(',') : [];
   removedAlarms.push(action.payload);

@@ -37,7 +37,7 @@ export const stopUpdateAlarms = () => action(actionTypes.STOP_UPDATE_ALARMS);
 export const setAlarms = (alarms: AlarmType[]) =>
   action(actionTypes.SET_ALARMS, alarms);
 
-export const removeAlarm = (alarmId: number) =>
-  action(actionTypes.REMOVE_ALARM, alarmId);
+export const saveRemovedAlarm = (alarmId: number) =>
+  action(actionTypes.SAVE_REMOVED_ALARM, alarmId);
 
 /** --------------------------------------------------- */
