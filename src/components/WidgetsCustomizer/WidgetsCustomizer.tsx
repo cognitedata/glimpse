@@ -234,7 +234,7 @@ export default function WidgetsCustomizer() {
                   alt={WIDGET_SETTINGS[selectedWidgetKey].name}
                 />
               </div>
-              <Box width="80%" p={1} my={0.5}>
+              <Box width="100%">
                 {Configurator && <Configurator onCreate={onCreate} />}
               </Box>
             </Box>
