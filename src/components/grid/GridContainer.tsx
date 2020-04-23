@@ -163,9 +163,9 @@ const dispatchProps = {
   setAlerts,
 };
 const mapStateToProps = (state: RootState) => ({
-  assetId: state.widgetState.asset?.id,
+  assetId: state.appState.asset?.id,
   user: state.authState.userInfo?.name,
-  newWidget: state.widgetState.newWidget,
+  newWidget: state.appState.newWidget,
 });
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);

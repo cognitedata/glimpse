@@ -4,6 +4,7 @@ import { CogniteClient, Asset } from '@cognite/sdk';
 import { action } from 'typesafe-actions';
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import { AlarmType } from 'components/Alarm/interfaces';
+import { WidgetConfig } from 'components/grid/interfaces';
 import * as actionTypes from './actionTypes';
 
 /**
@@ -39,6 +40,9 @@ export const setTsDps = (tsDpsMapping: any) =>
 
 export const setLatestDataPoint = (dataPointMapping: any) =>
   action(actionTypes.SET_LATEST_DATAPOINT, dataPointMapping);
+
+export const setNewWidget = (widget: WidgetConfig) =>
+  action(actionTypes.SET_NEW_WIDGET, widget);
 
 /** ------------------ Alarm actions ------------------ */
 
