@@ -3,14 +3,12 @@ import firebase from 'firebase';
 import { WIDGET_CONF_DB } from 'constants/widgetSettings';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBsORpInv-aKArFuUohvk4NeItVfdWp4RE',
-  authDomain: 'cognite-glimpse.firebaseapp.com',
-  databaseURL: 'https://cognite-glimpse.firebaseio.com',
-  projectId: 'cognite-glimpse',
-  storageBucket: 'cognite-glimpse.appspot.com',
-  messagingSenderId: '625563013605',
-  appId: '1:625563013605:web:9fdb3dd7c13635a70f9f0c',
-  measurementId: 'G-M56WV6PFFF',
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  databaseURL: process.env.REACT_APP_DATABASE_URL,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
 const firbaseInit: any = firebase.initializeApp(firebaseConfig);

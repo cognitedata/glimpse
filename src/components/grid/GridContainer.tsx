@@ -7,16 +7,15 @@ import WIDGET_SETTINGS from 'constants/widgetSettings';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction, RootState } from 'StoreTypes';
-import {
-  getWidgetConfigByUserId,
-  saveWidgetConfig,
-  saveWidgetConfigs,
-  deleteWidgetConfig,
-} from 'components/widgetCRUD/fireBaseRepo';
 import get from 'lodash/get';
 import differenceWith from 'lodash/differenceWith';
 import isEqual from 'lodash/isEqual';
-import findIndex from 'lodash/findIndex';
+import {
+  getWidgetConfigs,
+  updateLayout,
+  saveWidget,
+  deleteWidget,
+} from 'components/widgetCRUD/services/widgetConfService';
 import {
   getEmptyPositions,
   getGridLayout,
@@ -29,32 +28,11 @@ import { setAlerts } from '../../store/actions/root-action';
  * Used to Add widgets to the GridLayOut with extra Features as remove.
  * @param props GridContainerProps
  */
-
 const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const isMounted = useRef(true);
   const [widgetConfigs, setWidgetConfigs] = useState<WidgetConfig[]>([]);
   const [layouts, setLayouts] = useState<Layout[]>([]);
-
-  const onRemoveItem = async (key: string) => {
-    try {
-      await deleteWidgetConfig(props.user, props.assetId, key);
-      setLayouts((prevLayout: Layout[]) =>
-        prevLayout.filter((compDetails: Layout) => compDetails.i !== key)
-      );
-      setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) =>
-        prevWidgetConfigs.filter(
-          (compDetails: WidgetConfig) => compDetails.i !== key
-        )
-      );
-    } catch (error) {
-      props.setAlerts({
-        type: 'error',
-        text: 'Unable to delete the widget',
-        duration: 50000,
-        hideApp: false,
-      });
-    }
-  };
+  const [lastSavedlayouts, setLastSavedlayouts] = useState<Layout[]>([]);
 
   const isequalPosition = (obj1: Layout, obj2: Layout) => {
     return (
@@ -64,14 +42,32 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     );
   };
 
-  const onDragStop = (newLayouts: Layout[]) => {
-    const widgetConfChanged = differenceWith(
-      newLayouts,
-      layouts,
-      isequalPosition
-    );
-    if (widgetConfChanged && widgetConfChanged.length > 0) {
-      updatePositions(widgetConfChanged);
+  const onError = (msg: string) => {
+    props.setAlerts({
+      type: 'error',
+      text: msg,
+      duration: 50000,
+      hideApp: false,
+    });
+  };
+  const onLayoutChange = (newLayouts: Layout[]) => {
+    setLayouts(newLayouts);
+  };
+  const onDragStop = async (newLayouts: Layout[]) => {
+    const layOutChanged = differenceWith(newLayouts, layouts, isequalPosition);
+    if (layOutChanged && layOutChanged.length > 0) {
+      const isSuccess = await updateLayout(
+        props.user,
+        props.assetId,
+        layOutChanged,
+        widgetConfigs,
+        onError
+      );
+      if (isSuccess) {
+        setLastSavedlayouts(newLayouts);
+      } else {
+        setLayouts(lastSavedlayouts);
+      }
     }
   };
   useEffect(() => {
@@ -93,59 +89,34 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   }, [props.newWidget]);
 
   const initilizeGrid = async () => {
-    let widgetConf = {};
-    try {
-      widgetConf = await getWidgetConfigByUserId(props.user);
-    } catch (error) {
-      props.setAlerts({
-        type: 'error',
-        text: 'Unable to fetch saved widget configerations data!',
-        duration: 50000,
-        hideApp: false,
-      });
-    }
+    const widgetConf = await getWidgetConfigs(props.user, onError);
     if (isMounted.current) {
       const widgetConfForAsset = get(widgetConf, props.assetId) || [];
       setWidgetConfigs(widgetConfForAsset);
-      setLayouts(widgetConfForAsset.map(widConf => getGridLayout(widConf)));
+      const generatedLayout = widgetConfForAsset.map(widConf =>
+        getGridLayout(widConf)
+      );
+      setLayouts(generatedLayout);
+      setLastSavedlayouts(generatedLayout);
     }
   };
 
-  const updatePositions = async (layOutDiff: Layout[]) => {
-    const newWidgetConfigs = [...widgetConfigs];
-    layOutDiff.forEach(layout => {
-      const { i, x, y } = layout;
-      const index = findIndex(widgetConfigs, { i });
-      if (index !== -1) {
-        const newWidgetConfig: WidgetConfig = {
-          ...widgetConfigs[index],
-          cordinates: [x, y],
-        };
-        newWidgetConfigs[index] = newWidgetConfig;
-      }
-    });
-    try {
-      await saveWidgetConfigs(props.user, props.assetId, newWidgetConfigs);
-    } catch (error) {
-      props.setAlerts({
-        type: 'error',
-        text: 'layOut Save Failed',
-        duration: 50000,
-        hideApp: false,
-      });
-    }
-  };
-
-  const saveNewWidget = async (newWidgetConf: WidgetConfig) => {
-    try {
-      await saveWidgetConfig(props.user, props.assetId, newWidgetConf);
-    } catch (error) {
-      props.setAlerts({
-        type: 'error',
-        text: 'Widget save failed',
-        duration: 50000,
-        hideApp: false,
-      });
+  const onRemoveItem = async (widgetId: string) => {
+    const isSuccess = await deleteWidget(
+      props.user,
+      props.assetId,
+      widgetId,
+      onError
+    );
+    if (isSuccess) {
+      setLayouts((prevLayout: Layout[]) =>
+        prevLayout.filter((compDetails: Layout) => compDetails.i !== widgetId)
+      );
+      setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) =>
+        prevWidgetConfigs.filter(
+          (compDetails: WidgetConfig) => compDetails.i !== widgetId
+        )
+      );
     }
   };
 
@@ -154,21 +125,23 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
     const widgetCordinates = getEmptyPositions(layouts, w, h, MAXCOLS, MAXROWS);
     if (!widgetCordinates) {
-      props.setAlerts({
-        type: 'error',
-        text: 'There is no position for adding the component',
-        duration: 50000,
-        hideApp: false,
-      });
+      onError('There is no position for adding the component');
       return;
     }
     const newWidgetConf = { ...widgetConfig };
     newWidgetConf.i = generateRandomKey();
     newWidgetConf.cordinates = widgetCordinates;
     const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
-    setLayouts(newWidgetConfs.map(widConf => getGridLayout(widConf)));
-    setWidgetConfigs(newWidgetConfs);
-    saveNewWidget(newWidgetConf);
+    const isSuccess = saveWidget(
+      props.user,
+      props.assetId,
+      newWidgetConf,
+      onError
+    );
+    if (isSuccess) {
+      setLayouts(newWidgetConfs.map(widConf => getGridLayout(widConf)));
+      setWidgetConfigs(newWidgetConfs);
+    }
   };
 
   return (
@@ -176,6 +149,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       <div style={{ height: '85vh', padding: '10px' }}>
         <GridLayout
           layouts={layouts}
+          onLayoutChange={onLayoutChange}
           widgetConfigs={widgetConfigs}
           onRemoveItem={onRemoveItem}
           onDragStop={onDragStop}

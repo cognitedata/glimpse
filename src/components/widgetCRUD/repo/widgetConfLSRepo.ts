@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import { WidgetConfig } from 'components/grid/interfaces';
 
-export const saveWidgetConfig = async (
+export const save = async (
   userId: string,
   assetId: string,
   widgetConf: any
@@ -11,10 +11,9 @@ export const saveWidgetConfig = async (
     ? gridConf[assetId].concat(widgetConf)
     : [widgetConf];
   localStorage.setItem(userId, JSON.stringify(gridConf));
-  return true;
 };
 
-export const saveWidgetConfigs = async (
+export const update = async (
   userId: string,
   assetId: string,
   widgetConfs: any
@@ -22,10 +21,9 @@ export const saveWidgetConfigs = async (
   const gridConf = JSON.parse(localStorage.getItem(userId) || '{}');
   gridConf[assetId] = widgetConfs;
   localStorage.setItem(userId, JSON.stringify(gridConf));
-  return true;
 };
 
-export const deleteWidgetConfig = async (
+export const deleteOne = async (
   userId: string,
   assetId: string,
   widgetId: string
@@ -35,12 +33,9 @@ export const deleteWidgetConfig = async (
   const filteredWidgetConfs = widgetConfigs.filter(conf => conf.i !== widgetId);
   gridConf[assetId] = filteredWidgetConfs;
   localStorage.setItem(userId, JSON.stringify(gridConf));
-  return true;
 };
 
-export const getWidgetConfigByUserId = async (
-  userid: any
-): Promise<WidgetConfigs> => {
+export const getByUser = async (userid: any): Promise<WidgetConfigs> => {
   const grid = localStorage.getItem(userid);
   return grid ? JSON.parse(grid) : [];
 };

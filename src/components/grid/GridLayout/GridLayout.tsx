@@ -48,6 +48,7 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
           className="layout"
           compactType={null}
           onDragStop={props.onDragStop}
+          onLayoutChange={props.onLayoutChange}
           isResizable={IS_RESIZABLE}
           margin={MARGIN}
           maxRows={MAXROWS}
