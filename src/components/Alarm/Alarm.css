@@ -1,0 +1,68 @@
+.Alarm {
+  width: 100%;
+  margin: 0 15px;
+}
+
+.Alarm .MuiBadge-root {
+  top: 24px;
+  right: -10px;
+  cursor: pointer;
+}
+
+.Alarm-list .MuiList-root {
+  padding: 0;
+  width: unset !important;
+}
+
+.Alarm-list .MuiList-root .MuiListItem-root {
+  padding: 5px 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+}
+
+.Alarm .MuiList-root .MuiListItemText-root {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.Alarm-list .MuiList-root .MuiListItemIcon-root {
+  min-width: 30px;
+  color: #ec3e73;
+}
+
+.Alarm-list .MuiList-root .AlarmType-text {
+  font-size: 20px;
+  color: #ed6097;
+}
+
+.Alarm-list .MuiList-root .AlarmSubType-text .MuiListItemText-primary {
+  font-size: 20px;
+  font-weight: bold;
+  color: #242852;
+  margin-right: 10px;
+  display: inline-block;
+}
+
+.Alarm-list .MuiList-root .AlarmSubType-text .MuiListItemText-secondary {
+  display: inline-block;
+  bottom: 2px;
+  position: relative;
+}
+
+.Alarm-list .MuiList-root .Close-btn {
+  padding: 5px;
+}
+
+.Alarm-list .MuiList-root .Close-btn .MuiSvgIcon-root {
+  font-size: 18px;
+}
+
+.Alarm-menu .MuiMenu-paper {
+  top: 58px !important;
+  background-color: transparent !important;
+  box-shadow: none;
+}
+
+.Alarm-menu .MuiMenu-paper .MuiList-root .MuiListItem-root {
+  margin-top: 10px;
+}

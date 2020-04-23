@@ -3,6 +3,7 @@ import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { action } from 'typesafe-actions';
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
+import { AlarmType } from 'components/Alarm/interfaces';
 import * as actionTypes from './actionTypes';
 
 /**
@@ -26,3 +27,17 @@ export const updateAssets = () => action(actionTypes.UPDATE_ASSETS);
 
 export const setAssets = (assets: Asset[]) =>
   action(actionTypes.SET_ASSETS, assets);
+
+/** ------------------ Alarm actions ------------------ */
+
+export const startUpdateAlarms = () => action(actionTypes.START_UPDATE_ALARMS);
+
+export const stopUpdateAlarms = () => action(actionTypes.STOP_UPDATE_ALARMS);
+
+export const setAlarms = (alarms: AlarmType[]) =>
+  action(actionTypes.SET_ALARMS, alarms);
+
+export const saveRemovedAlarm = (alarmId: number) =>
+  action(actionTypes.SAVE_REMOVED_ALARM, alarmId);
+
+/** --------------------------------------------------- */
