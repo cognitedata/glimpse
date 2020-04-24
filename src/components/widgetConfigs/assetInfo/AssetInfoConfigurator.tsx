@@ -43,7 +43,7 @@ export const AssetInfoConfigurator = (props: TimeseriesConfiguratorProps) => {
    */
   const onSubmit = (data: FormValues) => {
     const returnObj = {
-      ValueMapping: {
+      valueMapping: {
         fields: [
           {
             label: data.fields[0].customName,
