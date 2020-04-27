@@ -2,13 +2,15 @@
 import { WidgetConfig } from 'components/grid/interfaces';
 import { widgetConfFSDoc } from '../../../firebase';
 
+type WidgetConfObj = { [key: string]: WidgetConfig[] };
+
 export const save = async (
   userId: string,
   assetId: string,
-  widgetConf: any
+  widgetConf: WidgetConfig
 ) => {
   const gridConfDoc = await widgetConfFSDoc(userId).get();
-  let gridConf: any = {};
+  let gridConf: WidgetConfObj = {};
   if (gridConfDoc.exists) {
     gridConf = gridConfDoc.data();
     gridConf[assetId] = gridConf[assetId]
@@ -24,10 +26,10 @@ export const save = async (
 export const update = async (
   userId: string,
   assetId: string,
-  widgetConfs: any
+  widgetConfs: WidgetConfig[]
 ) => {
   const gridConfDoc = await widgetConfFSDoc(userId).get();
-  let widgetConfObj: WidgetConfigs = {};
+  let widgetConfObj: WidgetConfObj = {};
   if (gridConfDoc.exists) {
     widgetConfObj = gridConfDoc.data();
     widgetConfObj[assetId] = widgetConfs;
@@ -55,7 +57,7 @@ export const deleteOne = async (
   }
 };
 
-export const getByUser = async (userId: any): Promise<WidgetConfigs> => {
+export const getByUser = async (userId: string): Promise<WidgetConfigs> => {
   const gridConfDoc = await widgetConfFSDoc(userId).get();
   if (gridConfDoc.exists) {
     return gridConfDoc.data();

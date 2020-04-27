@@ -17,6 +17,7 @@ export interface GridLayoutProps {
   widgetConfigs: WidgetConfig[];
   onLayoutChange?: (newLayout: Layout[]) => void;
   onDragStop?: (newLayout: Layout[]) => void;
+  isDraggable?: boolean;
   onRemoveItem: (key: string) => void;
   size: { height: number; width: number };
 }

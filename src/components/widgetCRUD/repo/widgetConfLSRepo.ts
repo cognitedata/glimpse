@@ -4,7 +4,7 @@ import { WidgetConfig } from 'components/grid/interfaces';
 export const save = async (
   userId: string,
   assetId: string,
-  widgetConf: any
+  widgetConf: WidgetConfigs
 ) => {
   const gridConf = JSON.parse(localStorage.getItem(userId) || '{}');
   gridConf[assetId] = gridConf[assetId]
@@ -16,7 +16,7 @@ export const save = async (
 export const update = async (
   userId: string,
   assetId: string,
-  widgetConfs: any
+  widgetConfs: WidgetConfigs[]
 ) => {
   const gridConf = JSON.parse(localStorage.getItem(userId) || '{}');
   gridConf[assetId] = widgetConfs;
@@ -35,7 +35,7 @@ export const deleteOne = async (
   localStorage.setItem(userId, JSON.stringify(gridConf));
 };
 
-export const getByUser = async (userid: any): Promise<WidgetConfigs> => {
+export const getByUser = async (userid: string): Promise<WidgetConfigs> => {
   const grid = localStorage.getItem(userid);
   return grid ? JSON.parse(grid) : [];
 };
