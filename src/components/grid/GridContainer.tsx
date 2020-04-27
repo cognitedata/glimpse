@@ -15,6 +15,8 @@ import {
   saveWidget,
   deleteWidget,
 } from 'components/widgetCRUD/services/widgetConfService';
+import { useLocation } from 'react-router-dom';
+import { RouterPaths } from 'constants/router';
 import {
   getEmptyPositions,
   getGridLayout,
@@ -50,6 +52,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const onLayoutChange = (newLayouts: Layout[]) => {
     setLayouts(newLayouts);
   };
+  const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   /**
    * fire when a widget is moved and place in a different position
    * @param newLayouts
@@ -162,6 +165,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
           widgetConfigs={widgetConfigs}
           onRemoveItem={onRemoveWidget}
           onDragStop={onDragStop}
+          isDraggable={isOnSettingPage}
         />
       </div>
     </>
