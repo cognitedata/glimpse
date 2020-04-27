@@ -13,27 +13,33 @@ export const getWidgetConfigs = async (userId: string, onError: Function) => {
   }
 };
 
-export const updateLayout = async (
-  userId: string,
-  assetId: string,
-  changedlayOuts: Layout[],
-  widgetConfigs: WidgetConfig[],
-  onError: Function
+export const getWidgetConfByLayout = (
+  layouts: Layout[],
+  widgetConf: WidgetConfig[]
 ) => {
-  const newWidgetConfigs = [...widgetConfigs];
-  changedlayOuts.forEach(layout => {
+  const newWidgetConfigs = [...widgetConf];
+  layouts.forEach(layout => {
     const { i, x, y } = layout;
-    const index = findIndex(widgetConfigs, { i });
+    const index = findIndex(widgetConf, { i });
     if (index !== -1) {
       const newWidgetConfig: WidgetConfig = {
-        ...widgetConfigs[index],
+        ...widgetConf[index],
         cordinates: [x, y],
       };
       newWidgetConfigs[index] = newWidgetConfig;
     }
   });
+  return newWidgetConfigs;
+};
+
+export const updateWidgetConfigs = async (
+  userId: string,
+  assetId: string,
+  widgetConfigs: WidgetConfig[],
+  onError: Function
+) => {
   try {
-    await update(userId, assetId, newWidgetConfigs);
+    await update(userId, assetId, widgetConfigs);
     return true;
   } catch (error) {
     onError('layOuts Save Failed');
