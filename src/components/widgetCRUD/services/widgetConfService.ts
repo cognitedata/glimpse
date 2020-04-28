@@ -41,7 +41,7 @@ export const updateLayout = async (
   }
 };
 
-export const saveWidget = async (
+export const saveWidgetConfig = async (
   userId: string,
   assetId: string,
   newWidgetConf: WidgetConfig,
