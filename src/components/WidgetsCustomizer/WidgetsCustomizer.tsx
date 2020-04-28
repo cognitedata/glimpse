@@ -123,12 +123,7 @@ export default function WidgetsCustomizer() {
       }
     }
   };
-  const getWidgetSettingKey = (objKey: string | null = null) => {
-    if (!objKey) {
-      return WIDGET_SETTINGS[selectedWidgetKey];
-    }
-    return WIDGET_SETTINGS[objKey];
-  };
+
   const onCreate = (data: WidgetConfig) => {
     const widgetConf = { ...data };
     widgetConf.widgetTypeId = selectedWidgetKey;
@@ -158,8 +153,8 @@ export default function WidgetsCustomizer() {
   useEffect(() => {
     updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const Configurator: FC<WidgetConfigProps> = getWidgetSettingKey()
-    .configurator;
+  const Configurator: FC<WidgetConfigProps> =
+    WIDGET_SETTINGS[selectedWidgetKey].configurator;
   return (
     <div className="WidgetsCustomizer">
       <Button
@@ -238,13 +233,13 @@ export default function WidgetsCustomizer() {
             </Box>
             <Box p={1} m={0.5} width="80%" className="WidgetConfig-Column">
               <div className="title">
-                {getWidgetSettingKey().name}
+                {WIDGET_SETTINGS[selectedWidgetKey].name}
                 {/* <span>({getSizeString(selectedWidgetKey)})</span> */}
               </div>
               <div className="preview">
                 <img
-                  src={getWidgetSettingKey().image}
-                  alt={getWidgetSettingKey().name}
+                  src={WIDGET_SETTINGS[selectedWidgetKey].image}
+                  alt={WIDGET_SETTINGS[selectedWidgetKey].name}
                 />
               </div>
               <Box width="100%">

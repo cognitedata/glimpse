@@ -12,7 +12,7 @@ import get from 'lodash/get';
 import {
   getWidgetConfigs,
   updateLayout,
-  saveWidget,
+  saveWidgetConfig,
   deleteWidget,
 } from 'components/widgetCRUD/services/widgetConfService';
 import { useLocation } from 'react-router-dom';
@@ -35,11 +35,6 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const [layouts, setLayouts] = useState<Layout[]>([]);
   const [lastSavedLayouts, setLastSavedLayouts] = useState<Layout[]>([]);
 
-  /**
-   * compare 2 layouts position is same or not
-   * @param layOut1
-   * @param layOut2
-   */
   const onError = (msg: string) => {
     props.setAlerts({
       type: 'error',
@@ -54,7 +49,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   };
   const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   /**
-   * fire when a widget is moved and place in a different position
+   * fire when a widget is moved and placed in a different position
    * @param newLayouts
    */
   const onDragStop = async (newLayouts: Layout[]) => {
@@ -142,7 +137,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     newWidgetConf.i = generateRandomKey();
     newWidgetConf.cordinates = widgetCordinates;
     const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
-    const isSuccess = saveWidget(
+    const isSuccess = saveWidgetConfig(
       props.user,
       props.assetId,
       newWidgetConf,

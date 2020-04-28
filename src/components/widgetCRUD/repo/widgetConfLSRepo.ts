@@ -1,4 +1,8 @@
 // Copyright 2020 Cognite AS
+
+/**
+ * this file is used to persist data in the local storage (for developing purposes)
+ */
 import { WidgetConfig } from 'components/grid/interfaces';
 
 export const save = async (

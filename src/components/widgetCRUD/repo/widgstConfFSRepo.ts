@@ -1,4 +1,8 @@
 // Copyright 2020 Cognite AS
+
+/**
+ * This is used to persist data in the firebase
+ */
 import { WidgetConfig } from 'components/grid/interfaces';
 import { widgetConfFSDoc } from '../../../firebase';
 
