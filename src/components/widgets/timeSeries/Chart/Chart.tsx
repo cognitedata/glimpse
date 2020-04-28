@@ -38,6 +38,7 @@ const Chart = ({
   xDataKey = 'xValue',
   yDataKey = 'yValue',
 }: Props) => {
+  console.log('chart data', data);
   return (
     <ResponsiveContainer width={width} height={height}>
       <AreaChart data={data} margin={CHART_MARGINS}>
@@ -50,7 +51,7 @@ const Chart = ({
         <XAxis
           axisLine={false}
           tickLine={false}
-          interval={0}
+          interval="preserveStartEnd"
           dataKey={xDataKey}
           stroke={chartColor}
           ticks={xAxisLabels}
