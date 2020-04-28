@@ -94,7 +94,9 @@ const Alarm: FC<Props> = (props: Props) => {
     return onUnmount;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return props.alarms && props.alarms.length > 0 ? (
+  return props.alarms &&
+    props.alarms.length > 0 &&
+    props.alarms[selectedIndex] ? (
     <div className="Alarm Alarm-list" ref={alarmElement}>
       <List component="nav" aria-label="Device settings">
         <ListItem aria-haspopup="true" aria-controls="lock-menu">

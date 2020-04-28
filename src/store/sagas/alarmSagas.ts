@@ -10,13 +10,17 @@ import { AppAction } from 'store/reducers/app';
 import includes from 'lodash/includes';
 import moment from 'moment';
 import * as actionTypes from '../actions/actionTypes';
-import { setAlarms } from '../actions/root-action';
+import {
+  setAlarms,
+  startUpdateAlarms,
+  stopUpdateAlarms,
+} from '../actions/root-action';
 
 const getCdfClient = (state: RootState) => state.appState.cdfClient;
 const getAssetId = (state: RootState) => state.appState.asset?.id;
 const getAlarms = (state: RootState) => state.appState.alarms;
 
-const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
+const ALARM_CONFIG_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
 const REMOVED_ALARMS_DOC_NAME = `${APP_NAME}_REMOVED_ALARMS`;
 
 /**
@@ -33,15 +37,19 @@ export default function* pollUpdateAlarms(alarmConfig: {
         .subtract(alarmConfig.startTime, 'hours')
         .utc()
         .toDate();
-      const eventsResults = yield cdfClient.events.list({
-        sort: { createdTime: 'desc' },
-        filter: {
-          createdTime: { min: minStartTime },
-          assetIds: [assetId],
-          type: alarmConfig.eventType,
-          subtype: alarmConfig.eventSubtype,
-        },
-      });
+      const eventsResults = yield cdfClient.events
+        .list({
+          sort: { createdTime: 'desc' },
+          filter: {
+            createdTime: { min: minStartTime },
+            assetIds: [assetId],
+            type: alarmConfig.eventType,
+            subtype: alarmConfig.eventSubtype,
+          },
+        })
+        .catch(() => {
+          return { items: [] };
+        });
       const events: CogniteEvent[] = eventsResults.items;
 
       const alarms: AlarmType[] = events.map(event => ({
@@ -55,7 +63,7 @@ export default function* pollUpdateAlarms(alarmConfig: {
     }
 
     const { cancel } = yield race({
-      delay: delay(Number(alarmConfig.pollingInterval)),
+      delay: delay(Number(alarmConfig.pollingInterval) * 1000),
       cancel: take(
         (stopAction: AppAction) =>
           stopAction.type === actionTypes.STOP_UPDATE_ALARMS
@@ -74,7 +82,9 @@ export default function* pollUpdateAlarms(alarmConfig: {
 export function* pollUpdateAlarmsWatcher() {
   while (true) {
     yield take(actionTypes.START_UPDATE_ALARMS);
-    const savedAlarmConfigStr = yield localStorage.getItem(ALARM_DOC_NAME);
+    const savedAlarmConfigStr = yield localStorage.getItem(
+      ALARM_CONFIG_DOC_NAME
+    );
     if (savedAlarmConfigStr) {
       yield fork(pollUpdateAlarms, JSON.parse(savedAlarmConfigStr));
     }
@@ -87,7 +97,11 @@ export function* pollUpdateAlarmsWatcher() {
  */
 function* setFilteredAlarms(alarms?: AlarmType[]) {
   const rawAlarms = alarms || (yield select(getAlarms));
-  let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
+  const ASSET_ID = yield select(getAssetId);
+  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
+  let removedAlarms = yield localStorage.getItem(
+    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
+  );
   removedAlarms = removedAlarms ? removedAlarms.split(',') : [];
   const filteredAlarms = rawAlarms.filter((alarm: AlarmType) => {
     return !includes(removedAlarms, alarm.id.toString());
@@ -103,13 +117,17 @@ function* setFilteredAlarms(alarms?: AlarmType[]) {
  */
 function* clearRemovedAlarmIds(alarms: AlarmType[]) {
   const fetchedAlarmIds = alarms.map(alarm => alarm.id);
-  let removedAlarmIds = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
+  const ASSET_ID = yield select(getAssetId);
+  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
+  let removedAlarmIds = yield localStorage.getItem(
+    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
+  );
   removedAlarmIds = removedAlarmIds ? removedAlarmIds.split(',') : [];
   const filteredAlarmIds = removedAlarmIds.filter((removedAlarmId: string) => {
     return includes(fetchedAlarmIds, Number(removedAlarmId));
   });
   yield localStorage.setItem(
-    REMOVED_ALARMS_DOC_NAME,
+    REMOVED_ALARMS_DOC_NAME_WITH_ASSET,
     filteredAlarmIds.join(',')
   );
 }
@@ -118,9 +136,24 @@ function* clearRemovedAlarmIds(alarms: AlarmType[]) {
  * This saga is used to save the removed alarms ids
  */
 export function* saveRemovedAlarm(action: any) {
-  let removedAlarms = yield localStorage.getItem(REMOVED_ALARMS_DOC_NAME);
+  const ASSET_ID = yield select(getAssetId);
+  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
+  let removedAlarms = yield localStorage.getItem(
+    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
+  );
   removedAlarms = removedAlarms ? removedAlarms.split(',') : [];
   removedAlarms.push(action.payload);
-  yield localStorage.setItem(REMOVED_ALARMS_DOC_NAME, removedAlarms.join(','));
+  yield localStorage.setItem(
+    REMOVED_ALARMS_DOC_NAME_WITH_ASSET,
+    removedAlarms.join(',')
+  );
   yield call(setFilteredAlarms);
+}
+
+/**
+ * This saga is used to restart alarms polling
+ */
+export function* restartAlarmsPolling() {
+  yield put(stopUpdateAlarms());
+  yield put(startUpdateAlarms());
 }

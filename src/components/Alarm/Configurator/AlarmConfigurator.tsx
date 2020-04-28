@@ -89,7 +89,7 @@ const defaultValues = {
   eventType: '',
   eventSubtype: '',
   metafieldKey: '',
-  pollingInterval: 10000,
+  pollingInterval: 10,
   startTime: 24,
 };
 
@@ -227,7 +227,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
 
               <Grid item xs={12}>
                 <Controller
-                  label="Polling Interval"
+                  label="Polling Interval (In Seconds)"
                   as={
                     <TextField
                       id="pollingInterval"

@@ -11,7 +11,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 
 import { RootState, RootAction } from 'StoreTypes';
 
-import { setAsset } from '../../store/actions/root-action';
+import { setAsset, restartUpdateAlarms } from '../../store/actions/root-action';
 
 /**
  * This is the machine selector component.
@@ -29,6 +29,7 @@ const MachineSelector: FC<Props> = (props: Props) => {
     );
     if (selectedMachine !== undefined) {
       props.setAsset(selectedMachine);
+      props.restartUpdateAlarms();
     }
   };
 
@@ -84,6 +85,7 @@ const mapStateToProps = (state: RootState) => {
 
 const dispatchProps = {
   setAsset,
+  restartUpdateAlarms,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
