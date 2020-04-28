@@ -42,7 +42,7 @@ describe('Alarm Configuration Popup', () => {
     expect(getByText('Event Type')).toBeInTheDocument();
     expect(getByText('Event Subtype')).toBeInTheDocument();
     expect(getByText('Metafield Key')).toBeInTheDocument();
-    expect(getByText('Polling Interval')).toBeInTheDocument();
+    expect(getByText('Polling Interval (In Seconds)')).toBeInTheDocument();
     expect(getByText('Start Time')).toBeInTheDocument();
   });
 
@@ -51,7 +51,7 @@ describe('Alarm Configuration Popup', () => {
       appState: { ...appInitialState },
     });
     fireEvent.click(getByTestId('config-button'));
-    expect(getByTestId('pollingInterval').innerHTML).toContain('value="10000"');
+    expect(getByTestId('pollingInterval').innerHTML).toContain('value="10"');
     expect(getByTestId('startTime').innerHTML).toContain('value="24"');
   });
 });
