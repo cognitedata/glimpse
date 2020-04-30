@@ -11,7 +11,7 @@ import get from 'lodash/get';
 import {
   getWidgetConfigs,
   updateWidgetConfigs,
-  saveWidget,
+  saveWidgetConfig,
   deleteWidget,
   getWidgetConfByLayout,
 } from 'components/widgetCRUD/services/widgetConfService';
@@ -145,7 +145,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     newWidgetConf.cordinates = widgetCordinates;
     const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
     setWidgetConfigs(newWidgetConfs);
-    const isSuccess = saveWidget(
+    const isSuccess = saveWidgetConfig(
       props.user,
       props.assetId,
       newWidgetConf,
