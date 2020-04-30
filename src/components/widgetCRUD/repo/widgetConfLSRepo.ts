@@ -8,7 +8,7 @@ import { WidgetConfig } from 'components/grid/interfaces';
 export const save = async (
   userId: string,
   assetId: string,
-  widgetConf: WidgetConfigs
+  widgetConf: WidgetConfig
 ) => {
   const gridConf = JSON.parse(localStorage.getItem(userId) || '{}');
   gridConf[assetId] = gridConf[assetId]
@@ -20,7 +20,7 @@ export const save = async (
 export const update = async (
   userId: string,
   assetId: string,
-  widgetConfs: WidgetConfigs[]
+  widgetConfs: WidgetConfig[]
 ) => {
   const gridConf = JSON.parse(localStorage.getItem(userId) || '{}');
   gridConf[assetId] = widgetConfs;

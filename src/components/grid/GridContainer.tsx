@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import React, { FC, useState, useEffect, useRef } from 'react';
+import React, { FC, useState, useEffect, useRef, useMemo } from 'react';
 import { generateRandomKey } from 'utils/utils';
 import { MAXCOLS, MAXROWS } from 'constants/grid';
 import { Layout } from 'react-grid-layout';
@@ -8,12 +8,12 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction, RootState } from 'StoreTypes';
 import get from 'lodash/get';
-
 import {
   getWidgetConfigs,
-  updateLayout,
-  saveWidgetConfig,
+  updateWidgetConfigs,
+  saveWidget,
   deleteWidget,
+  getWidgetConfByLayout,
 } from 'components/widgetCRUD/services/widgetConfService';
 import { useLocation } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
@@ -32,8 +32,9 @@ import { setAlerts } from '../../store/actions/root-action';
 const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const isMounted = useRef(true);
   const [widgetConfigs, setWidgetConfigs] = useState<WidgetConfig[]>([]);
-  const [layouts, setLayouts] = useState<Layout[]>([]);
-  const [lastSavedLayouts, setLastSavedLayouts] = useState<Layout[]>([]);
+  const [lastSavedWidgetConfigs, setlastSavedwidgetConfigs] = useState<
+    WidgetConfig[]
+  >([]);
 
   const onError = (msg: string) => {
     props.setAlerts({
@@ -45,26 +46,27 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   };
 
   const onLayoutChange = (newLayouts: Layout[]) => {
-    setLayouts(newLayouts);
+    setWidgetConfigs(getWidgetConfByLayout(newLayouts, widgetConfigs));
   };
+
   const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
   /**
    * fire when a widget is moved and placed in a different position
    * @param newLayouts
    */
   const onDragStop = async (newLayouts: Layout[]) => {
-    setLayouts(newLayouts);
-    const isSuccess = await updateLayout(
+    const newWidgetConfs = getWidgetConfByLayout(newLayouts, widgetConfigs);
+    setWidgetConfigs(newWidgetConfs);
+    const isSuccess = await updateWidgetConfigs(
       props.user,
       props.assetId,
-      newLayouts,
-      widgetConfigs,
+      getWidgetConfByLayout(newLayouts, widgetConfigs),
       onError
     );
     if (isSuccess) {
-      setLastSavedLayouts(newLayouts);
+      setlastSavedwidgetConfigs(newWidgetConfs);
     } else {
-      setLayouts(lastSavedLayouts);
+      setWidgetConfigs(lastSavedWidgetConfigs);
     }
   };
 
@@ -86,23 +88,31 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.newWidget]);
 
+  const getGridLayouts = (widgetconfigs: WidgetConfig[]) =>
+    widgetconfigs.map(wconf => getGridLayout(wconf));
+
+  const getGridLayoutsMemo = useMemo(() => getGridLayouts(widgetConfigs), [
+    widgetConfigs,
+  ]);
+
   const initilizeGrid = async () => {
     const widgetConf = await getWidgetConfigs(props.user, onError);
     if (isMounted.current) {
       const widgetConfForAsset = get(widgetConf, props.assetId) || [];
       setWidgetConfigs(widgetConfForAsset);
-      const generatedLayout = widgetConfForAsset
-        .filter(widConf => WIDGET_SETTINGS[widConf.widgetTypeId] !== undefined)
-        .map(widConf => getGridLayout(widConf));
-      setLayouts(generatedLayout);
-      setLastSavedLayouts(generatedLayout);
+      setlastSavedwidgetConfigs(widgetConfForAsset);
     }
   };
+
   /**
    * Fires when a remove button click on a widget
    * @param widgetId
    */
   const onRemoveWidget = async (widgetId: string) => {
+    const newWidgetConfig = widgetConfigs.filter(
+      (compDetails: WidgetConfig) => compDetails.i !== widgetId
+    );
+    setWidgetConfigs(newWidgetConfig);
     const isSuccess = await deleteWidget(
       props.user,
       props.assetId,
@@ -110,16 +120,12 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
       onError
     );
     if (isSuccess) {
-      setLayouts((prevLayout: Layout[]) =>
-        prevLayout.filter((compDetails: Layout) => compDetails.i !== widgetId)
-      );
-      setWidgetConfigs((prevWidgetConfigs: WidgetConfig[]) =>
-        prevWidgetConfigs.filter(
-          (compDetails: WidgetConfig) => compDetails.i !== widgetId
-        )
-      );
+      setlastSavedwidgetConfigs(newWidgetConfig);
+    } else {
+      setWidgetConfigs(lastSavedWidgetConfigs);
     }
   };
+
   /**
    * save a widget-configuration with generated id. and add it to the grid.
    * @param widgetConfig
@@ -127,6 +133,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const addWidget = async (widgetConfig: WidgetConfig) => {
     const { widgetTypeId } = widgetConfig;
     const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
+    const layouts = widgetConfigs.map(wconf => getGridLayout(wconf));
     const widgetCordinates = getEmptyPositions(layouts, w, h, MAXCOLS, MAXROWS);
     console.log(layouts, widgetCordinates);
     if (!widgetCordinates) {
@@ -137,17 +144,17 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     newWidgetConf.i = generateRandomKey();
     newWidgetConf.cordinates = widgetCordinates;
     const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
-    const isSuccess = saveWidgetConfig(
+    setWidgetConfigs(newWidgetConfs);
+    const isSuccess = saveWidget(
       props.user,
       props.assetId,
       newWidgetConf,
       onError
     );
     if (isSuccess) {
-      setLayouts(prevLayout =>
-        [...prevLayout].concat(getGridLayout(newWidgetConf))
-      );
-      setWidgetConfigs(newWidgetConfs);
+      setlastSavedwidgetConfigs(newWidgetConfs);
+    } else {
+      setWidgetConfigs(lastSavedWidgetConfigs);
     }
   };
 
@@ -155,7 +162,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     <>
       <div style={{ height: '85vh', padding: '10px' }}>
         <GridLayout
-          layouts={layouts}
+          layouts={getGridLayoutsMemo}
           onLayoutChange={onLayoutChange}
           widgetConfigs={widgetConfigs}
           onRemoveItem={onRemoveWidget}
@@ -170,11 +177,13 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
 const dispatchProps = {
   setAlerts,
 };
+
 const mapStateToProps = (state: RootState) => ({
   assetId: state.appState.asset?.id,
   user: state.authState.userInfo?.name,
   newWidget: state.appState.newWidget,
 });
+
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
