@@ -1,0 +1,86 @@
+.MachineConfigurator {
+  margin: 0 5px;
+}
+
+.MachineConfigurator .Config-button {
+  color: #ffffff;
+}
+
+.MachineConfigurator-Modal .MuiDialogContent-root {
+  padding: 20px 15px;
+}
+
+.MachineConfigurator-Modal .MuiDialogActions-root button {
+  color: #ffffff;
+  background-color: #394177;
+}
+
+.MachineConfigurator-Modal .MuiDialogActions-root button:hover {
+  background-color: #3f51b5;
+}
+
+.MachineConfigurator-Modal .MuiFormControl-root {
+  width: 100%;
+  margin-bottom: 5px;
+}
+
+.MachineConfigurator-Modal .Asset-external-id-input.MuiFormControl-root {
+  margin-bottom: 10px;
+}
+
+.MachineConfigurator-Modal .MuiInputBase-root {
+  background-color: #3a4177;
+  color: #ffffff;
+}
+
+.MachineConfigurator-Modal .MuiInputBase-root.Mui-disabled {
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.MachineConfigurator-Modal .MuiFormLabel-root {
+  color: #8a8a98;
+}
+
+.MachineConfigurator-Modal .MuiFormLabel-root.Mui-focused {
+  color: #8a8a98;
+}
+
+.MachineConfigurator-Modal
+  .MuiOutlinedInput-root
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #8a8a98;
+}
+
+.MachineConfigurator-Modal
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: #8a8a98;
+}
+
+.MachineConfigurator-Modal .Add-button {
+  color: #ffffff;
+  top: 4px;
+  left: 2px;
+}
+
+.MachineConfigurator-Modal .Remove-button {
+  color: #ffffff;
+  right: 4px;
+  top: 4px;
+}
+
+.MachineConfigurator-Modal form {
+  display: flex;
+  width: 100%;
+}
+
+.MachineConfigurator-Modal .Asset-validator-loader {
+  width: 25px !important;
+  height: 25px !important;
+  position: relative;
+  top: -50px;
+  margin-bottom: -25px;
+  float: right;
+  right: 10px;
+}

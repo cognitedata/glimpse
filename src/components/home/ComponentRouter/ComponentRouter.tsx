@@ -5,6 +5,7 @@ import GridContainer from 'components/grid/GridContainer';
 
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { RouterPaths } from 'constants/router';
+import Overview from './Overview';
 
 /**
  *
@@ -13,7 +14,7 @@ import { RouterPaths } from 'constants/router';
 const ComponentRouter = () => (
   <Switch>
     <Route name="overview" exact path={RouterPaths.OVERVIEW}>
-      <GridContainer />
+      <Overview />
     </Route>
     <Route
       name="settings"

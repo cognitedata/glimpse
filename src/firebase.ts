@@ -1,6 +1,7 @@
 // Copyright 2020 Cognite AS
 import firebase from 'firebase';
 import { WIDGET_CONF_DB } from 'constants/widgetSettings';
+import { APP_CONFIG_DB } from 'constants/firebase';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,3 +19,6 @@ firestoreDB.settings({ timestampsInSnapshots: true });
 export { firestoreDB };
 export const widgetConfFSDoc = (docName: string) =>
   firestoreDB.collection(WIDGET_CONF_DB).doc(docName);
+
+export const appConfDoc = (docName: string) =>
+  firestoreDB.collection(APP_CONFIG_DB).doc(docName);
