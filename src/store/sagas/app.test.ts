@@ -1,4 +1,5 @@
 // Copyright 2020 Cognite AS
+import { testSaga } from 'redux-saga-test-plan';
 import { put } from 'redux-saga/effects';
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import {
@@ -39,23 +40,31 @@ const alert: AlertsPropsType = {
 };
 
 describe('App Sagas', () => {
-  test('should fetch assets and set to state', () => {
-    const gen = updateAssets();
-    expect(gen.next().value).toEqual(put(setLoading()));
-    gen.next();
-    expect(gen.next(client).value).toEqual(assetList);
-    expect(gen.next(assetList).value).toEqual(put(setAssets(assetList)));
-    expect(gen.next().value).toEqual(put(setAsset(assetList[0])));
-    expect(gen.next().value).toEqual(put(setLoaded()));
-    expect(gen.next().done).toBeTruthy();
+  test('should fetch assets and set to state', async () => {
+    const testGen = testSaga(updateAssets, { payload: true });
+    return testGen
+      .next()
+      .put(setLoading())
+      .next(client)
+      .next(assetList)
+      .next()
+      .put(setLoaded())
+      .next()
+      .isDone();
   });
 
-  test('should set alert on error', () => {
-    const gen = updateAssets();
-    expect(gen.next().value).toEqual(put(setLoading()));
-    gen.next();
-    expect(gen.next(null).value).toEqual(put(setAlerts(alert)));
-    expect(gen.next().value).toEqual(put(setLoaded()));
-    expect(gen.next().done).toBeTruthy();
+  test('should set alert on error', async () => {
+    const testGen = testSaga(updateAssets, { payload: true });
+    return testGen
+      .next()
+      .put(setLoading())
+      .next()
+      .next(assetList)
+      .next(assetList[0])
+      .put(setAlerts(alert))
+      .next()
+      .put(setLoaded())
+      .next()
+      .isDone();
   });
 });

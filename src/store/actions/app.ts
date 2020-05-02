@@ -24,7 +24,8 @@ export const setLoading = () => action(actionTypes.SET_LOADING);
 
 export const setLoaded = () => action(actionTypes.SET_LOADED);
 
-export const updateAssets = () => action(actionTypes.UPDATE_ASSETS);
+export const updateAssets = (showLoader?: boolean) =>
+  action(actionTypes.UPDATE_ASSETS, showLoader);
 
 export const setAssets = (assets: Asset[]) =>
   action(actionTypes.SET_ASSETS, assets);

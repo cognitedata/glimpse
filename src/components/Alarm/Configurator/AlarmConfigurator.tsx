@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import AddAlarmIcon from '@material-ui/icons/AddAlarm';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Tooltip from '@material-ui/core/Tooltip';
 
 import './AlarmConfigurator.css';
 import { Dispatch, bindActionCreators } from 'redux';
@@ -170,15 +171,17 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
 
   return (
     <div className="AlarmConfigurator">
-      <IconButton
-        className="Config-button"
-        data-testid="config-button"
-        edge="end"
-        aria-label="Config"
-        onClick={handleClickOpen}
-      >
-        <AddAlarmIcon />
-      </IconButton>
+      <Tooltip title="Alarm Configurator">
+        <IconButton
+          className="Config-button"
+          data-testid="config-button"
+          edge="end"
+          aria-label="Config"
+          onClick={handleClickOpen}
+        >
+          <AddAlarmIcon />
+        </IconButton>
+      </Tooltip>
       <Dialog
         data-testid="widgets-customizer-Modal"
         className="AlarmConfigurator-Modal"

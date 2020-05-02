@@ -30,6 +30,11 @@ import { WidgetConfigProps } from 'components/widgetConfigs/event/interfaces';
 import store from 'store';
 import { SET_NEW_WIDGET } from 'store/actions/actionTypes';
 import { WidgetConfig } from 'components/grid/interfaces';
+import { RootState, RootAction } from 'StoreTypes';
+import { Dispatch, bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
+import { setAlerts } from 'store/actions/root-action';
 
 const FILTER_LABEL_WIDTH = 95;
 
@@ -82,7 +87,7 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   );
 });
 
-export default function WidgetsCustomizer() {
+const WidgetsCustomizer: FC<Props> = (props: Props) => {
   const [open, setOpen] = useState(false);
   const [selectedWidgetKey, setSelectedWidgetKey] = useState(
     Object.keys(WIDGET_SETTINGS)[0]
@@ -98,9 +103,16 @@ export default function WidgetsCustomizer() {
   };
 
   const handleClickOpen = () => {
-    setOpen(true);
-    setDefaultWidgetSizeFilter('All');
-    setWidgetSizeFilter('All');
+    if (props.assetsLength > 0) {
+      setOpen(true);
+      setDefaultWidgetSizeFilter('All');
+      setWidgetSizeFilter('All');
+    } else {
+      props.setAlerts({
+        type: 'warning',
+        text: 'Machines are not configured!',
+      });
+    }
   };
 
   const handleClose = () => {
@@ -260,4 +272,20 @@ export default function WidgetsCustomizer() {
       </Dialog>
     </div>
   );
-}
+};
+
+const mapStateToProps = (state: RootState) => ({
+  assetsLength: state.appState.assets.length,
+});
+
+const dispatchProps = {
+  setAlerts,
+};
+
+const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
+  bindActionCreators(dispatchProps, dispatch);
+
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
+
+export default connect(mapStateToProps, dispatchProps)(WidgetsCustomizer);

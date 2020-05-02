@@ -71,10 +71,9 @@ describe('Auth Sagas', () => {
     gen.next(false);
     expect(gen.next(true).value).toEqual(userStatus);
     expect(gen.next(true).value).toEqual(groupList);
-    expect(gen.next(groupList).value).toEqual(put(setLoggedIn()));
+    gen.next(groupList);
     gen.next();
-    gen.next();
-    expect(gen.next().value).toEqual(put(setLoaded()));
+    expect(gen.next().value).toEqual(put(setLoggedIn()));
     expect(gen.next().done).toBeTruthy();
   });
 

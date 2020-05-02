@@ -31,7 +31,7 @@ describe('Widget Customizer', () => {
 
   test('Display popup on button click ', async () => {
     const { getByText, getByTestId } = renderWithRedux(<WidgetCustomizer />, {
-      appState: { ...appInitialState, asset: assetList[0] },
+      appState: { ...appInitialState, assets: assetList, asset: assetList[0] },
     });
     fireEvent.click(getByTestId('add-button'));
     expect(getByText('Add Widget')).toBeInTheDocument();
@@ -41,7 +41,11 @@ describe('Widget Customizer', () => {
     const { getByTestId, findAllByText } = renderWithRedux(
       <WidgetCustomizer />,
       {
-        appState: { ...appInitialState, asset: assetList[0] },
+        appState: {
+          ...appInitialState,
+          assets: assetList,
+          asset: assetList[0],
+        },
       }
     );
     fireEvent.click(getByTestId('add-button'));
@@ -59,7 +63,11 @@ describe('Widget Customizer', () => {
     const { getByTestId, findAllByText } = renderWithRedux(
       <WidgetCustomizer />,
       {
-        appState: { ...appInitialState, asset: assetList[0] },
+        appState: {
+          ...appInitialState,
+          assets: assetList,
+          asset: assetList[0],
+        },
       }
     );
     fireEvent.click(getByTestId('add-button'));
@@ -71,7 +79,11 @@ describe('Widget Customizer', () => {
     const { getByTestId, findAllByText, findAllByAltText } = renderWithRedux(
       <WidgetCustomizer />,
       {
-        appState: { ...appInitialState, asset: assetList[0] },
+        appState: {
+          ...appInitialState,
+          assets: assetList,
+          asset: assetList[0],
+        },
       }
     );
     fireEvent.click(getByTestId('add-button'));

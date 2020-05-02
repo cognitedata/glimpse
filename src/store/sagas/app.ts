@@ -1,6 +1,7 @@
 // Copyright 2020 Cognite AS
 import { put, select, fork, take } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
+import { getMachineIds } from 'services/appCRUD/appConfService';
 import {
   setLoading,
   setAssets,
@@ -8,7 +9,6 @@ import {
   setAsset,
   setAlerts,
 } from '../actions/root-action';
-import { MACHINE_EXTERNAL_IDS } from '../../constants/appData';
 
 import { MESSAGES } from '../../constants/messages';
 
@@ -23,16 +23,30 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
 /**
  * Assets list fetcher
  */
-export function* updateAssets() {
-  yield put(setLoading());
+export function* updateAssets(action: any) {
+  /**
+   * Show loader only if its requested in input parameters
+   */
+  if (action.payload) {
+    yield put(setLoading());
+  }
+
   const cdfClient = yield select(getCdfClient);
 
   try {
-    const assets = yield cdfClient.assets.retrieve(
-      MACHINE_EXTERNAL_IDS.map(id => ({ id }))
-    );
-    yield put(setAssets(assets));
-    yield put(setAsset(assets[0]));
+    const savedMachineConfigStr = yield getMachineIds();
+
+    const MACHINE_EXTERNAL_IDS = savedMachineConfigStr
+      ? savedMachineConfigStr.split(',')
+      : [];
+
+    if (MACHINE_EXTERNAL_IDS.length > 0) {
+      const assets = yield cdfClient.assets.retrieve(
+        MACHINE_EXTERNAL_IDS.map((id: string) => ({ id }))
+      );
+      yield put(setAssets(assets));
+      yield put(setAsset(assets[0]));
+    }
   } catch (error) {
     yield put(
       setAlerts({
@@ -42,7 +56,9 @@ export function* updateAssets() {
       })
     );
   } finally {
-    yield put(setLoaded());
+    if (action.payload) {
+      yield put(setLoaded());
+    }
   }
 }
 

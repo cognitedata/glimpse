@@ -28,11 +28,17 @@ import {
  * This contains some major functions such as assets fetch etc.
  */
 const AppContainer: FC<Props> = (props: Props) => {
-  const showAlert = () => {
-    props.setAlerts({
-      type: 'error',
-      text: 'Test message',
-    });
+  const onOverviewClick = () => {
+    /**
+     * On overview click, if there are no configured machines,
+     * app will redirect back to settings page and show a warning.
+     */
+    if (props.assetsLength === 0) {
+      props.setAlerts({
+        type: 'warning',
+        text: 'Machines are not configured!',
+      });
+    }
   };
 
   const navList: NavListItem[] = [
@@ -41,6 +47,7 @@ const AppContainer: FC<Props> = (props: Props) => {
       text: 'Overview',
       icon: <RemoveRedEyeIconOutlined />,
       routeTo: RouterPaths.OVERVIEW,
+      onClick: onOverviewClick,
     },
     {
       id: 2,
@@ -53,7 +60,6 @@ const AppContainer: FC<Props> = (props: Props) => {
       text: 'Feedback',
       icon: <SmsIconOutlined />,
       routeTo: RouterPaths.FEEDBACK,
-      onClick: showAlert,
     },
     {
       id: 4,
@@ -65,17 +71,20 @@ const AppContainer: FC<Props> = (props: Props) => {
   ];
 
   useEffect(() => {
-    props.updateAssets();
+    props.updateAssets(true);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const homeHtml = props.loading ? <Loader /> : <Home navList={navList} />;
-
-  return homeHtml;
+  if (props.loading) {
+    return <Loader />;
+  }
+  return props.loggedIn ? <Home navList={navList} /> : null;
 };
 
 const mapStateToProps = (state: RootState) => ({
   loading: state.appState.loading,
   cdfClient: state.appState.cdfClient,
+  assetsLength: state.appState.assets.length,
+  loggedIn: state.authState.loggedIn,
 });
 
 const dispatchProps = {
