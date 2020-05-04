@@ -5,14 +5,14 @@ import { TSFancyNumericMockProps } from 'mocks/widgetsMockData/circularProgressM
 import { TSFancyNumeric } from './TSFancyNumeric';
 
 describe('CircularProgress', () => {
-  // it('should render progress precentage correctly', () => {
-  //   const { getByText } = render(
-  //     <TSFancyNumeric {...TSFancyNumericMockProps[0]} />
-  //   );
-  //   expect(
-  //     getByText(`${TSFancyNumericMockProps[0].precentage.toString()}%`)
-  //   ).toBeInTheDocument();
-  // });
+  it('should render progress precentage correctly', () => {
+    const { getByText } = render(
+      <TSFancyNumeric {...TSFancyNumericMockProps[0]} />
+    );
+    expect(
+      getByText(`${TSFancyNumericMockProps[0].precentage.toString()}%`)
+    ).toBeInTheDocument();
+  });
 
   it('should render title correctly', () => {
     const { getAllByText } = render(
