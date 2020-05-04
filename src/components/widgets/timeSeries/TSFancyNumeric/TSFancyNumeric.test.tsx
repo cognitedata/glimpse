@@ -15,10 +15,12 @@ describe('CircularProgress', () => {
   });
 
   it('should render title correctly', () => {
-    const { getByText } = render(
+    const { getAllByText } = render(
       <TSFancyNumeric {...TSFancyNumericMockProps[0]} />
     );
-    expect(getByText(TSFancyNumericMockProps[0].title)).toBeInTheDocument();
+    expect(
+      getAllByText(TSFancyNumericMockProps[0].title).length
+    ).toBeGreaterThan(0);
   });
 
   it('should render timeDisplayKey correctly', () => {
