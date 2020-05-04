@@ -3,7 +3,7 @@ import { MESSAGES } from 'constants/messages';
 import {
   getMachineConfig,
   saveMachineConfig,
-} from './appConfRepo/appConfFSRepo';
+} from './appConfRepo/appConfLSRepo';
 
 /**
  *
