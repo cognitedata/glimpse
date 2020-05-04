@@ -19,33 +19,33 @@ const renderWithRedux = (
 };
 
 describe('Machine Configuration', () => {
-  test('Dumb test', async () => {
-    expect(true).toBeTruthy();
+  // test('Dumb test', async () => {
+  //   expect(true).toBeTruthy();
+  // });
+  test('Render configuration button intially', async () => {
+    const { getByTestId } = renderWithRedux(<MachineConfigurator />, {
+      appState: { ...appInitialState },
+    });
+    expect(getByTestId('machine-configurator-btn')).toBeInTheDocument();
   });
-  // test('Render configuration button intially', async () => {
-  //   const { getByTestId } = renderWithRedux(<MachineConfigurator />, {
-  //     appState: { ...appInitialState },
-  //   });
-  //   expect(getByTestId('machine-configurator-btn')).toBeInTheDocument();
-  // });
-  // test('Display popup on button click ', async () => {
-  //   const { getByText, getByTestId } = renderWithRedux(
-  //     <MachineConfigurator />,
-  //     {
-  //       appState: { ...appInitialState },
-  //     }
-  //   );
-  //   fireEvent.click(getByTestId('machine-configurator-btn'));
-  //   expect(getByText('Machine Configuration')).toBeInTheDocument();
-  // });
-  // test('Display form field ', async () => {
-  //   const { getByText, getByTestId } = renderWithRedux(
-  //     <MachineConfigurator />,
-  //     {
-  //       appState: { ...appInitialState },
-  //     }
-  //   );
-  //   fireEvent.click(getByTestId('machine-configurator-btn'));
-  //   expect(getByText('Asset External Id')).toBeInTheDocument();
-  // });
+  test('Display popup on button click ', async () => {
+    const { getByText, getByTestId } = renderWithRedux(
+      <MachineConfigurator />,
+      {
+        appState: { ...appInitialState },
+      }
+    );
+    fireEvent.click(getByTestId('machine-configurator-btn'));
+    expect(getByText('Machine Configuration')).toBeInTheDocument();
+  });
+  test('Display form field ', async () => {
+    const { getByText, getByTestId } = renderWithRedux(
+      <MachineConfigurator />,
+      {
+        appState: { ...appInitialState },
+      }
+    );
+    fireEvent.click(getByTestId('machine-configurator-btn'));
+    expect(getByText('Asset External Id')).toBeInTheDocument();
+  });
 });
