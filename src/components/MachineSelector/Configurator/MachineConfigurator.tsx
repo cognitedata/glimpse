@@ -217,7 +217,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
       <Tooltip title="Machine Configurator">
         <IconButton
           className="Config-button"
-          data-testid="config-button"
+          data-testid="machine-configurator-btn"
           edge="end"
           aria-label="Config"
           onClick={handleClickOpen}

@@ -23,7 +23,7 @@ describe('Machine Configuration', () => {
     const { getByTestId } = renderWithRedux(<MachineConfigurator />, {
       appState: { ...appInitialState },
     });
-    expect(getByTestId('config-button')).toBeInTheDocument();
+    expect(getByTestId('machine-configurator-btn')).toBeInTheDocument();
   });
 
   test('Display popup on button click ', async () => {
@@ -33,7 +33,7 @@ describe('Machine Configuration', () => {
         appState: { ...appInitialState },
       }
     );
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('machine-configurator-btn'));
     expect(getByText('Machine Configuration')).toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe('Machine Configuration', () => {
         appState: { ...appInitialState },
       }
     );
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('machine-configurator-btn'));
     expect(getByText('Asset External Id')).toBeInTheDocument();
   });
 });
