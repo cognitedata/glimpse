@@ -14,6 +14,7 @@ import {
   saveRemovedAlarm,
   restartAlarmsPolling,
 } from './alarmSagas';
+import { addWidget, pollSyncWidgetConf, machineChanged } from './widgetConfig';
 
 /**
  * watch app related sagas and fire on action dispatch
@@ -37,4 +38,10 @@ export function* watchAppSagas() {
 export function* watchAuthSagas() {
   yield takeEvery(actionTypes.LOGIN, login);
   yield takeEvery(actionTypes.LOGOUT, logout);
+}
+
+export function* watchWidgetConfigs() {
+  yield takeEvery(actionTypes.SET_ASSET, machineChanged);
+  yield takeEvery(actionTypes.SET_NEW_WIDGET, addWidget);
+  yield pollSyncWidgetConf();
 }

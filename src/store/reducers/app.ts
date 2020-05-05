@@ -4,7 +4,7 @@ import { CogniteClient, Asset } from '@cognite/sdk';
 
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import { AlarmType } from 'components/Alarm/interfaces';
-import { WidgetConfig } from 'components/grid/interfaces';
+import { WidgetConfig, LocalWidgetConfigs } from 'components/grid/interfaces';
 import * as actionTypes from '../actions/actionTypes';
 
 import * as actions from '../actions/app';
@@ -19,12 +19,14 @@ export type AppState = {
   asset?: Asset;
   alarms?: AlarmType[];
   newWidget?: WidgetConfig;
+  localWidgetConfigs: LocalWidgetConfigs;
 };
 
 export const initialState: AppState = {
   loading: false,
   assets: [],
   alarms: [],
+  localWidgetConfigs: { id: '', lastUpdated: null, widgetConfigs: [] },
 };
 
 const appReducer = (state = initialState, action: AppAction): AppState => {
@@ -82,10 +84,10 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
         ...state,
         ...action.payload,
       };
-    case actionTypes.SET_NEW_WIDGET:
+    case actionTypes.SET_WIDGET_CONFIGS:
       return {
         ...state,
-        newWidget: action.payload,
+        localWidgetConfigs: action.payload,
       };
     case actionTypes.SET_ALARMS:
       return {
