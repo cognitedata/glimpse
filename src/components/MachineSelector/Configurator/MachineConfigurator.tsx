@@ -110,9 +110,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
    */
   const handleClickOpen = () => {
     setOpen(true);
-    setTimeout(() => {
-      restoreMachineConfig();
-    }, 10);
+    restoreMachineConfig();
   };
 
   /**
@@ -133,9 +131,10 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
   };
 
   /**
-   * This function is used to validate machine saving.
+   * This function is used to validate asset external ids list before it is saved.
+   * This will check if the list empty and show the alert accordingly.
    */
-  const isValidSaving = () => {
+  const isValidAssetIdList = () => {
     if (assetExternalIds.length === 0) {
       props.setAlerts({
         type: 'warning',
@@ -152,13 +151,14 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
    * A alert will be displayed finally based on the saving status.
    */
   const saveMachineConfig = async () => {
-    if (isValidSaving()) {
+    if (isValidAssetIdList()) {
       const actionStatus = await saveMachineIds(
         assetExternalIds.join(','),
         onError
       );
       if (actionStatus) {
         handleClose();
+        /** This is used to update the assets list in the state with the newly entered asset external ids */
         props.updateAssets();
         props.setAlerts({
           type: 'success',
@@ -188,7 +188,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
   };
 
   /**
-   * This method is used to validate asset id before it adding to the list
+   * This method is used to validate asset external id before it is added to the list
    */
   const validateAssetId = async (assetId: string) => {
     if (assetExternalIds.includes(assetId)) {
@@ -214,6 +214,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
 
   return (
     <div className="MachineConfigurator">
+      {/* This button is used to open the popup */}
       <Tooltip title="Machine Configurator">
         <IconButton
           className="Config-button"
@@ -233,14 +234,17 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
         aria-labelledby="customized-dialog-title"
         open={open}
       >
+        {/* Popup title */}
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
           Machine Configuration
         </DialogTitle>
         <MuiDialogContent dividers>
           <Grid container spacing={1}>
             <Grid container>
+              {/* This form contains input field for asset external id and a button to add it to the list */}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Grid item xs={11}>
+                  {/* Input field for asset external id */}
                   <Controller
                     label="Asset External Id"
                     className="Asset-external-id-input"
@@ -254,6 +258,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
                     name="assetExternalId"
                     control={control}
                   />
+                  {/* Loader icon to show while asset external id is getting validated */}
                   {assetValidating ? (
                     <CircularProgress
                       className="Asset-validator-loader"
@@ -262,6 +267,7 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
                   ) : null}
                 </Grid>
                 <Grid item xs={1}>
+                  {/* This button is used to submit the asset external id */}
                   <IconButton
                     className="Add-button"
                     edge="end"
@@ -275,6 +281,8 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
               </form>
             </Grid>
 
+            {/* This will show the list of asset external ids in disabled input fields 
+             and buttons to remove ids from the list */}
             {assetExternalIds.map((assetExternalId, index) => (
               <Grid
                 key={`assetIdContainer${assetExternalId}`}
@@ -305,9 +313,11 @@ const MachineConfigurator: FC<Props> = (props: Props) => {
           </Grid>
         </MuiDialogContent>
         <MuiDialogActions>
+          {/* This button is used to save the machine config */}
           <Button color="primary" onClick={saveMachineConfig}>
             Save
           </Button>
+          {/* This button is used to close the popup */}
           <Button
             data-testid="close-button"
             onClick={handleClose}
