@@ -19,9 +19,6 @@ const renderWithRedux = (
 };
 
 describe('Machine Configuration', () => {
-  // test('Dumb test', async () => {
-  //   expect(true).toBeTruthy();
-  // });
   test('Render configuration button intially', async () => {
     const { getByTestId } = renderWithRedux(<MachineConfigurator />, {
       appState: { ...appInitialState },
