@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import { put, select, fork, take } from 'redux-saga/effects';
-import { RootState } from 'StoreTypes';
 import { getMachineIds } from 'services/appCRUD/appConfService';
+import { getCdfClient } from './selectors';
 import {
   setLoading,
   setAssets,
@@ -18,8 +18,6 @@ import pollUpdateEventInfo from './dataFetchers/eventsFetcher';
 import pollUpdateDataLatestPoint from './dataFetchers/latestDataPointFetcher';
 import pollUpdateTsDps from './dataFetchers/dataPointsFetcher';
 
-const getCdfClient = (state: RootState) => state.appState.cdfClient;
-
 /**
  * Assets list fetcher
  */
@@ -31,8 +29,6 @@ export function* updateAssets(action: any) {
     yield put(setLoading());
   }
 
-  const cdfClient = yield select(getCdfClient);
-
   try {
     const savedMachineConfigStr = yield getMachineIds();
 
@@ -41,6 +37,7 @@ export function* updateAssets(action: any) {
       : [];
 
     if (MACHINE_EXTERNAL_IDS.length > 0) {
+      const cdfClient = yield select(getCdfClient);
       const assets = yield cdfClient.assets.retrieve(
         MACHINE_EXTERNAL_IDS.map((id: string) => ({ id }))
       );

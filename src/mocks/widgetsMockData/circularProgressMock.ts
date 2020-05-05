@@ -7,8 +7,8 @@ export const TSFancyNumericMockProps = [
     time: new Date(),
   },
   {
-    title: 'Time Utilization',
-    timeDisplayKey: 'Time Utilization Elapsed Time - Job',
+    title: 'Shift Utilization 2',
+    timeDisplayKey: 'Elapsed Time - Job 2',
     precentage: 50,
     time: new Date(),
   },
