@@ -2,6 +2,7 @@
 import { Layout } from 'react-grid-layout';
 import { WidgetConfig } from 'components/grid/interfaces';
 import WIDGET_SETTINGS from 'constants/widgetSettings';
+import findIndex from 'lodash/findIndex';
 
 /**
  * Get calculated matrix related to the given layout
@@ -104,4 +105,27 @@ export const getGridLayout = (widgetConfig: WidgetConfig): Layout => {
   const isStatic = layout?.static;
   const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
   return { i, x: cordinates[0], y: cordinates[1], static: isStatic, w, h };
+};
+/**
+ * change given wigetConfigs array cordinates with given layouts array
+ * @param layouts
+ * @param widgetConf
+ */
+export const setCordinatesFromLayouts = (
+  layouts: Layout[],
+  widgetConf: WidgetConfig[]
+) => {
+  const newWidgetConfigs = [...widgetConf];
+  layouts.forEach(layout => {
+    const { i, x, y } = layout;
+    const index = findIndex(widgetConf, { i });
+    if (index !== -1) {
+      const newWidgetConfig: WidgetConfig = {
+        ...widgetConf[index],
+        cordinates: [x, y],
+      };
+      newWidgetConfigs[index] = newWidgetConfig;
+    }
+  });
+  return newWidgetConfigs;
 };

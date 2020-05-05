@@ -4,7 +4,8 @@
  * This is used to persist data in the firebase
  */
 import { WidgetConfig } from 'components/grid/interfaces';
-import { widgetConfFSDoc } from '../../../firebaseConfig';
+import { widgetConfFSDoc } from '../../../firebase';
+import { WidgetConfigs } from './interfaces';
 
 type WidgetConfObj = { [key: string]: WidgetConfig[] };
 
@@ -70,8 +71,4 @@ export const getByUser = async (userId: string): Promise<WidgetConfigs> => {
   return gridConfDoc.exists && gridConfDoc.data()
     ? (gridConfDoc.data() as WidgetConfigs)
     : {};
-};
-
-type WidgetConfigs = {
-  [key: string]: WidgetConfig[];
 };
