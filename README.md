@@ -1,21 +1,34 @@
 # Cognite Glimpse
 
-This repository is a showcase of how to build apps on top of [Cognite Data Fusion](https://cognite.com/cognite/cognite-data-fusion/developers/).This app is mainly useful for manufacturing operators, To perform the CNC machines as efficiently as possible and to understand when they are not performing at their best.
+This repository is a showcase of how to build dashboard style apps on top of [Cognite Data Fusion](https://cognite.com/cognite/cognite-data-fusion/developers/). It can be used to build configurable dashboards showing various type of information such as events, time series, meta fields, shift utilization, etc which can be used to give a high-level overview about efficiency of a manufacturing process for example.
+
+Information is presented using a set of widgets which the operator can configure. Each widget is laid out in a fixed sized grid. Position of widgets in the grid can be changed based on operator's preferences. Overall dashboard configuration is persisted for each user separately.
+
+## Overview
+
+This is a react application and used redux for managing the state. We are using Redux-saga for data fetching (asynchronous state management).
+
+We are using [react-grid-layout](https://github.com/STRML/react-grid-layout) for maintaining the dragging and dropping widgets in the grid system.
+
+[Material-UI](https://material-ui.com/) is used for styling the widgets and the application.
 
 ## Getting started
 
-- Clone the app
+- Clone the repository
   ```bash
   $ git clone https://github.com/cognitedata/glimpse.git
   ```
-- This app use [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) for saving data. You must create a firebase project and complete .env templete inside the root folder with correct keys. In the firestore create empty collections
+- This app use [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) for saving data. You must [create a firebase project](https://firebase.google.com/docs/firestore/quickstart) and complete .env template inside the root folder with correct values. In the firestore create empty collections
 
   - app-config
   - widget-config
 
 - Install dependencies and start the app
-  `bash $ yarn && yarn start:https`
-  If you get an error about a certificate not being valid or trusted, then click "advanced" and "proceed" to skip.
+  ```bash
+  $ yarn && yarn start:https
+  ```
+  If the browser is not opened automatically please use `https://localhost:3000/`
+  After opening the browser if you get an error about a certificate not being valid or trusted, then click "advanced" and "proceed" to skip.
 
 ## Unit testing
 
