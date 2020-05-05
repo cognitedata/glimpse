@@ -4,6 +4,7 @@
  * this file is used to persist data in the local storage (for developing purposes)
  */
 import { WidgetConfig } from 'components/grid/interfaces';
+import { WidgetConfigs } from './interfaces';
 
 export const save = async (
   userId: string,
@@ -42,8 +43,4 @@ export const deleteOne = async (
 export const getByUser = async (userid: string): Promise<WidgetConfigs> => {
   const grid = localStorage.getItem(userid);
   return grid ? JSON.parse(grid) : [];
-};
-
-type WidgetConfigs = {
-  [key: string]: WidgetConfig[];
 };

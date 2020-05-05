@@ -21,3 +21,9 @@ export interface GridLayoutProps {
   onRemoveItem: (key: string) => void;
   size: { height: number; width: number };
 }
+
+export interface LocalWidgetConfigs {
+  id: string;
+  lastUpdated: Date | null;
+  widgetConfigs: WidgetConfig[];
+}
