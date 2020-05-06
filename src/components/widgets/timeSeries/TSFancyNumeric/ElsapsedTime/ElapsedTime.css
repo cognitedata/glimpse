@@ -1,17 +1,15 @@
-.elasped-time label {
-  display: block;
+.elasped-time div {
+  padding: 5px;
 }
 
 .elasped-time .title {
   font-size: 1em;
-  color: #ffffff;
-  padding: 1vh 0vh 1vh 1vh;
-  text-align: left;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .elasped-time .time {
   font-size: 0.6em;
-  color: #ffffff;
-  padding: 0vh 0vh 1vh 1vh;
-  text-align: left;
+  height: 15px;
 }

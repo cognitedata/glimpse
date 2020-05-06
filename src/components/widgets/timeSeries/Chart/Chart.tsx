@@ -38,7 +38,6 @@ const Chart = ({
   xDataKey = 'xValue',
   yDataKey = 'yValue',
 }: Props) => {
-  console.log('chart data', data);
   return (
     <ResponsiveContainer width={width} height={height}>
       <AreaChart data={data} margin={CHART_MARGINS}>

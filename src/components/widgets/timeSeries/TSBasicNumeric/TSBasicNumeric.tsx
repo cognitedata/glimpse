@@ -14,10 +14,12 @@ const TSBasicNumeric: FC<TSBasicNumericProps> = (
 
   return (
     <div className="basic-numeric">
-      <label className="name">{name}</label>
-      <div className="val-unit">
-        <label className="value">{value}</label>
-        <label className="unit">{unit}</label>
+      <div className="name" title={name}>
+        {name}
+      </div>
+      <div className="value-unit" title={`${value}${unit}`}>
+        {value}
+        <div className="unit">{unit}</div>
       </div>
     </div>
   );
