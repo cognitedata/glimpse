@@ -19,9 +19,11 @@ const TSBasicString: FC<TSBasicStringProps> = (props: TSBasicStringProps) => {
 
   return (
     <div className="basic-string">
-      <label className="name">{name}</label>
-      <label className="time">{isElapsedTimeEnabled && elapsedTime}</label>
-      <label className="value">{value}</label>
+      <div title={name} className="name">
+        {name}
+      </div>
+      <div className="time">{isElapsedTimeEnabled && elapsedTime}</div>
+      <div className="value">{value}</div>
     </div>
   );
 };

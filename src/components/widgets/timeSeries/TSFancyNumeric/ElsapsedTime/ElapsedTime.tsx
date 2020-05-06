@@ -11,10 +11,13 @@ const ElaspedTime: FC<ElaspedTimeProps> = (props: ElaspedTimeProps) => {
   const { title, timeDisplayKey, time } = props;
   return (
     <div className="elasped-time">
-      <label className="title">{title}</label>
-      <label className="time">
-        {timeDisplayKey} : {time}
-      </label>
+      <div title={title} className="title">
+        {title}
+      </div>
+      <div className="time">
+        {' '}
+        {timeDisplayKey} : {time}{' '}
+      </div>
     </div>
   );
 };

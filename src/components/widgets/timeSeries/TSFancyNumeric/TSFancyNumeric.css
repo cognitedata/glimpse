@@ -1,18 +1,19 @@
 .circular-progress {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  transition: 0.3s;
+  font-size: 18px;
   width: 100%;
   height: 100%;
   background-color: #6b30f7;
+  color: #ffffff;
   border-radius: 10px;
 }
 
 .circular-progress .progress-circle {
-  padding-top: 5%;
   width: 100%;
   text-align: center;
+  position: absolute;
+  bottom: 0;
 }
 
-.circular-progress #inner {
-  display: inline-block;
+.circular-progress .inner {
+  padding: 5px;
 }

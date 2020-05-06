@@ -1,34 +1,28 @@
 .basic-string {
+  font-size: 18px;
   width: 100%;
   height: 100%;
   background-color: #f4ac3d;
+  color: black;
   border-radius: 10px;
-  text-overflow: ellipsis;
-  overflow: hidden;
 }
 
-.basic-string label {
-  display: block;
+.basic-string div {
+  padding: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .basic-string .name {
-  font-size: 0.5em;
-  color: black;
-  padding: 1vh 0vh 0vh 1vh;
-  text-align: left;
+  font-size: 1em;
 }
 
 .basic-string .time {
-  padding: 1vh 0vh 0vh 1vh;
-  color: black;
-  font-size: 0.4em;
-  font-weight: 400;
+  font-size: 0.8em;
 }
 
 .basic-string .value {
-  padding: 2vh 0vh 0vh 1vh;
-  text-align: left;
-  color: black;
-  font-size: 1em;
-  font-weight: 400;
+  font-size: 1.5em;
+  font-weight: 500;
 }
