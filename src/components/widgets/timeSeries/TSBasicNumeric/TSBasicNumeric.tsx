@@ -12,13 +12,20 @@ const TSBasicNumeric: FC<TSBasicNumericProps> = (
 ) => {
   const { name, value, unit } = props;
 
+  const isFloat = (n: number | string) => {
+    return Number(n) === n && n % 1 !== 0;
+  };
+
+  const roundValue = (value: string | number) =>
+    isFloat(value) ? Number(value).toFixed(2) : value;
+
   return (
     <div className="basic-numeric">
       <div className="name" title={name}>
         {name}
       </div>
-      <div className="value-unit" title={`${value}${unit}`}>
-        {value}
+      <div className="value-unit" title={`${roundValue(value)}${unit}`}>
+        {roundValue(value)}
         <div className="unit">{unit}</div>
       </div>
     </div>
