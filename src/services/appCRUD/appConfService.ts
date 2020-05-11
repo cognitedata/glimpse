@@ -14,7 +14,6 @@ export const getMachineIds = async (onError?: Function) => {
     const machineConfig = await getMachineConfig();
     return machineConfig.machineIds ? machineConfig.machineIds : '';
   } catch (error) {
-    console.log(error);
     if (onError) {
       onError(MESSAGES.MACHINE_CONFIG_FETCH_ERROR);
       return '';

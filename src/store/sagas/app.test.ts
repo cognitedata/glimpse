@@ -16,7 +16,7 @@ import { assetList } from '../../mocks/assetList';
 
 import { updateAssets } from './app';
 
-import * as selectors from './selectors';
+import * as selectors from '../selectors';
 
 class CogniteClient extends MockCogniteClient {
   assets: any = {

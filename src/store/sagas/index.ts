@@ -12,6 +12,7 @@ import { login, logout } from './auth';
 import {
   pollUpdateAlarmsWatcher,
   saveRemovedAlarm,
+  saveRemovedAlarmIds,
   restartAlarmsPolling,
 } from './alarmSagas';
 
@@ -21,6 +22,7 @@ import {
 export function* watchAppSagas() {
   yield takeEvery(actionTypes.UPDATE_ASSETS, updateAssets);
   yield takeEvery(actionTypes.SAVE_REMOVED_ALARM, saveRemovedAlarm);
+  yield takeEvery(actionTypes.SAVE_REMOVED_ALARM_IDS, saveRemovedAlarmIds);
   yield takeEvery(actionTypes.RESTART_UPDATE_ALARMS, restartAlarmsPolling);
 
   yield all([

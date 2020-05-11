@@ -1,13 +1,14 @@
 // Copyright 2020 Cognite AS
 import { put, select, fork, take } from 'redux-saga/effects';
 import { getMachineIds } from 'services/appCRUD/appConfService';
-import { getCdfClient } from './selectors';
+import { getCdfClient } from '../selectors';
 import {
   setLoading,
   setAssets,
   setLoaded,
   setAsset,
   setAlerts,
+  restartUpdateAlarms,
 } from '../actions/root-action';
 
 import { MESSAGES } from '../../constants/messages';
@@ -43,6 +44,7 @@ export function* updateAssets(action: any) {
       );
       yield put(setAssets(assets));
       yield put(setAsset(assets[0]));
+      yield put(restartUpdateAlarms());
     }
   } catch (error) {
     yield put(

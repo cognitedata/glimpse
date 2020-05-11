@@ -18,6 +18,7 @@ export type AppState = {
   assets: Asset[];
   asset?: Asset;
   alarms?: AlarmType[];
+  removedAlarmIds: number[];
   newWidget?: WidgetConfig;
 };
 
@@ -25,6 +26,7 @@ export const initialState: AppState = {
   loading: false,
   assets: [],
   alarms: [],
+  removedAlarmIds: [],
 };
 
 const appReducer = (state = initialState, action: AppAction): AppState => {
@@ -91,6 +93,16 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
       return {
         ...state,
         alarms: action.payload,
+      };
+    case actionTypes.SET_REMOVED_ALARM_ID:
+      return {
+        ...state,
+        removedAlarmIds: [...state.removedAlarmIds, action.payload],
+      };
+    case actionTypes.SET_REMOVED_ALARM_IDS:
+      return {
+        ...state,
+        removedAlarmIds: action.payload,
       };
   }
   return state;

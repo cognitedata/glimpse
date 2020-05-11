@@ -24,14 +24,12 @@ import './AlarmConfigurator.css';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction } from 'StoreTypes';
 import { connect } from 'react-redux';
+import { setAlerts, restartUpdateAlarms } from 'store/actions/root-action';
 import {
-  setAlerts,
-  startUpdateAlarms,
-  stopUpdateAlarms,
-} from 'store/actions/root-action';
-import { APP_NAME } from 'constants/appData';
-
-const ALARM_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
+  saveAlarmFetchConfig,
+  getAlarmFetchConfig,
+} from 'services/alarmCRUD/alarmConfService';
+import { AlarmFetchConfig } from './interfaces';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -78,14 +76,6 @@ const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   );
 });
 
-type FormField = {
-  eventType: string;
-  eventSubtype: string;
-  metafieldKey: string;
-  pollingInterval: number;
-  startTime: number;
-};
-
 const defaultValues = {
   eventType: '',
   eventSubtype: '',
@@ -104,13 +94,20 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
     defaultValues,
   });
 
+  const onError = (msg: string) => {
+    props.setAlerts({
+      type: 'error',
+      text: msg,
+      hideApp: false,
+    });
+  };
+
   /**
    * This will open the configurator popup on alarm settings icon click.
    * Alarms polling will be stopped when the popup opens.
    * restoreAlarmConfig function is used to fill the form fields with previously saved values
    */
   const handleClickOpen = () => {
-    props.stopUpdateAlarms();
     setOpen(true);
     setTimeout(() => {
       restoreAlarmConfig();
@@ -121,42 +118,35 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
    * This will close the popup and start polling alarms
    */
   const handleClose = () => {
-    props.startUpdateAlarms();
     setOpen(false);
   };
 
   /**
    * This is used to update the form fields with previously saved values
    */
-  const restoreAlarmConfig = () => {
-    const savedAlarmConfigStr = localStorage.getItem(ALARM_DOC_NAME);
-    if (savedAlarmConfigStr) {
-      const savedAlarmConfig: { [key: string]: string } = JSON.parse(
-        savedAlarmConfigStr
-      );
-      Object.keys(savedAlarmConfig).forEach(key => {
-        if (savedAlarmConfig[key]) {
-          setValue(key, savedAlarmConfig[key]);
-        }
-      });
-    }
+  const restoreAlarmConfig = async () => {
+    const savedAlarmConfig: {
+      [key: string]: string;
+    } = await getAlarmFetchConfig(onError);
+    Object.keys(savedAlarmConfig).forEach(key => {
+      if (savedAlarmConfig[key]) {
+        setValue(key, savedAlarmConfig[key]);
+      }
+    });
   };
 
   /**
    * This function is used to save alarm configurations.
    * A alert will be displayed finally based on the saving status.
    */
-  const saveAlarmConfig = (data: FormField) => {
-    let actionStatus = true;
-    try {
-      localStorage.setItem(ALARM_DOC_NAME, JSON.stringify(data));
+  const saveAlarmConfig = async (data: AlarmFetchConfig) => {
+    const actionStatus = await saveAlarmFetchConfig(data, onError);
+    if (actionStatus) {
+      props.restartUpdateAlarms();
       handleClose();
-    } catch (Error) {
-      actionStatus = false;
-    } finally {
       props.setAlerts({
-        type: actionStatus ? 'success' : 'error',
-        text: actionStatus ? 'Successfully saved!' : 'Error while saving!',
+        type: 'success',
+        text: 'Successfully saved!',
         hideApp: false,
       });
     }
@@ -165,7 +155,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
   /**
    * This function fires on form submit
    */
-  const onSubmit = (data: FormField) => {
+  const onSubmit = (data: AlarmFetchConfig) => {
     saveAlarmConfig(data);
   };
 
@@ -255,7 +245,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
                       data-testid="startTime"
                       type="number"
                       variant="outlined"
-                      inputProps={{ min: '1', max: '24' }}
+                      // inputProps={{ min: '1', max: '24' }}
                       required
                     />
                   }
@@ -297,8 +287,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
  */
 const dispatchProps = {
   setAlerts,
-  startUpdateAlarms,
-  stopUpdateAlarms,
+  restartUpdateAlarms,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
