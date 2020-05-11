@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import firebase from 'firebase';
 import { WIDGET_CONF_DB } from 'constants/widgetSettings';
-import { APP_CONFIG_DB } from 'constants/firebase';
+import { APP_CONFIG_DB, ALARM_CONFIG_DB } from 'constants/firebase';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -22,3 +22,6 @@ export const widgetConfFSDoc = (docName: string) =>
 
 export const appConfDoc = (docName: string) =>
   firestoreDB.collection(APP_CONFIG_DB).doc(docName);
+
+export const alarmConfDoc = (docName: string) =>
+  firestoreDB.collection(ALARM_CONFIG_DB).doc(docName);

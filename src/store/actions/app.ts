@@ -57,7 +57,16 @@ export const restartUpdateAlarms = () =>
 export const setAlarms = (alarms: AlarmType[]) =>
   action(actionTypes.SET_ALARMS, alarms);
 
-export const saveRemovedAlarm = (alarmId: number) =>
-  action(actionTypes.SAVE_REMOVED_ALARM, alarmId);
+export const saveRemovedAlarm = (alarmId: number, persist?: boolean) =>
+  action(actionTypes.SAVE_REMOVED_ALARM, { alarmId, persist });
+
+export const setRemovedAlarmId = (alarmId: number) =>
+  action(actionTypes.SET_REMOVED_ALARM_ID, alarmId);
+
+export const setRemovedAlarmIds = (alarmIds: number[]) =>
+  action(actionTypes.SET_REMOVED_ALARM_IDS, alarmIds);
+
+export const saveRemovedAlarmIds = () =>
+  action(actionTypes.SAVE_REMOVED_ALARM_IDS);
 
 /** --------------------------------------------------- */

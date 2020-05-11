@@ -17,9 +17,10 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { AlarmType } from './interfaces';
 import {
-  startUpdateAlarms,
   stopUpdateAlarms,
   saveRemovedAlarm,
+  setAlerts,
+  saveRemovedAlarmIds,
 } from '../../store/actions/root-action';
 
 /**
@@ -50,6 +51,7 @@ const Alarm: FC<Props> = (props: Props) => {
   /**
    * This will activate on remove icon click in the alarm list.
    * 'Remove Alarm' dipatch action will be fired and list's first alarm will be selected as the default alarm.
+   * This will save the removed alarm id in the state
    */
   const onRemoveAlarmClick = (index: number, alarmId: number) => {
     if (index !== 0 && index !== selectedIndex) {
@@ -63,6 +65,7 @@ const Alarm: FC<Props> = (props: Props) => {
    */
   const onMoreAlarmsClose = () => {
     setAnchorEl(null);
+    props.saveRemovedAlarmIds();
   };
 
   /**
@@ -87,13 +90,8 @@ const Alarm: FC<Props> = (props: Props) => {
   };
 
   useEffect(() => {
-    /**
-     * Alarms polling dispatch action will be fired when the component is mounted
-     */
-    props.startUpdateAlarms();
     return onUnmount;
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
   return props.alarms &&
     props.alarms.length > 0 &&
     props.alarms[selectedIndex] ? (
@@ -106,11 +104,13 @@ const Alarm: FC<Props> = (props: Props) => {
           <ListItemText
             className="AlarmType-text"
             primary={props.alarms[selectedIndex].type}
+            title={props.alarms[selectedIndex].type}
           />
           <ListItemText
             className="AlarmSubType-text"
             primary={props.alarms[selectedIndex].value}
             secondary={props.alarms[selectedIndex].subType}
+            title={`${props.alarms[selectedIndex].value}  ${props.alarms[selectedIndex].subType}`}
           />
           <ListItemSecondaryAction>
             <IconButton
@@ -118,7 +118,7 @@ const Alarm: FC<Props> = (props: Props) => {
               edge="end"
               aria-label="delete"
               onClick={() => {
-                props.saveRemovedAlarm(props.alarms[selectedIndex].id);
+                props.saveRemovedAlarm(props.alarms[selectedIndex].id, true);
               }}
             >
               <CloseIcon />
@@ -159,11 +159,16 @@ const Alarm: FC<Props> = (props: Props) => {
               <ListItemIcon>
                 <RadioButtonCheckedIcon fontSize="small" />
               </ListItemIcon>
-              <ListItemText className="AlarmType-text" primary={alarm.type} />
+              <ListItemText
+                className="AlarmType-text"
+                primary={alarm.type}
+                title={props.alarms[selectedIndex].type}
+              />
               <ListItemText
                 className="AlarmSubType-text"
                 primary={alarm.value}
                 secondary={alarm.subType}
+                title={`${props.alarms[selectedIndex].value}  ${props.alarms[selectedIndex].subType}`}
               />
               <ListItemSecondaryAction>
                 <IconButton
@@ -196,9 +201,10 @@ const mapStateToProps = (state: RootState) => ({
  * Redux dispatch actions to connect to the component
  */
 const dispatchProps = {
-  startUpdateAlarms,
   stopUpdateAlarms,
   saveRemovedAlarm,
+  setAlerts,
+  saveRemovedAlarmIds,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
