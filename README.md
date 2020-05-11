@@ -6,9 +6,9 @@ Information is presented using a set of widgets which the operator can configure
 
 ## Overview
 
-This is a react application and used redux for managing the state. We are using Redux-saga for data fetching (asynchronous state management).
+Application is based on React/Redux. We use Redux-saga for data fetching (asynchronous state management).
 
-We are using [react-grid-layout](https://github.com/STRML/react-grid-layout) for maintaining the dragging and dropping widgets in the grid system.
+[react-grid-layout](https://github.com/STRML/react-grid-layout) is used for maintaining the dragging and dropping widgets in the grid system.
 
 [Material-UI](https://material-ui.com/) is used for styling the widgets and the application.
 
@@ -32,13 +32,17 @@ We are using [react-grid-layout](https://github.com/STRML/react-grid-layout) for
 
 ## Unit testing
 
-We are using [react-testing-library](https://testing-library.com/docs/react-testing-library/intro) with [jest](https://jestjs.io/) as the test runner. It is prefered to write tests that closely resemble how your web pages are used. For more info read [here](https://testing-library.com/docs/guiding-principles).
+[react-testing-library](https://testing-library.com/docs/react-testing-library/intro) with [jest](https://jestjs.io/) as the test runner are used for unit testing. It is prefered to write tests that closely resemble how your web pages are used. For more info read [here](https://testing-library.com/docs/guiding-principles).
 
 Run all tests
 
 ```bash
 $ yarn test
 ```
+
+## Architecture diagram
+
+![architecture Diagram](src/assets/architectureDiagram/architecture-diagram.png)
 
 ## License
 
