@@ -19,7 +19,7 @@ import * as actionTypes from '../actions/actionTypes';
 const getUserId = (state: RootState) => state.authState.userInfo?.name;
 const getAssetId = (state: RootState) => state.appState.asset?.id;
 const getLocalWidgetConfs = (state: RootState) =>
-  state.appState.localWidgetConfigs;
+  state.appState.widgetConfWrapper;
 
 export function* showAlert(msg: string) {
   yield put(
@@ -59,8 +59,8 @@ export function* addWidget(
 ) {
   const { widgetTypeId } = widgetconfig;
   const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
-  const localwidgetConfigs = yield select(getLocalWidgetConfs);
-  const { widgetConfigs } = localwidgetConfigs;
+  const widgetConfWrapper = yield select(getLocalWidgetConfs);
+  const { widgetConfigs } = widgetConfWrapper;
   const layouts = widgetConfigs.map((wconf: WidgetConfig) =>
     getGridLayout(wconf)
   );
@@ -74,7 +74,7 @@ export function* addWidget(
   newWidgetConf.cordinates = widgetCordinates;
   const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
   const newLocalConfigs = {
-    ...localwidgetConfigs,
+    ...widgetConfWrapper,
     lastUpdated: lastUpdated || new Date(),
     widgetConfigs: newWidgetConfs,
   };

@@ -20,7 +20,7 @@ const ComponentRouter = () => (
       name="settings"
       exact
       path={RouterPaths.SETTINGS}
-      render={() => <GridContainer />}
+      render={() => <GridContainer isDraggable />}
     />
     <Route
       name="feedback"

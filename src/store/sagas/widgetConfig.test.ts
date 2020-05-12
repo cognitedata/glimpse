@@ -61,7 +61,7 @@ describe('Widget configs Saga', () => {
 
   test('Should update widget config list when adding a new widget', async () => {
     jest.mock('./widgetConfig', () => ({
-      localwidgetConfigs: { widgetConfigs: mockWidgetConfigArr },
+      widgetConfWrapper: { widgetConfigs: mockWidgetConfigArr },
     }));
     const layouts = mockWidgetConfigArr.map((wconf: WidgetConfig) =>
       getGridLayout(wconf)
