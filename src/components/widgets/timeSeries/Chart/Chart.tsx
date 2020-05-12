@@ -42,7 +42,13 @@ const Chart = ({
     <ResponsiveContainer width={width} height={height}>
       <AreaChart data={data} margin={CHART_MARGINS}>
         <defs>
-          <linearGradient id="seriesFillColor" x1="0" y1="0" x2="0" y2="1">
+          <linearGradient
+            id={`seriesFillColor-${seriesColor}`}
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="1"
+          >
             <stop offset="5%" stopColor={seriesColor} stopOpacity={0.2} />
             <stop offset="95%" stopColor={seriesColor} stopOpacity={0} />
           </linearGradient>
@@ -68,7 +74,7 @@ const Chart = ({
           dataKey={yDataKey}
           stroke={seriesColor}
           fillOpacity={CHART_AREA_FILL_OPACITY}
-          fill="url(#seriesFillColor)"
+          fill={`url(#seriesFillColor-${seriesColor})`}
         />
       </AreaChart>
     </ResponsiveContainer>

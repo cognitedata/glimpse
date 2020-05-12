@@ -1,6 +1,7 @@
 // Copyright 2020 Cognite AS
 import React, { FC } from 'react';
 import './TSBasicNumeric.css';
+import { roundValue } from 'utils/utils';
 import { TSBasicNumericProps } from './interfaces';
 
 /**
@@ -11,20 +12,14 @@ const TSBasicNumeric: FC<TSBasicNumericProps> = (
   props: TSBasicNumericProps
 ) => {
   const { name, value, unit } = props;
-
-  const isFloat = (n: number | string) => {
-    return Number(n) === n && n % 1 !== 0;
-  };
-
-  const roundValue = () => (isFloat(value) ? Number(value).toFixed(2) : value);
-
+  const roundedVal = roundValue(value);
   return (
     <div className="basic-numeric">
       <div className="name" title={name}>
         {name}
       </div>
-      <div className="value-unit" title={`${roundValue()}${unit}`}>
-        {roundValue()}
+      <div className="value-unit" title={`${roundedVal}${unit}`}>
+        {roundedVal}
         <div className="unit">{unit}</div>
       </div>
     </div>
