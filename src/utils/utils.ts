@@ -15,6 +15,13 @@ export const generateRandomKey = () =>
  *
  * Auth Utils
  */
+export const isFloat = (n: number | string) => {
+  return Number(n) === n && n % 1 !== 0;
+};
+
+export const roundValue = (value: number | string) =>
+  isFloat(value) ? Number(value).toFixed(2) : value;
+
 export const getUserCapabilities = (groups: Group[]) =>
   groups
     .map(group =>

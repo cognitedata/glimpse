@@ -2,6 +2,7 @@
 import React, { FC } from 'react';
 import './ShowField.css';
 import moment from 'moment';
+import { isFloat, roundValue } from 'utils/utils';
 import { ShowFieldProps } from './interfaces';
 
 /**
@@ -18,7 +19,7 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
     if (!valueProp) {
       return ' - ';
     }
-    // if substring 'time' contains in the path it should be a time
+    // if substring 'time or Date' contains in the path it should be a time
     if (
       path &&
       new RegExp(/(time|date)/gi).test(path) &&
@@ -30,13 +31,9 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
       return JSON.stringify(valueProp);
     }
     if (isFloat(valueProp)) {
-      return Number(valueProp).toFixed(2);
+      return roundValue(valueProp);
     }
     return valueProp;
-  };
-
-  const isFloat = (n: number | string) => {
-    return Number(n) === n && n % 1 !== 0;
   };
 
   return (
