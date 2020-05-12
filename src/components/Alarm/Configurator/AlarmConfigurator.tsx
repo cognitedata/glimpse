@@ -104,7 +104,6 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
 
   /**
    * This will open the configurator popup on alarm settings icon click.
-   * Alarms polling will be stopped when the popup opens.
    * restoreAlarmConfig function is used to fill the form fields with previously saved values
    */
   const handleClickOpen = () => {
@@ -115,7 +114,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
   };
 
   /**
-   * This will close the popup and start polling alarms
+   * This will close the popup
    */
   const handleClose = () => {
     setOpen(false);
