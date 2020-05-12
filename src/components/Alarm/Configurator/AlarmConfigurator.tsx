@@ -245,7 +245,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
                       data-testid="startTime"
                       type="number"
                       variant="outlined"
-                      // inputProps={{ min: '1', max: '24' }}
+                      inputProps={{ min: '1', max: '24' }}
                       required
                     />
                   }
