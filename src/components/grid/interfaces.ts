@@ -22,7 +22,7 @@ export interface GridLayoutProps {
   size: { height: number; width: number };
 }
 
-export interface LocalWidgetConfigs {
+export interface WidgetConfWrapper {
   id: string;
   lastUpdated: Date | null;
   widgetConfigs: WidgetConfig[];

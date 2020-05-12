@@ -4,11 +4,9 @@ import { Layout } from 'react-grid-layout';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import { RootAction, RootState } from 'StoreTypes';
-import { useLocation } from 'react-router-dom';
-import { RouterPaths } from 'constants/router';
 import {
   getGridLayout,
-  setCordinatesFromLayouts,
+  addCordinateChanges,
 } from './GridLayout/gridOperations/gridOperations';
 import GridLayout from './GridLayout/GridLayout';
 import { WidgetConfig } from './interfaces';
@@ -19,21 +17,25 @@ import { setAlerts, setWidgetConfigs } from '../../store/actions/root-action';
  * @param props GridContainerProps
  */
 const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
-  const isOnSettingPage = useLocation().pathname === RouterPaths.SETTINGS;
-  const { localWidgetConfigs } = props;
-  const { widgetConfigs } = localWidgetConfigs;
+  const { isDraggable } = props;
+
+  // widgetConfWrapper is keeping local widgetConfigs with last updated time in the redux state.
+  // When some modification is done these local widget configurations are saved in the DB
+  const { widgetConfWrapper } = props;
+  const { widgetConfigs } = widgetConfWrapper;
+
   /**
    * fires when a widget is moved and placed in a different position
    * @param newLayouts Layout[]
    */
   const onDragStop = async (newLayouts: Layout[]) => {
-    const newWidgetConf = setCordinatesFromLayouts(newLayouts, widgetConfigs);
-    const newLocalWidgetconfigs = {
-      ...localWidgetConfigs,
-      widgetConfigs: newWidgetConf,
+    const updatedWidgetConfs = addCordinateChanges(newLayouts, widgetConfigs);
+    const newWidgetConfWrapper = {
+      ...widgetConfWrapper,
+      widgetConfigs: updatedWidgetConfs,
       lastUpdated: new Date(),
     };
-    props.setWidgetConfigs(newLocalWidgetconfigs);
+    props.setWidgetConfigs(newWidgetConfWrapper);
   };
 
   const getGridLayouts = (widgetconfigs: WidgetConfig[]) =>
@@ -51,12 +53,12 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     const newWidgetConfig = widgetConfigs.filter(
       (compDetails: WidgetConfig) => compDetails.i !== widgetId
     );
-    const newLocalWidgetconfigs = {
-      ...localWidgetConfigs,
+    const newwidgetConfWrapper = {
+      ...widgetConfWrapper,
       lastUpdated: new Date(),
       widgetConfigs: newWidgetConfig,
     };
-    props.setWidgetConfigs(newLocalWidgetconfigs);
+    props.setWidgetConfigs(newwidgetConfWrapper);
   };
 
   return (
@@ -67,7 +69,7 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
           widgetConfigs={widgetConfigs}
           onRemoveItem={onRemoveWidget}
           onDragStop={onDragStop}
-          isDraggable={isOnSettingPage}
+          isDraggable={isDraggable}
         />
       </div>
     </>
@@ -82,13 +84,16 @@ const dispatchProps = {
 const mapStateToProps = (state: RootState) => ({
   assetId: state.appState.asset?.id,
   user: state.authState.userInfo?.name,
-  localWidgetConfigs: state.appState.localWidgetConfigs,
+  widgetConfWrapper: state.appState.widgetConfWrapper,
   newWidget: state.appState.newWidget,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-type GridContainerProps = ReturnType<typeof mapDispatchToProps> &
+type GridContainerProps = { isDraggable?: boolean } & ReturnType<
+  typeof mapDispatchToProps
+> &
   ReturnType<typeof mapStateToProps>;
+
 export default connect(mapStateToProps, dispatchProps)(GridContainer);

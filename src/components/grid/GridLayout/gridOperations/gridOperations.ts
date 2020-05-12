@@ -111,7 +111,7 @@ export const getGridLayout = (widgetConfig: WidgetConfig): Layout => {
  * @param layouts
  * @param widgetConf
  */
-export const setCordinatesFromLayouts = (
+export const addCordinateChanges = (
   layouts: Layout[],
   widgetConf: WidgetConfig[]
 ) => {
