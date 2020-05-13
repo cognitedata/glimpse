@@ -6,6 +6,11 @@ import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import { AlarmType } from 'components/Alarm/interfaces';
 import { WidgetConfig } from 'components/grid/interfaces';
 import * as actionTypes from './actionTypes';
+import {
+  EventMapping,
+  LatestDatapointMapping,
+  DatapointMapping,
+} from './interfaces';
 
 /**
  *
@@ -33,13 +38,13 @@ export const setAssets = (assets: Asset[]) =>
 export const setAsset = (machine: Asset) =>
   action(actionTypes.SET_ASSET, machine);
 
-export const setEvent = (eventMapping: any) =>
+export const setEvent = (eventMapping: EventMapping) =>
   action(actionTypes.SET_EVENT, eventMapping);
 
-export const setTsDps = (tsDpsMapping: any) =>
+export const setTsDps = (tsDpsMapping: DatapointMapping) =>
   action(actionTypes.SET_TS_DPS, tsDpsMapping);
 
-export const setLatestDataPoint = (dataPointMapping: any) =>
+export const setLatestDataPoint = (dataPointMapping: LatestDatapointMapping) =>
   action(actionTypes.SET_LATEST_DATAPOINT, dataPointMapping);
 
 export const setNewWidget = (widget: WidgetConfig) =>

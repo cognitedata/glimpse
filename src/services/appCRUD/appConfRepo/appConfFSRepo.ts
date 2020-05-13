@@ -4,7 +4,7 @@
  * This is used to persist data in the firebase
  */
 import { MACHINE_CONFIG_DOC } from 'constants/firebase';
-import { appConfDoc } from '../../../firebase';
+import { appConfDoc } from '../../../firebaseConfig';
 import { MachineConfig } from './interfaces';
 
 /**
@@ -12,7 +12,9 @@ import { MachineConfig } from './interfaces';
  */
 export const getMachineConfig = async (): Promise<MachineConfig> => {
   const machineConfDoc = await appConfDoc(MACHINE_CONFIG_DOC).get();
-  return machineConfDoc.exists ? machineConfDoc.data() : {};
+  return machineConfDoc.exists && machineConfDoc.data()
+    ? (machineConfDoc.data() as MachineConfig)
+    : {};
 };
 
 /**

@@ -41,7 +41,7 @@ describe('time series utils', () => {
     );
   });
   it('should not change data points which are not selected to display in x-axis', () => {
-    const [convertedDps, xVals]: [any[], any, any] = generateXAxisVals(
+    const [convertedDps, xVals] = generateXAxisVals(
       mockDataPoints,
       xAxisPointsNumber
     );
@@ -51,15 +51,10 @@ describe('time series utils', () => {
         (dp: any) => dp.timestamp !== xval
       );
     });
-    dpsWithoutXVals.forEach((dp: any) =>
-      expect(convertedDps).toContainEqual(dp)
-    );
+    dpsWithoutXVals.forEach(dp => expect(convertedDps).toContainEqual(dp));
   });
   it('should not fail when number of xvals wanted is 1', () => {
-    const [convertedDps, xVals]: [any[], any, any] = generateXAxisVals(
-      mockDataPoints,
-      1
-    );
+    const [convertedDps, xVals] = generateXAxisVals(mockDataPoints, 1);
     expect(xVals.length).toEqual(1);
     expect(convertedDps[0]).not.toContainEqual(mockDataPoints);
   });

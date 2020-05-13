@@ -4,7 +4,7 @@
  * This is used to persist data in the firebase
  */
 import { WidgetConfig } from 'components/grid/interfaces';
-import { widgetConfFSDoc } from '../../../firebase';
+import { widgetConfFSDoc } from '../../../firebaseConfig';
 
 type WidgetConfObj = { [key: string]: WidgetConfig[] };
 
@@ -16,7 +16,7 @@ export const save = async (
   const gridConfDoc = await widgetConfFSDoc(userId).get();
   let gridConf: WidgetConfObj = {};
   if (gridConfDoc.exists) {
-    gridConf = gridConfDoc.data();
+    gridConf = gridConfDoc.data() ? (gridConfDoc.data() as WidgetConfObj) : {};
     gridConf[assetId] = gridConf[assetId]
       ? gridConf[assetId].concat(widgetConf)
       : [widgetConf];
@@ -35,7 +35,9 @@ export const update = async (
   const gridConfDoc = await widgetConfFSDoc(userId).get();
   let widgetConfObj: WidgetConfObj = {};
   if (gridConfDoc.exists) {
-    widgetConfObj = gridConfDoc.data();
+    widgetConfObj = gridConfDoc.data()
+      ? (gridConfDoc.data() as WidgetConfObj)
+      : {};
     widgetConfObj[assetId] = widgetConfs;
     await widgetConfFSDoc(userId).update(widgetConfObj);
   }
@@ -51,7 +53,9 @@ export const deleteOne = async (
   const gridConfDoc = await widgetConfFSDoc(userId).get();
 
   if (gridConfDoc.exists) {
-    const widgetConfObj = gridConfDoc.data();
+    const widgetConfObj = gridConfDoc.data()
+      ? (gridConfDoc.data() as WidgetConfObj)
+      : {};
     const widgetConfigs: WidgetConfig[] = widgetConfObj[assetId] || [];
     const filteredWidgetConfs = widgetConfigs.filter(
       conf => conf.i !== widgetId
@@ -63,10 +67,9 @@ export const deleteOne = async (
 
 export const getByUser = async (userId: string): Promise<WidgetConfigs> => {
   const gridConfDoc = await widgetConfFSDoc(userId).get();
-  if (gridConfDoc.exists) {
-    return gridConfDoc.data();
-  }
-  return {};
+  return gridConfDoc.exists && gridConfDoc.data()
+    ? (gridConfDoc.data() as WidgetConfigs)
+    : {};
 };
 
 type WidgetConfigs = {

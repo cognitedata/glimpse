@@ -20,7 +20,7 @@ import { FormValues, DefaultProps } from './interfaces';
 /**
  * Component for asset info widget configurator
  */
-export const AssetInfoConfigurator = (props: TimeseriesConfiguratorProps) => {
+export const AssetInfoConfigurator = (props: AssetInfoConfiguratorProps) => {
   const [fields, setFields] = useState<FieldObj[]>([]);
   const excludeFieldsArr = ['metadata'];
   const isCustomNameRequired = true;
@@ -135,7 +135,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-type TimeseriesConfiguratorProps = ReturnType<typeof mapStateToProps> &
+export type AssetInfoConfiguratorProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   DefaultProps;
 

@@ -3,7 +3,7 @@ import { WidgetConfig } from 'components/grid/interfaces';
 import widgetConnector from 'store/connectors/widgetConnector';
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import { getUniqueKey } from 'utils/utils';
-import React from 'react';
+import React, { FC } from 'react';
 import addRemoveBtn from './addRemoveButton/addRemoveBtn';
 
 /**
@@ -16,6 +16,10 @@ export default (
 ) => {
   const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
+  if (!widgetSetting) {
+    return <></>;
+  }
+
   const requestKey = getUniqueKey(widgetConfig.queryParams);
 
   const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
@@ -24,7 +28,7 @@ export default (
     if (widgetSetting !== undefined) {
       return widgetConnector(
         widgetSetting.mapStateToProps(widgetConfig.valueMapping, actionKey),
-        widgetSetting.component
+        widgetSetting.component as FC
       );
     }
     return <></>;

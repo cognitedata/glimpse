@@ -2,18 +2,17 @@
 import { testSaga } from 'redux-saga-test-plan';
 import { mockDataPoints } from 'mocks/widgetsMockData/tsWideNumericMock';
 import { setTsDps } from 'store/actions/root-action';
-import { MockCogniteClient } from '../../../mocks';
 import pollUpdateTsDps from './dataPointsFetcher';
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
+class CogniteClient {
+  loginWithOAuth = jest.fn();
   authenticate = jest.fn();
-  datapoints: any = {
+  datapoints = {
     retrieve: jest.fn(),
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 const tsDataPointsObj = [{ datapoints: mockDataPoints }];
 beforeEach(() => {
   client.datapoints.retrieve.mockReturnValue(mockDataPoints);

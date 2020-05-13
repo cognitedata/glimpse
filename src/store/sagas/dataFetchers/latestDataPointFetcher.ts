@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 import { take, race, put, select, delay } from 'redux-saga/effects';
 
-import { RootState } from 'StoreTypes';
+import { RootState, RootAction } from 'StoreTypes';
 import { setLatestDataPoint } from '../../actions/root-action';
 import * as actionTypes from '../../actions/actionTypes';
 
@@ -11,7 +11,7 @@ const getCdfClient = (state: RootState) => state.appState.cdfClient;
  *
  * Data point fetcher
  */
-export default function* pollUpdateDataLatestPoint(action: any) {
+export default function* pollUpdateDataLatestPoint(action: RootAction) {
   while (true) {
     const cdfClient = yield select(getCdfClient);
 
@@ -35,7 +35,7 @@ export default function* pollUpdateDataLatestPoint(action: any) {
     const { cancel } = yield race({
       delay: delay(action.payload.pollingInterval),
       cancel: take(
-        (stopAction: any) =>
+        (stopAction: RootAction) =>
           stopAction.type === actionTypes.STOP_UPDATE_LATEST_DATAPOINT &&
           stopAction.payload === actionKey
       ),

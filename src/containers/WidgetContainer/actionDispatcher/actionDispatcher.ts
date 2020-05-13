@@ -3,9 +3,10 @@ import { WidgetConfig } from 'components/grid/interfaces';
 import WIDGET_SETTINGS from 'constants/widgetSettings';
 import { getUniqueKey } from 'utils/utils';
 import store from 'store';
+import { RootAction } from 'StoreTypes';
 
 type PollingEndAction = {
-  action: any;
+  action: RootAction;
   key: string;
 };
 const pollingEndActions: PollingEndAction[] = [];
@@ -18,7 +19,7 @@ export const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
   widgetConfigs.forEach(widgetConfig => {
     const widgetSetting = WIDGET_SETTINGS[widgetConfig.widgetTypeId];
 
-    if (widgetSetting.dataFetcher) {
+    if (widgetSetting && widgetSetting.dataFetcher) {
       const requestKey = getUniqueKey(widgetConfig.queryParams);
 
       const actionKey = `${widgetSetting.dataFetcher}-${requestKey}`;
@@ -40,7 +41,6 @@ export const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
       }
     }
   });
-  return endPolling;
 };
 
 /**
@@ -48,7 +48,7 @@ export const dispatchDistinctActions = (widgetConfigs: WidgetConfig[]) => {
  * Store polling end action list to fire on component unmount
  */
 const updatePollingEndActionList = (
-  pollingEndAction: any,
+  pollingEndAction: RootAction,
   actionKey: string
 ) => {
   if (pollingEndAction) {

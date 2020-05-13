@@ -18,6 +18,7 @@ import {
   getRemovedAlarmIds,
 } from 'store/selectors';
 import { MESSAGES } from 'constants/messages';
+import { RootAction } from 'StoreTypes';
 import {
   setAlarms,
   startUpdateAlarms,
@@ -174,7 +175,7 @@ export function* saveRemovedAlarmIds() {
 /**
  * This saga is used to save the removed alarms ids
  */
-export function* saveRemovedAlarm(action: any) {
+export function* saveRemovedAlarm(action: RootAction) {
   yield put(setRemovedAlarmId(action.payload.alarmId));
   yield call(setFilteredAlarms);
   if (action.payload.persist) {
