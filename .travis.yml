@@ -4,9 +4,12 @@ node_js:
 sudo: false
 install:
   - yarn
-  - npm install -g codecov
+  - npm install -g codecov surge
 script:
   - commitlint-travis
   - yarn lint
   - yarn build
   - yarn test && codecov
+after_success:
+  - chmod ugo+x ./deploy.sh
+  - ./deploy.sh
