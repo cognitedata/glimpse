@@ -12,9 +12,7 @@ const firebaseConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
 };
 
-const firbaseInit: any = firebase.initializeApp(firebaseConfig);
-
-export default firbaseInit;
+firebase.initializeApp(firebaseConfig);
 
 const firestoreDB = firebase.firestore();
 firestoreDB.settings({ timestampsInSnapshots: true });
