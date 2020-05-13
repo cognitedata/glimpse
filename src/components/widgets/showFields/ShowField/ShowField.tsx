@@ -13,7 +13,7 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
   const { label, value, path } = props;
   /**
    * format returning object based on the input object type.
-   * @param valueProp
+   * @param valueProp string
    */
   const formatValueByType = (valueProp: string) => {
     if (!valueProp) {
