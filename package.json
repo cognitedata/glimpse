@@ -6,7 +6,7 @@
     "start": "react-scripts start",
     "start:https": "HTTPS=true yarn start",
     "build": "react-scripts build",
-    "test": "react-scripts test --config=jest.config.js",
+    "test": "react-scripts test --coverage --coverageDirectory=coverage",
     "lint": "concurrently \"yarn prettier\" \"yarn eslint\"",
     "eslint": "yarn eslint:changed 'src/**/*.{ts,tsx}'",
     "eslint:changed": "eslint --config .eslintrc.production.js",
