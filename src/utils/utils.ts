@@ -45,7 +45,7 @@ export const isAdmin = (groups: Group[]) =>
   groups.filter(group => ADMIN_GROUPS.includes(group.name)).length > 0;
 
 /**
- * Used to get unique key from any object
+ * Used to get unique key from any objectt
  */
 export const getUniqueKey = (source?: QueryParams) => {
   return source ? window.btoa(JSON.stringify(source)) : '';
