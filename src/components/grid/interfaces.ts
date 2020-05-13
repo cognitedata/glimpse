@@ -24,6 +24,5 @@ export interface GridLayoutProps {
 
 export interface WidgetConfWrapper {
   id: string;
-  lastUpdated: Date | null;
   widgetConfigs: WidgetConfig[];
 }

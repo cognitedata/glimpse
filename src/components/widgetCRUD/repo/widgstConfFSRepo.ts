@@ -4,7 +4,7 @@
  * This is used to persist data in the firebase
  */
 import { WidgetConfig } from 'components/grid/interfaces';
-import { widgetConfFSDoc } from '../../../firebase';
+import { widgetConfFSDoc } from 'firebaseConfig';
 import { WidgetConfigs } from './interfaces';
 
 type WidgetConfObj = { [key: string]: WidgetConfig[] };

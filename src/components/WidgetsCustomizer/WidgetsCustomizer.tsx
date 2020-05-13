@@ -22,18 +22,20 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import './WidgetsCustomizer.css';
-
 import WIDGET_SETTINGS from 'constants/widgetSettings';
-import store from 'store';
-import { SET_NEW_WIDGET } from 'store/actions/actionTypes';
 import { WidgetConfig } from 'components/grid/interfaces';
 import { RootState, RootAction } from 'StoreTypes';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-import { setAlerts } from 'store/actions/root-action';
+import { setWidgetConfigs, setAlerts } from 'store/actions/root-action';
+import {
+  getGridLayout,
+  getEmptyPositions,
+} from 'components/grid/GridLayout/gridOperations/gridOperations';
+import { MAXCOLS, MAXROWS } from 'constants/grid';
+import { generateRandomKey } from 'utils/utils';
+import { MESSAGES } from 'constants/messages';
 
 const FILTER_LABEL_WIDTH = 95;
 
@@ -68,6 +70,7 @@ export interface DialogTitleProps extends WithStyles<typeof styles> {
 /**
  * Title component for widget customizer popup
  */
+
 const DialogTitle = withStyles(styles)((props: DialogTitleProps) => {
   const { children, classes, onClose, ...other } = props;
   return (
@@ -96,13 +99,13 @@ const WidgetsCustomizer: FC<Props> = (props: Props) => {
   const [sizeWidgetKeyMapping, setSizeWidgetKeyMapping] = useState<
     SizeWidgetKeyMapping
   >();
-
+  const { widgetConfWrapper, assetsLength } = props;
   const handleListItemClick = (key: string) => {
     setSelectedWidgetKey(key);
   };
 
   const handleClickOpen = () => {
-    if (props.assetsLength > 0) {
+    if (assetsLength > 0) {
       setOpen(true);
       setDefaultWidgetSizeFilter('All');
       setWidgetSizeFilter('All');
@@ -138,18 +141,41 @@ const WidgetsCustomizer: FC<Props> = (props: Props) => {
   const onCreate = (data: WidgetConfig) => {
     const widgetConf = { ...data };
     widgetConf.widgetTypeId = selectedWidgetKey;
-    store.dispatch({
-      type: SET_NEW_WIDGET,
-      payload: widgetConf,
-    });
+    addWidget(widgetConf);
     setOpen(false);
+  };
+
+  const addWidget = async (widgetconfig: WidgetConfig) => {
+    const { widgetTypeId } = widgetconfig;
+    const [w, h] = WIDGET_SETTINGS[widgetTypeId].size;
+    const { widgetConfigs } = widgetConfWrapper;
+    const layouts = widgetConfigs.map((wconf: WidgetConfig) =>
+      getGridLayout(wconf)
+    );
+    const widgetCordinates = getEmptyPositions(layouts, w, h, MAXCOLS, MAXROWS);
+    if (!widgetCordinates) {
+      props.setAlerts({
+        type: 'error',
+        text: MESSAGES.NO_POSITION_ON_GRID,
+      });
+      return;
+    }
+    const newWidgetConf = { ...widgetconfig };
+    newWidgetConf.i = generateRandomKey();
+    newWidgetConf.cordinates = widgetCordinates;
+    const newWidgetConfs = [...widgetConfigs].concat(newWidgetConf);
+    const newLocalConfigs = {
+      ...widgetConfWrapper,
+      widgetConfigs: newWidgetConfs,
+    };
+    props.setWidgetConfigs(newLocalConfigs);
   };
   /**
    * Get distinct size list from widget settings and update size widget key mapping
    */
   const updateSizeMapping = () => {
     const tempSizeWidgetKeyMapping: SizeWidgetKeyMapping = { All: [] };
-    Object.keys(WIDGET_SETTINGS).forEach((key, index) => {
+    Object.keys(WIDGET_SETTINGS).forEach(key => {
       const sizeString = getSizeString(key);
       tempSizeWidgetKeyMapping.All.push(key);
       if (tempSizeWidgetKeyMapping[sizeString]) {
@@ -274,10 +300,12 @@ const WidgetsCustomizer: FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => ({
   assetsLength: state.appState.assets.length,
+  widgetConfWrapper: state.appState.widgetConfWrapper,
 });
 
 const dispatchProps = {
   setAlerts,
+  setWidgetConfigs,
 };
 
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
