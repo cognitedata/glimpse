@@ -21,7 +21,9 @@ export const getAlarmConfig = async (): Promise<AlarmConfig> => {
     const doc = await alarmConfDoc(userId).get();
     if (doc.exists && doc.data()) {
       const alarmConfigDocData = doc.data();
-      return alarmConfigDocData ? alarmConfigDocData[assetId] : {};
+      return alarmConfigDocData && alarmConfigDocData[assetId]
+        ? alarmConfigDocData[assetId]
+        : {};
     }
     return {};
   }

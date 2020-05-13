@@ -135,7 +135,7 @@ const mapStateToProps = (state: RootState) => {
 const mapDispatchToProps = (dispatch: Dispatch<RootAction>) =>
   bindActionCreators(dispatchProps, dispatch);
 
-export type AssetInfoConfiguratorProps = ReturnType<typeof mapStateToProps> &
+type AssetInfoConfiguratorProps = ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> &
   DefaultProps;
 
