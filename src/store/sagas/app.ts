@@ -1,14 +1,16 @@
 // Copyright 2020 Cognite AS
 import { put, select, fork, take } from 'redux-saga/effects';
-import { RootState } from 'StoreTypes';
+import { getMachineIds } from 'services/appCRUD/appConfService';
+import { RootAction } from 'StoreTypes';
+import { getCdfClient } from '../selectors';
 import {
   setLoading,
   setAssets,
   setLoaded,
   setAsset,
   setAlerts,
+  restartUpdateAlarms,
 } from '../actions/root-action';
-import { MACHINE_EXTERNAL_IDS } from '../../constants/appData';
 
 import { MESSAGES } from '../../constants/messages';
 
@@ -18,21 +20,33 @@ import pollUpdateEventInfo from './dataFetchers/eventsFetcher';
 import pollUpdateDataLatestPoint from './dataFetchers/latestDataPointFetcher';
 import pollUpdateTsDps from './dataFetchers/dataPointsFetcher';
 
-const getCdfClient = (state: RootState) => state.appState.cdfClient;
-
 /**
  * Assets list fetcher
  */
-export function* updateAssets() {
-  yield put(setLoading());
-  const cdfClient = yield select(getCdfClient);
+export function* updateAssets(action: RootAction) {
+  /**
+   * Show loader only if its requested in input parameters
+   */
+  if (action.payload) {
+    yield put(setLoading());
+  }
 
   try {
-    const assets = yield cdfClient.assets.retrieve(
-      MACHINE_EXTERNAL_IDS.map(id => ({ id }))
-    );
-    yield put(setAssets(assets));
-    yield put(setAsset(assets[0]));
+    const savedMachineConfigStr = yield getMachineIds();
+
+    const MACHINE_EXTERNAL_IDS = savedMachineConfigStr
+      ? savedMachineConfigStr.split(',')
+      : [];
+
+    if (MACHINE_EXTERNAL_IDS.length > 0) {
+      const cdfClient = yield select(getCdfClient);
+      const assets = yield cdfClient.assets.retrieve(
+        MACHINE_EXTERNAL_IDS.map((id: string) => ({ id }))
+      );
+      yield put(setAssets(assets));
+      yield put(setAsset(assets[0]));
+      yield put(restartUpdateAlarms());
+    }
   } catch (error) {
     yield put(
       setAlerts({
@@ -42,7 +56,9 @@ export function* updateAssets() {
       })
     );
   } finally {
-    yield put(setLoaded());
+    if (action.payload) {
+      yield put(setLoaded());
+    }
   }
 }
 

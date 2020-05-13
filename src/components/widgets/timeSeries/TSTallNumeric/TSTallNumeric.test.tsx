@@ -4,7 +4,7 @@ import { render } from '@testing-library/react';
 import { TSTallNumericMockProps } from 'mocks/widgetsMockData/tsTallNumericMock';
 import TSTallNumeric from './TSTallNumeric';
 
-describe('TSWideNumeric', () => {
+describe('TSTallNumeric', () => {
   it('should render name value and unit correctly', () => {
     const { getByText } = render(
       <TSTallNumeric {...TSTallNumericMockProps[0]} />

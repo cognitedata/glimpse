@@ -15,6 +15,13 @@ export const generateRandomKey = () =>
  *
  * Auth Utils
  */
+export const isFloat = (n: number | string) => {
+  return Number(n) === n && n % 1 !== 0;
+};
+
+export const roundValue = (value: number | string) =>
+  isFloat(value) ? Number(value).toFixed(2) : value;
+
 export const getUserCapabilities = (groups: Group[]) =>
   groups
     .map(group =>
@@ -46,10 +53,10 @@ export const getUniqueKey = (source?: QueryParams) => {
 
 /**
  * return an Array Which removed all elemnts in excludeArr;
- * @param originalArr any[]
- * @param excludeArr any[]
+ * @param originalArr string[]
+ * @param excludeArr string[]
  */
-export const removeObjects = (originalArr: any[], excludeArr: any[]) => {
+export const removeObjects = (originalArr: string[], excludeArr: string[]) => {
   return filter(originalArr, key => {
     return !includes(excludeArr, key);
   });

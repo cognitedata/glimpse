@@ -1,29 +1,49 @@
-# React Demo App
+# Cognite Glimpse
 
-This repository shows how to bootstrap a [React]-based application at Cognite.
-It demonstrates best practices, such as:
+This repository is a showcase of how to build dashboard style apps on top of [Cognite Data Fusion](https://cognite.com/cognite/cognite-data-fusion/developers/). It can be used to build configurable dashboards showing various type of information such as events, time series, meta fields, shift utilization, etc which can be used to give a high-level overview about efficiency of a manufacturing process for example.
 
-- Lint setup to use
-- Jenkinsfile steps
-- TypeScript usage
-- Folder / component layout
-- ...
+Information is presented using a set of widgets which the operator can configure. Each widget is laid out in a fixed sized grid. Position of widgets in the grid can be changed based on operator's preferences. Overall dashboard configuration is persisted for each user separately.
 
-## Deploying the app
+## Overview
 
-Please see the [deployment guide] for more information how to actually get this app into production.
-(It should be pretty easy!)
+Application is based on React/Redux. We use Redux-saga for data fetching (asynchronous state management).
 
-## Template repo
+[react-grid-layout](https://github.com/STRML/react-grid-layout) is used for maintaining the dragging and dropping widgets in the grid system.
 
-This repo is configured as a template, so it's easy to get started.
-Simply go to the [create repo page] and select "cognitedata/glimpse" as a template.
+[Material-UI](https://material-ui.com/) is used for styling the widgets and the application.
 
-## Help
+## Getting started
 
-If you have any questions, please join us in [#frontend] and ask away!
+- Clone the repository
+  ```bash
+  $ git clone https://github.com/cognitedata/glimpse.git
+  ```
+- This app use [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) for saving data. You must [create a firebase project](https://firebase.google.com/docs/firestore/quickstart) and complete .env template inside the root folder with correct values. In the firestore create empty collections
 
-[react]: https://reactjs.org/
-[deployment guide]: https://cognitedata.atlassian.net/wiki/spaces/FAS/pages/1003225162/How+to+deploy+on+Frontend+App+Server+FAS
-[#frontend]: https://cognitedata.slack.com/archives/C6KNJCEEA
-[create repo page]: https://github.com/organizations/cognitedata/repositories/new
+  - app-config
+  - widget-config
+
+- Install dependencies and start the app
+  ```bash
+  $ yarn && yarn start:https
+  ```
+  If the browser is not opened automatically please use `https://localhost:3000/`
+  After opening the browser if you get an error about a certificate not being valid or trusted, then click "advanced" and "proceed" to skip.
+
+## Unit testing
+
+[react-testing-library](https://testing-library.com/docs/react-testing-library/intro) with [jest](https://jestjs.io/) as the test runner are used for unit testing. It is prefered to write tests that closely resemble how your web pages are used. For more info read [here](https://testing-library.com/docs/guiding-principles).
+
+Run all tests
+
+```bash
+$ yarn test
+```
+
+## Architecture diagram
+
+![architecture Diagram](src/assets/architectureDiagram/architecture-diagram.png)
+
+## License
+
+[Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)

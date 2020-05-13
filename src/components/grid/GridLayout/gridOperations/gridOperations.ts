@@ -14,7 +14,7 @@ const getGridMap = (layout: Layout[], maxCols: number, maxRows: number) => {
   const matrix = new Array(maxCols)
     .fill(0)
     .map(() => new Array(maxRows).fill(0));
-  layout.forEach((compDetails: any) => {
+  layout.forEach(compDetails => {
     const { x, y, w, h } = compDetails;
     for (let i = x; i <= x + w - 1; i++) {
       for (let j = y; j <= y + h - 1; j++) {

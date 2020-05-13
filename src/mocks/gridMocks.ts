@@ -10,7 +10,8 @@ export const initialLayoutMocked: Layout[] = [
   { i: 'c', x: 0, y: 2, w: 1, h: 2 },
   { i: 'd', x: 0, y: 4, w: 1, h: 1, static: true },
   { i: 'e', x: 0, y: 5, w: 1, h: 1 },
-  { i: 'f', x: 1, y: 0, w: 1, h: 1 },
+  /** Commented this as tool widget is temporary disabled */
+  // { i: 'f', x: 1, y: 0, w: 1, h: 1 },
   { i: 'g', x: 1, y: 1, w: 1, h: 3 },
   { i: 'h', x: 1, y: 4, w: 3, h: 2 },
   { i: 'i', x: 2, y: 0, w: 1, h: 2 },
@@ -83,18 +84,19 @@ export const mockedWidgetConfigs: WidgetConfig[] = [
       unit: '°c',
     },
   },
-  {
-    i: 'f',
-    cordinates: [1, 0],
-    widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
-    queryParams: {
-      externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
-    },
-    valueMapping: {
-      assetInfo: 'Description   84mm',
-      label: 'Tool Id',
-    },
-  },
+  /** Commented this as tool widget is temporary disabled */
+  // {
+  //   i: 'f',
+  //   cordinates: [1, 0],
+  //   widgetTypeId: WIDGET_TYPE_IDS.TOOL_WIDGET,
+  //   queryParams: {
+  //     externalId: 'VAL_23-LY-92529_SILch0_SC0_TYPSP:VALUE',
+  //   },
+  //   valueMapping: {
+  //     assetInfo: 'Description   84mm',
+  //     label: 'Tool Id',
+  //   },
+  // },
   {
     i: 'g',
     cordinates: [1, 1],

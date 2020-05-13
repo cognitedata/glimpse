@@ -9,7 +9,6 @@ import {
   setLoggedIn,
 } from '../actions/root-action';
 
-import { MockCogniteClient } from '../../mocks';
 import { groupList } from '../../mocks/groupList';
 
 import { MESSAGES } from '../../constants/messages';
@@ -30,21 +29,21 @@ loginStatus
   .mockReturnValueOnce(userStatus)
   .mockReturnValueOnce(userStatus);
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
+class CogniteClient {
+  loginWithOAuth = jest.fn();
   authenticate = jest.fn();
-  login: any = {
+  login = {
     status: loginStatus,
   };
-  logout: any = {
+  logout = {
     getUrl: jest.fn(),
   };
-  groups: any = {
+  groups = {
     list: jest.fn(),
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 
 beforeEach(() => {
   client.groups.list.mockReturnValue(groupList);
@@ -71,10 +70,9 @@ describe('Auth Sagas', () => {
     gen.next(false);
     expect(gen.next(true).value).toEqual(userStatus);
     expect(gen.next(true).value).toEqual(groupList);
-    expect(gen.next(groupList).value).toEqual(put(setLoggedIn()));
+    gen.next(groupList);
     gen.next();
-    gen.next();
-    expect(gen.next().value).toEqual(put(setLoaded()));
+    expect(gen.next().value).toEqual(put(setLoggedIn()));
     expect(gen.next().done).toBeTruthy();
   });
 

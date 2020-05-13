@@ -17,6 +17,7 @@ import './TopBar.css';
 import WidgetsCustomizer from 'components/WidgetsCustomizer/WidgetsCustomizer';
 import Alarm from 'components/Alarm/Alarm';
 import AlarmConfigurator from 'components/Alarm/Configurator/AlarmConfigurator';
+import MachineConfigurator from 'components/MachineSelector/Configurator/MachineConfigurator';
 import MachineSelector from '../../MachineSelector/MachineSelector';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -128,6 +129,7 @@ const TopBar: FC<Props> = (props: Props) => {
           {isOnSettingPage ? (
             <>
               <WidgetsCustomizer />
+              {props.isAdmin ? <MachineConfigurator /> : null}
               <AlarmConfigurator />
             </>
           ) : (
@@ -179,6 +181,7 @@ const TopBar: FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => ({
   userInfo: state.authState.userInfo,
+  isAdmin: state.authState.userInfo.admin,
 });
 
 type Props = ReturnType<typeof mapStateToProps>;

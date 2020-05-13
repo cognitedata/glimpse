@@ -1,6 +1,9 @@
 // Copyright 2020 Cognite AS
-import { put } from 'redux-saga/effects';
 import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
+import { runSaga } from 'redux-saga';
+import sinon from 'sinon';
+import * as api from 'services/appCRUD/appConfService';
+import { RootAction } from 'StoreTypes';
 import {
   setLoading,
   setAssets,
@@ -9,28 +12,19 @@ import {
   setAlerts,
 } from '../actions/root-action';
 
-import { MockCogniteClient } from '../../mocks';
 import { assetList } from '../../mocks/assetList';
 
 import { updateAssets } from './app';
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
-  authenticate = jest.fn();
-  assets: any = {
-    retrieve: jest.fn(),
+import * as selectors from '../selectors';
+
+class CogniteClient {
+  assets = {
+    retrieve: () => assetList,
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
-
-beforeEach(() => {
-  client.assets.retrieve.mockReturnValue(assetList);
-});
-
-afterEach(() => {
-  jest.clearAllMocks();
-});
+const client = new CogniteClient();
 
 const alert: AlertsPropsType = {
   hideApp: false,
@@ -39,23 +33,60 @@ const alert: AlertsPropsType = {
 };
 
 describe('App Sagas', () => {
-  test('should fetch assets and set to state', () => {
-    const gen = updateAssets();
-    expect(gen.next().value).toEqual(put(setLoading()));
-    gen.next();
-    expect(gen.next(client).value).toEqual(assetList);
-    expect(gen.next(assetList).value).toEqual(put(setAssets(assetList)));
-    expect(gen.next().value).toEqual(put(setAsset(assetList[0])));
-    expect(gen.next().value).toEqual(put(setLoaded()));
-    expect(gen.next().done).toBeTruthy();
+  let getMachineIdsMock = null;
+  let getCdfClientMock = null;
+
+  it('should fetch assets and set to state', async () => {
+    getMachineIdsMock = sinon
+      .stub(api, 'getMachineIds')
+      .callsFake(async () => '591296422005001,650646241084062');
+
+    getCdfClientMock = sinon
+      .stub(selectors, 'getCdfClient')
+      .callsFake(() => client);
+
+    const dispatched: RootAction[] = [];
+
+    const result = await runSaga(
+      {
+        dispatch: action => dispatched.push(action),
+        getState: () => ({}),
+      },
+      updateAssets,
+      { payload: true }
+    ).toPromise();
+
+    expect(dispatched).toContainEqual(setLoading());
+    expect(dispatched).toContainEqual(setAssets(assetList));
+    expect(dispatched).toContainEqual(setAsset(assetList[0]));
+    expect(dispatched).toContainEqual(setLoaded());
+
+    getMachineIdsMock.restore();
+    getCdfClientMock.restore();
   });
 
-  test('should set alert on error', () => {
-    const gen = updateAssets();
-    expect(gen.next().value).toEqual(put(setLoading()));
-    gen.next();
-    expect(gen.next(null).value).toEqual(put(setAlerts(alert)));
-    expect(gen.next().value).toEqual(put(setLoaded()));
-    expect(gen.next().done).toBeTruthy();
+  it('should set alert on error', async () => {
+    getMachineIdsMock = sinon
+      .stub(api, 'getMachineIds')
+      .callsFake(async () => '591296422005001,650646241084062');
+
+    getCdfClientMock = sinon
+      .stub(selectors, 'getCdfClient')
+      .callsFake(() => null);
+
+    const dispatched: RootAction[] = [];
+
+    const result = await runSaga(
+      {
+        dispatch: action => dispatched.push(action),
+        getState: () => ({}),
+      },
+      updateAssets,
+      { payload: true }
+    ).toPromise();
+
+    expect(dispatched).toContainEqual(setLoading());
+    expect(dispatched).toContainEqual(setAlerts(alert));
+    expect(dispatched).toContainEqual(setLoaded());
   });
 });

@@ -46,13 +46,13 @@ export function* login() {
         hideApp: true,
       })
     );
+    yield put(setLoaded());
   } else {
     const userInfo = { name: status?.user, admin: isAdmin(groups) };
-    yield put(setLoggedIn());
     yield put(setUserInfo(userInfo));
     yield put(setUserCapabilities(userCapabilities));
+    yield put(setLoggedIn());
   }
-  yield put(setLoaded());
 }
 
 /**

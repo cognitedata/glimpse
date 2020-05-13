@@ -4,27 +4,18 @@ import { AggregateDatapoint } from './interfaces';
 
 /**
  * get time difference as a representation of array ([day,hour,minute,second] diff)
- * @param timstamp1 number (timestamp)
+ * @param timestamp1 number (timestamp)
  * @param timestamp2 number (timestamp)
  */
-function getTimeDifference(timstamp1: number, timestamp2: number) {
-  let difference = Math.abs(timestamp2 - timstamp1);
+function getTimeDifference(timestamp1: number, timestamp2: number) {
+  const timeA = moment(timestamp2);
+  const timeB = moment(timestamp1);
 
-  const daysDifference = Math.floor(difference / 1000 / 60 / 60 / 24);
-  difference -= daysDifference * 1000 * 60 * 60 * 24;
-
-  const hoursDifference = Math.floor(difference / 1000 / 60 / 60);
-  difference -= hoursDifference * 1000 * 60 * 60;
-
-  const minutesDifference = Math.floor(difference / 1000 / 60);
-  difference -= minutesDifference * 1000 * 60;
-
-  const secondsDifference = Math.floor(difference / 1000);
   return [
-    daysDifference,
-    hoursDifference,
-    minutesDifference,
-    secondsDifference,
+    Math.abs(Math.floor(timeA.diff(timeB, 'days', true))),
+    Math.abs(Math.floor(timeA.diff(timeB, 'hours', true))),
+    Math.abs(Math.floor(timeA.diff(timeB, 'minutes', true))),
+    Math.abs(Math.floor(timeA.diff(timeB, 'seconds', true))),
   ];
 }
 
@@ -81,7 +72,7 @@ export function generateXAxisVals(
     // days and hours
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => moment(timestamp).format('D|h'),
+      (timestamp: number) => moment(timestamp).format('D|H'),
       noOfXVals,
       `day | hour`
     );
@@ -90,7 +81,7 @@ export function generateXAxisVals(
     // hours
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => moment(timestamp).format('h'),
+      (timestamp: number) => moment(timestamp).format('H'),
       noOfXVals,
       `hour`
     );
@@ -99,7 +90,7 @@ export function generateXAxisVals(
     // hours and miniutes
     return getConvertedDataArrays(
       dpArr,
-      (timestamp: number) => moment(timestamp).format('h:m'),
+      (timestamp: number) => moment(timestamp).format('H:m'),
       noOfXVals,
       `hour : minute`
     );

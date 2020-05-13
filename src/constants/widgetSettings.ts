@@ -1,7 +1,6 @@
 // Copyright 2020 Cognite AS
-import { RootState } from 'StoreTypes';
+import { RootState, RootAction } from 'StoreTypes';
 import ShowFields from 'components/widgets/showFields/ShowFields';
-import ToolWidget from 'components/widgets/ToolWidget/ToolWidget';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicString';
 import TSBasicNumeric from 'components/widgets/timeSeries/TSBasicNumeric/TSBasicNumeric';
@@ -12,7 +11,6 @@ import assetInfoImg from 'assets/widget-previews/asset-info.png';
 import eventBasicImg from 'assets/widget-previews/event-basic.png';
 import event3MetadataFieldsImg from 'assets/widget-previews/event-3-metadata-fields.png';
 import event4MetadataFieldsImg from 'assets/widget-previews/event-4-metadata-fields.png';
-import toolWidgetImg from 'assets/widget-previews/tool-widget.png';
 import timeseriesBasicStringImg from 'assets/widget-previews/timeseries-basic-string.png';
 import timeseriesFancyNumericImg from 'assets/widget-previews/timeseries-fancy-numeric.png';
 import timeseriesBasicNumericImg from 'assets/widget-previews/timeseries-basic-numeric.png';
@@ -109,14 +107,28 @@ export type QueryParams = {
   limit?: number;
 };
 
-const extractFields = (asset: any, fields: any[]) => {
+const extractFields = (asset: object, fields: FieldMapping[]) => {
   return fields.map(fieldObj => ({
     ...fieldObj,
-    value: get(asset, fieldObj.key, ''),
+    value: fieldObj.key ? get(asset, fieldObj.key, '') : '',
   }));
 };
 
-const WIDGET_SETTINGS: any = {
+type WidgetSettings = {
+  [key: string]: {
+    name: string;
+    image: string;
+    configurator: Function;
+    size: [number, number];
+    component: Function;
+    mapStateToProps: Function;
+    dataFetcher?: RootAction;
+    pollingInterval?: number;
+    pollingEndAction?: RootAction;
+  };
+};
+
+const WIDGET_SETTINGS: WidgetSettings = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
     name: 'Asset info',
     image: assetInfoImg,
@@ -189,26 +201,27 @@ const WIDGET_SETTINGS: any = {
       };
     },
   },
-  [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
-    name: 'Tool widget',
-    image: toolWidgetImg,
-    size: [1, 1],
-    component: ToolWidget,
-    dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
-    pollingInterval: 10000,
-    pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
-    mapStateToProps: (
-      valueMapping: VALUE_MAPPING_TOOLWIDGET,
-      statePath: string
-    ) => (state: RootState) => {
-      const { appState } = state;
-      return {
-        field: valueMapping.assetInfo,
-        value: appState[statePath]?.value,
-        name: valueMapping.label,
-      };
-    },
-  },
+  /** Commented this as tool widget is temporary disabled */
+  // [WIDGET_TYPE_IDS.TOOL_WIDGET]: {
+  //   name: 'Tool widget',
+  //   image: toolWidgetImg,
+  //   size: [1, 1],
+  //   component: ToolWidget,
+  //   dataFetcher: actionTypes.START_UPDATE_LATEST_DATAPOINT,
+  //   pollingInterval: 10000,
+  //   pollingEndAction: actionTypes.STOP_UPDATE_LATEST_DATAPOINT,
+  //   mapStateToProps: (
+  //     valueMapping: VALUE_MAPPING_TOOLWIDGET,
+  //     statePath: string
+  //   ) => (state: RootState) => {
+  //     const { appState } = state;
+  //     return {
+  //       field: valueMapping.assetInfo,
+  //       value: appState[statePath]?.value,
+  //       name: valueMapping.label,
+  //     };
+  //   },
+  // },
   [WIDGET_TYPE_IDS.TIMESERIES_FANCY_NUMERIC]: {
     name: 'Timeseries - Fancy numeric',
     image: timeseriesFancyNumericImg,

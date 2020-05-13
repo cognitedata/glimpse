@@ -1,7 +1,7 @@
 // Copyright 2020 Cognite AS
 
 export const MACHINE_EXTERNAL_IDS = [591296422005001, 650646241084062];
-export const ADMIN_GROUPS = ['groups:list', 'Assets:Read'];
+export const ADMIN_GROUPS = ['fallback-group'];
 export const USER_REQUIRED_CAPABILITIES = ['groupsAcl:LIST'];
 export const APP_NAME = 'glimpse';
 export const APP_VERSION = 'v1';

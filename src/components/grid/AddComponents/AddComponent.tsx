@@ -4,7 +4,11 @@ import './AddComponent.css';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
-export default (props: any) => {
+type Props = {
+  addElement: Function;
+};
+
+export default (props: Props) => {
   const [height, setHeight] = useState(0);
   const [width, setWidth] = useState(0);
 

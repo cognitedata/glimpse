@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { render } from '@testing-library/react';
 import withSecurity from 'hoc/WithSecurity';
-import { MockCogniteClient, groupList } from '../../mocks';
+import { groupList } from '../../mocks';
 
 import rootReducer from '../../store/reducers/root-reducer';
 import {
@@ -26,18 +26,18 @@ loginStatus.mockReturnValueOnce(false).mockReturnValueOnce({
   projectId: 204967111817541,
 });
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
+class CogniteClient {
+  loginWithOAuth = jest.fn();
   authenticate = jest.fn();
-  login: any = {
+  login = {
     status: loginStatus,
   };
-  groups: any = {
+  groups = {
     list: jest.fn(),
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 
 beforeEach(() => {
   client.groups.list.mockReturnValue(groupList);

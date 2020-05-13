@@ -13,13 +13,12 @@ type ShowFieldsProps = {
  */
 const ShowFields: FC<ShowFieldsProps> = (props: ShowFieldsProps) => {
   const { fields } = props;
-
   const mapToShowFields = fields.map((showField, index) => (
     <ShowField
       // eslint-disable-next-line react/no-array-index-key
       key={`${showField.label}-${index}`}
-      label={showField.label}
-      value={showField.value}
+      path={showField.key}
+      {...showField}
     />
   ));
 

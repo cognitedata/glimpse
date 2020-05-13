@@ -2,26 +2,32 @@
 import { take, race, put, select, delay, fork, call } from 'redux-saga/effects';
 import { CogniteEvent } from '@cognite/sdk';
 
-import { RootState } from 'StoreTypes';
 import get from 'lodash/get';
 import { AlarmType } from 'components/Alarm/interfaces';
-import { APP_NAME } from 'constants/appData';
 import { AppAction } from 'store/reducers/app';
 import includes from 'lodash/includes';
 import moment from 'moment';
-import * as actionTypes from '../actions/actionTypes';
+import {
+  getAlarmConfigurations,
+  persistRemovedAlarmIds,
+} from 'services/alarmCRUD/alarmConfService';
+import {
+  getCdfClient,
+  getAssetId,
+  getAlarms,
+  getRemovedAlarmIds,
+} from 'store/selectors';
+import { MESSAGES } from 'constants/messages';
+import { RootAction } from 'StoreTypes';
 import {
   setAlarms,
   startUpdateAlarms,
   stopUpdateAlarms,
+  setAlerts,
+  setRemovedAlarmId,
+  setRemovedAlarmIds,
 } from '../actions/root-action';
-
-const getCdfClient = (state: RootState) => state.appState.cdfClient;
-const getAssetId = (state: RootState) => state.appState.asset?.id;
-const getAlarms = (state: RootState) => state.appState.alarms;
-
-const ALARM_CONFIG_DOC_NAME = `${APP_NAME}_ALARM_CONFIG`;
-const REMOVED_ALARMS_DOC_NAME = `${APP_NAME}_REMOVED_ALARMS`;
+import * as actionTypes from '../actions/actionTypes';
 
 /**
  * This saga is used to poll alarms and set in the state
@@ -82,11 +88,36 @@ export default function* pollUpdateAlarms(alarmConfig: {
 export function* pollUpdateAlarmsWatcher() {
   while (true) {
     yield take(actionTypes.START_UPDATE_ALARMS);
-    const savedAlarmConfigStr = yield localStorage.getItem(
-      ALARM_CONFIG_DOC_NAME
-    );
-    if (savedAlarmConfigStr) {
-      yield fork(pollUpdateAlarms, JSON.parse(savedAlarmConfigStr));
+    try {
+      const alarmConfig = yield getAlarmConfigurations();
+      /**
+       * Set removed alarm ids in the sate
+       */
+      const removedAlarmsIds = alarmConfig.removedAlarmsIds
+        ? alarmConfig.removedAlarmsIds
+        : [];
+      yield put(setRemovedAlarmIds(removedAlarmsIds));
+
+      /**
+       * Pass alarm fetch configurations to events fetcher
+       */
+      const alarmFetchConfig = alarmConfig.alarmFetchConfig
+        ? alarmConfig.alarmFetchConfig
+        : {};
+      if (Object.keys(alarmFetchConfig).length > 0) {
+        yield fork(pollUpdateAlarms, alarmFetchConfig);
+      } else {
+        yield call(setFilteredAlarms, []);
+      }
+    } catch (error) {
+      yield call(setFilteredAlarms, []);
+      yield put(
+        setAlerts({
+          type: 'error',
+          text: MESSAGES.ALARMS_FETCH_ERROR,
+          hideApp: false,
+        })
+      );
     }
   }
 }
@@ -97,14 +128,9 @@ export function* pollUpdateAlarmsWatcher() {
  */
 function* setFilteredAlarms(alarms?: AlarmType[]) {
   const rawAlarms = alarms || (yield select(getAlarms));
-  const ASSET_ID = yield select(getAssetId);
-  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
-  let removedAlarms = yield localStorage.getItem(
-    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
-  );
-  removedAlarms = removedAlarms ? removedAlarms.split(',') : [];
+  const removedAlarmIds = yield select(getRemovedAlarmIds);
   const filteredAlarms = rawAlarms.filter((alarm: AlarmType) => {
-    return !includes(removedAlarms, alarm.id.toString());
+    return !includes(removedAlarmIds, alarm.id);
   });
   yield put(setAlarms(filteredAlarms));
 }
@@ -117,37 +143,44 @@ function* setFilteredAlarms(alarms?: AlarmType[]) {
  */
 function* clearRemovedAlarmIds(alarms: AlarmType[]) {
   const fetchedAlarmIds = alarms.map(alarm => alarm.id);
-  const ASSET_ID = yield select(getAssetId);
-  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
-  let removedAlarmIds = yield localStorage.getItem(
-    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
-  );
-  removedAlarmIds = removedAlarmIds ? removedAlarmIds.split(',') : [];
-  const filteredAlarmIds = removedAlarmIds.filter((removedAlarmId: string) => {
-    return includes(fetchedAlarmIds, Number(removedAlarmId));
+  const removedAlarmIds = yield select(getRemovedAlarmIds);
+  const filteredAlarmIds = removedAlarmIds.filter((removedAlarmId: number) => {
+    return includes(fetchedAlarmIds, removedAlarmId);
   });
-  yield localStorage.setItem(
-    REMOVED_ALARMS_DOC_NAME_WITH_ASSET,
-    filteredAlarmIds.join(',')
-  );
+  yield put(setRemovedAlarmIds(filteredAlarmIds));
+}
+
+/**
+ * This saga is used to persist the removed alarms ids
+ */
+export function* saveRemovedAlarmIds() {
+  try {
+    yield persistRemovedAlarmIds();
+  } catch (error) {
+    yield put(
+      setAlerts({
+        type: 'error',
+        text: MESSAGES.ALARM_REMOVE_ERROR,
+        hideApp: false,
+        duration: 2000,
+      })
+    );
+    /**
+     * Reset removed alarms on alarm remove failure
+     */
+    yield call(restartAlarmsPolling);
+  }
 }
 
 /**
  * This saga is used to save the removed alarms ids
  */
-export function* saveRemovedAlarm(action: any) {
-  const ASSET_ID = yield select(getAssetId);
-  const REMOVED_ALARMS_DOC_NAME_WITH_ASSET = `${REMOVED_ALARMS_DOC_NAME}_${ASSET_ID}`;
-  let removedAlarms = yield localStorage.getItem(
-    REMOVED_ALARMS_DOC_NAME_WITH_ASSET
-  );
-  removedAlarms = removedAlarms ? removedAlarms.split(',') : [];
-  removedAlarms.push(action.payload);
-  yield localStorage.setItem(
-    REMOVED_ALARMS_DOC_NAME_WITH_ASSET,
-    removedAlarms.join(',')
-  );
+export function* saveRemovedAlarm(action: RootAction) {
+  yield put(setRemovedAlarmId(action.payload.alarmId));
   yield call(setFilteredAlarms);
+  if (action.payload.persist) {
+    yield call(saveRemovedAlarmIds);
+  }
 }
 
 /**

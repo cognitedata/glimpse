@@ -3,14 +3,12 @@ import React, { useEffect } from 'react';
 import { CogniteClient, REDIRECT } from '@cognite/sdk';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { RootState } from 'StoreTypes';
 
 import {
   APP_NAME,
   APP_VERSION,
   CDF_PROJECT as project,
 } from '../constants/appData';
-import Loader from '../components/UI/Loader/Loader';
 import { setCdfClient, login } from '../store/actions/root-action';
 
 type withSecurityPropType =
@@ -47,21 +45,10 @@ const withSecurity = (props?: withSecurityPropType) => (
       compProps.login();
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    let html = null;
-    if (compProps.loggedIn) {
-      html = <WrappedComponet />;
-    } else if (compProps.loading) {
-      html = <Loader />;
-    }
-    return html;
+    return <WrappedComponet />;
   };
-  return connect(mapStateToProps, mapDispatchToProps)(WithSecurityComponent);
+  return connect(null, mapDispatchToProps)(WithSecurityComponent);
 };
-
-const mapStateToProps = (state: RootState) => ({
-  loading: state.appState.loading,
-  loggedIn: state.authState.loggedIn,
-});
 
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
@@ -70,7 +57,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
   };
 };
 
-type CompProps = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type CompProps = ReturnType<typeof mapDispatchToProps>;
 
 export default withSecurity;
