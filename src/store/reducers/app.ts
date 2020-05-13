@@ -27,8 +27,7 @@ export const initialState: AppState = {
   loading: false,
   assets: [],
   alarms: [],
-  widgetConfWrapper: { id: '', lastUpdated: null, widgetConfigs: [] },
-  localWidgetConfigs: { id: '', lastUpdated: null, widgetConfigs: [] },
+  widgetConfWrapper: { id: '', widgetConfigs: [] },
   removedAlarmIds: [],
 };
 

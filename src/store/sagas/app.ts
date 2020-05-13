@@ -9,7 +9,6 @@ import {
   setLoaded,
   setAsset,
   setAlerts,
-  restartUpdateAlarms,
 } from '../actions/root-action';
 
 import { MESSAGES } from '../../constants/messages';
@@ -45,7 +44,6 @@ export function* updateAssets(action: RootAction) {
       );
       yield put(setAssets(assets));
       yield put(setAsset(assets[0]));
-      yield put(restartUpdateAlarms());
     }
   } catch (error) {
     yield put(

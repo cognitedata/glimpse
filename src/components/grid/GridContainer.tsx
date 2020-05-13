@@ -33,7 +33,6 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     const newWidgetConfWrapper = {
       ...widgetConfWrapper,
       widgetConfigs: updatedWidgetConfs,
-      lastUpdated: new Date(),
     };
     props.setWidgetConfigs(newWidgetConfWrapper);
   };
@@ -55,7 +54,6 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     );
     const newwidgetConfWrapper = {
       ...widgetConfWrapper,
-      lastUpdated: new Date(),
       widgetConfigs: newWidgetConfig,
     };
     props.setWidgetConfigs(newwidgetConfWrapper);

@@ -15,7 +15,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const firestoreDB = firebase.firestore();
-firestoreDB.settings({ timestampsInSnapshots: true });
 export { firestoreDB };
 export const widgetConfFSDoc = (docName: string) =>
   firestoreDB.collection(WIDGET_CONF_DB).doc(docName);
