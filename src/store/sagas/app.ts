@@ -1,6 +1,7 @@
 // Copyright 2020 Cognite AS
 import { put, select, fork, take } from 'redux-saga/effects';
 import { getMachineIds } from 'services/appCRUD/appConfService';
+import { RootAction } from 'StoreTypes';
 import { getCdfClient } from '../selectors';
 import {
   setLoading,
@@ -22,7 +23,7 @@ import pollUpdateTsDps from './dataFetchers/dataPointsFetcher';
 /**
  * Assets list fetcher
  */
-export function* updateAssets(action: any) {
+export function* updateAssets(action: RootAction) {
   /**
    * Show loader only if its requested in input parameters
    */

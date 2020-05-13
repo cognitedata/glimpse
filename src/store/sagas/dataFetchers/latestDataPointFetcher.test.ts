@@ -3,20 +3,19 @@ import { testSaga } from 'redux-saga-test-plan';
 
 import { setLatestDataPoint } from '../../actions/root-action';
 
-import { MockCogniteClient } from '../../../mocks';
 import { latestDatapoint } from '../../../mocks/latestDataPoint';
 
 import pollUpdateDataLatestPoint from './latestDataPointFetcher';
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
+class CogniteClient {
+  loginWithOAuth = jest.fn();
   authenticate = jest.fn();
-  datapoints: any = {
+  datapoints = {
     retrieveLatest: jest.fn(),
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 
 const dataPointObject = {
   value: latestDatapoint[0].datapoints[0].value,

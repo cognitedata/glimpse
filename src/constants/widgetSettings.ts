@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import { RootState } from 'StoreTypes';
+import { RootState, RootAction } from 'StoreTypes';
 import ShowFields from 'components/widgets/showFields/ShowFields';
 import { TSFancyNumeric } from 'components/widgets/timeSeries/TSFancyNumeric/TSFancyNumeric';
 import TSBasicString from 'components/widgets/timeSeries/TSBasicString/TSBasicString';
@@ -107,14 +107,28 @@ export type QueryParams = {
   limit?: number;
 };
 
-const extractFields = (asset: any, fields: any[]) => {
+const extractFields = (asset: object, fields: FieldMapping[]) => {
   return fields.map(fieldObj => ({
     ...fieldObj,
-    value: get(asset, fieldObj.key, ''),
+    value: fieldObj.key ? get(asset, fieldObj.key, '') : '',
   }));
 };
 
-const WIDGET_SETTINGS: any = {
+type WidgetSettings = {
+  [key: string]: {
+    name: string;
+    image: string;
+    configurator: Function;
+    size: [number, number];
+    component: Function;
+    mapStateToProps: Function;
+    dataFetcher?: RootAction;
+    pollingInterval?: number;
+    pollingEndAction?: RootAction;
+  };
+};
+
+const WIDGET_SETTINGS: WidgetSettings = {
   [WIDGET_TYPE_IDS.ASSET_INFO]: {
     name: 'Asset info',
     image: assetInfoImg,

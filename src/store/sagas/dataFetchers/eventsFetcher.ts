@@ -2,7 +2,7 @@
 import { take, race, put, select, delay } from 'redux-saga/effects';
 import { CogniteEvent } from '@cognite/sdk';
 
-import { RootState } from 'StoreTypes';
+import { RootState, RootAction } from 'StoreTypes';
 import { setEvent } from '../../actions/root-action';
 import * as actionTypes from '../../actions/actionTypes';
 
@@ -13,7 +13,7 @@ const getAssetId = (state: RootState) => state.appState.asset?.id;
  *
  * Event fetcher
  */
-export default function* pollUpdateEventInfo(action: any) {
+export default function* pollUpdateEventInfo(action: RootAction) {
   while (true) {
     const cdfClient = yield select(getCdfClient);
     const assetId = yield select(getAssetId);
@@ -42,7 +42,7 @@ export default function* pollUpdateEventInfo(action: any) {
     const { cancel } = yield race({
       delay: delay(action.payload.pollingInterval),
       cancel: take(
-        (stopAction: any) =>
+        (stopAction: RootAction) =>
           stopAction.type === actionTypes.STOP_UPDATE_EVENT_INFO &&
           stopAction.payload === actionKey
       ),

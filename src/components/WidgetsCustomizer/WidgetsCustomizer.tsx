@@ -26,7 +26,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import './WidgetsCustomizer.css';
 
 import WIDGET_SETTINGS from 'constants/widgetSettings';
-import { WidgetConfigProps } from 'components/widgetConfigs/event/interfaces';
 import store from 'store';
 import { SET_NEW_WIDGET } from 'store/actions/actionTypes';
 import { WidgetConfig } from 'components/grid/interfaces';
@@ -165,8 +164,7 @@ const WidgetsCustomizer: FC<Props> = (props: Props) => {
   useEffect(() => {
     updateSizeMapping();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-  const Configurator: FC<WidgetConfigProps> =
-    WIDGET_SETTINGS[selectedWidgetKey].configurator;
+  const Configurator = WIDGET_SETTINGS[selectedWidgetKey].configurator;
   return (
     <div className="WidgetsCustomizer">
       <Button

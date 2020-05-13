@@ -3,6 +3,7 @@ import { AlertsPropsType } from 'components/UI/Alerts/interfaces';
 import { runSaga } from 'redux-saga';
 import sinon from 'sinon';
 import * as api from 'services/appCRUD/appConfService';
+import { RootAction } from 'StoreTypes';
 import {
   setLoading,
   setAssets,
@@ -11,20 +12,19 @@ import {
   setAlerts,
 } from '../actions/root-action';
 
-import { MockCogniteClient } from '../../mocks';
 import { assetList } from '../../mocks/assetList';
 
 import { updateAssets } from './app';
 
 import * as selectors from '../selectors';
 
-class CogniteClient extends MockCogniteClient {
-  assets: any = {
+class CogniteClient {
+  assets = {
     retrieve: () => assetList,
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 
 const alert: AlertsPropsType = {
   hideApp: false,
@@ -45,11 +45,11 @@ describe('App Sagas', () => {
       .stub(selectors, 'getCdfClient')
       .callsFake(() => client);
 
-    const dispatched: any[] = [];
+    const dispatched: RootAction[] = [];
 
     const result = await runSaga(
       {
-        dispatch: (action: any) => dispatched.push(action),
+        dispatch: action => dispatched.push(action),
         getState: () => ({}),
       },
       updateAssets,
@@ -74,11 +74,11 @@ describe('App Sagas', () => {
       .stub(selectors, 'getCdfClient')
       .callsFake(() => null);
 
-    const dispatched: any[] = [];
+    const dispatched: RootAction[] = [];
 
     const result = await runSaga(
       {
-        dispatch: (action: any) => dispatched.push(action),
+        dispatch: action => dispatched.push(action),
         getState: () => ({}),
       },
       updateAssets,

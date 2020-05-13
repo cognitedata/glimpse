@@ -1,8 +1,13 @@
 // Copyright 2020 Cognite AS
 import { CogniteClient } from '@cognite/sdk';
 
+interface ClientOptions {
+  appId: string;
+  baseUrl?: string;
+}
+
 export class MockCogniteClient extends CogniteClient {
-  constructor(options: any) {
+  constructor(options: ClientOptions) {
     super(options);
     Object.defineProperty(this, 'assets', {
       writable: true,

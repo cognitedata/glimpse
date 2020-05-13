@@ -4,7 +4,7 @@
  * This is used to persist data in the firebase
  */
 import { getUserId, getAssetId } from 'store/service';
-import { alarmConfDoc } from '../../../firebase';
+import { alarmConfDoc } from '../../../firebaseConfig';
 import { AlarmConfig } from './interfaces';
 
 /**
@@ -19,8 +19,9 @@ export const getAlarmConfig = async (): Promise<AlarmConfig> => {
     throw new Error('Machine Id is not available!');
   } else {
     const doc = await alarmConfDoc(userId).get();
-    if (doc.exists && doc.data()[assetId]) {
-      return doc.data()[assetId];
+    if (doc.exists && doc.data()) {
+      const alarmConfigDocData = doc.data();
+      return alarmConfigDocData ? alarmConfigDocData[assetId] : {};
     }
     return {};
   }
@@ -39,7 +40,10 @@ export const saveAlarmConfig = async (alarmConfig: AlarmConfig) => {
   } else {
     const doc = await alarmConfDoc(userId).get();
     if (doc.exists) {
-      const docData = doc.data();
+      let docData = doc.data();
+      if (!docData) {
+        docData = {};
+      }
       if (docData[assetId]) {
         docData[assetId] = { ...docData[assetId], ...alarmConfig };
       } else {

@@ -13,9 +13,9 @@ const ShowField: FC<ShowFieldProps> = (props: ShowFieldProps) => {
   const { label, value, path } = props;
   /**
    * format returning object based on the input object type.
-   * @param valueProp any
+   * @param valueProp
    */
-  const formatValueByType = (valueProp: any) => {
+  const formatValueByType = (valueProp: string) => {
     if (!valueProp) {
       return ' - ';
     }

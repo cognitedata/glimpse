@@ -3,20 +3,19 @@ import { testSaga } from 'redux-saga-test-plan';
 
 import { setEvent } from '../../actions/root-action';
 
-import { MockCogniteClient } from '../../../mocks';
 import { eventList } from '../../../mocks/eventList';
 
 import pollUpdateEventInfo from './eventsFetcher';
 
-class CogniteClient extends MockCogniteClient {
-  loginWithOAuth: any = jest.fn();
+class CogniteClient {
+  loginWithOAuth = jest.fn();
   authenticate = jest.fn();
-  events: any = {
+  events = {
     list: jest.fn(),
   };
 }
 
-const client = new CogniteClient({ appId: 'mock app' });
+const client = new CogniteClient();
 
 beforeEach(() => {
   client.events.list.mockReturnValue(eventList);

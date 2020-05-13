@@ -53,10 +53,10 @@ export const getUniqueKey = (source?: QueryParams) => {
 
 /**
  * return an Array Which removed all elemnts in excludeArr;
- * @param originalArr any[]
- * @param excludeArr any[]
+ * @param originalArr string[]
+ * @param excludeArr string[]
  */
-export const removeObjects = (originalArr: any[], excludeArr: any[]) => {
+export const removeObjects = (originalArr: string[], excludeArr: string[]) => {
   return filter(originalArr, key => {
     return !includes(excludeArr, key);
   });

@@ -91,9 +91,9 @@ const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
     if (isMounted.current) {
       const widgetConfForAsset = get(widgetConf, props.assetId) || [];
       setWidgetConfigs(widgetConfForAsset);
-      const generatedLayout = widgetConfForAsset.map(widConf =>
-        getGridLayout(widConf)
-      );
+      const generatedLayout = widgetConfForAsset
+        .filter(widConf => WIDGET_SETTINGS[widConf.widgetTypeId] !== undefined)
+        .map(widConf => getGridLayout(widConf));
       setLayouts(generatedLayout);
       setLastSavedLayouts(generatedLayout);
     }
