@@ -163,7 +163,7 @@ const AlarmConfigurator: FC<Props> = (props: Props) => {
       <Tooltip title="Alarm Configurator">
         <IconButton
           className="Config-button"
-          data-testid="config-button"
+          data-testid="alarm-config-button"
           edge="end"
           aria-label="Config"
           onClick={handleClickOpen}

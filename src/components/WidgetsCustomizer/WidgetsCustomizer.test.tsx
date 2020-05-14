@@ -33,7 +33,7 @@ describe('Widget Customizer', () => {
     const { getByText, getByTestId } = renderWithRedux(<WidgetCustomizer />, {
       appState: { ...appInitialState, assets: assetList, asset: assetList[0] },
     });
-    fireEvent.click(getByTestId('add-button'));
+    fireEvent.click(getByTestId('widget-add-button'));
     expect(getByText('Add Widget')).toBeInTheDocument();
   });
 
@@ -48,7 +48,7 @@ describe('Widget Customizer', () => {
         },
       }
     );
-    fireEvent.click(getByTestId('add-button'));
+    fireEvent.click(getByTestId('widget-add-button'));
     let items = await findAllByText(WIDGET_SETTINGS[keys[1]].name);
     expect(items).toHaveLength(1);
     items = await findAllByText(WIDGET_SETTINGS[keys[2]].name);
@@ -70,7 +70,7 @@ describe('Widget Customizer', () => {
         },
       }
     );
-    fireEvent.click(getByTestId('add-button'));
+    fireEvent.click(getByTestId('widget-add-button'));
     const items = await findAllByText(WIDGET_SETTINGS[keys[0]].name);
     expect(items).toHaveLength(2);
   });
@@ -86,7 +86,7 @@ describe('Widget Customizer', () => {
         },
       }
     );
-    fireEvent.click(getByTestId('add-button'));
+    fireEvent.click(getByTestId('widget-add-button'));
     let items = await findAllByText(WIDGET_SETTINGS[keys[2]].name);
     const listItem = items[0].parentElement?.parentElement;
     if (listItem) {
