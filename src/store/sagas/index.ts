@@ -16,7 +16,7 @@ import {
   saveRemovedAlarmIds,
   restartAlarmsPolling,
 } from './alarmSagas';
-import { machineIdChanged, saveWidgetConfigs } from './widgetConfig';
+import { loadWidgetConfigs, saveWidgetConfigs } from './widgetConfig';
 
 /**
  * watch app related sagas and fire on action dispatch
@@ -44,6 +44,6 @@ export function* watchAuthSagas() {
 }
 
 export function* watchWidgetConfigs() {
-  yield takeEvery(actionTypes.SET_WIDGET_CONFIGS, saveWidgetConfigs);
-  yield takeEvery(actionTypes.SET_ASSET, machineIdChanged);
+  yield takeEvery(actionTypes.SAVE_WIDGET_CONFIGS, saveWidgetConfigs);
+  yield takeEvery(actionTypes.SET_ASSET, loadWidgetConfigs);
 }

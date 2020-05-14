@@ -19,7 +19,6 @@ import { setAlerts, setWidgetConfigs } from '../../store/actions/root-action';
 const GridContainer: FC<GridContainerProps> = (props: GridContainerProps) => {
   const { isDraggable } = props;
 
-  // widgetConfWrapper is keeping local widgetConfigs with last updated time in the redux state.
   // When some modification is done these local widget configurations are saved in the DB
   const { widgetConfWrapper } = props;
   const { widgetConfigs } = widgetConfWrapper;

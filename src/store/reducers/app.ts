@@ -86,7 +86,7 @@ const appReducer = (state = initialState, action: AppAction): AppState => {
         ...state,
         ...action.payload,
       };
-    case actionTypes.SET_WIDGET_CONFIGS:
+    case actionTypes.SAVE_WIDGET_CONFIGS:
       return {
         ...state,
         widgetConfWrapper: action.payload,
