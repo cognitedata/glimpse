@@ -1,5 +1,5 @@
 // Copyright 2020 Cognite AS
-import { getByUser, update } from 'components/widgetCRUD/repo/widgetConfLSRepo';
+import { getByUser, update } from 'services/widgetCRUD/repo';
 import { select, put, Effect } from 'redux-saga/effects';
 import { RootState } from 'StoreTypes';
 import { setWidgetConfigs, setAlerts } from 'store/actions/app';

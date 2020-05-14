@@ -20,10 +20,19 @@ Application is based on React/Redux. We use Redux-saga for data fetching (asynch
   ```
 - This app use [Firebase Cloud Firestore](https://firebase.google.com/docs/firestore) for saving data. You must [create a firebase project](https://firebase.google.com/docs/firestore/quickstart) and complete .env template inside the root folder with correct values. In the firestore create empty collections
 
+  - alarm-config
   - app-config
   - widget-config
 
-- Install dependencies and start the app
+  \
+   **Note**
+  For developing purposes, you can use local storage in the browser without configuring the firebase. you can edit environment variable `REACT_APP_USE_LOCALSTORAGE` in .env file in the root folder. (Change this to `false` if you are using firebase)
+
+  ```
+  REACT_APP_USE_LOCALSTORAGE=true
+  ```
+
+* Install dependencies and start the app
   ```bash
   $ yarn && yarn start:https
   ```
