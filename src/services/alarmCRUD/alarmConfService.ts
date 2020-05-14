@@ -3,10 +3,7 @@ import { MESSAGES } from 'constants/messages';
 import { AlarmFetchConfig } from 'components/Alarm/Configurator/interfaces';
 
 import { getRemovedAlarmIds } from 'store/service';
-import {
-  getAlarmConfig,
-  saveAlarmConfig,
-} from './alarmConfRepo/alarmConfFSRepo';
+import { getAlarmConfig, saveAlarmConfig } from './alarmConfRepo';
 
 /**
  *

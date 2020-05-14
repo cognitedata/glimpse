@@ -3,7 +3,7 @@ import { testSaga } from 'redux-saga-test-plan';
 import { mockWidgetConfigs } from 'mocks/widgetsMockData/widgetConfigsMockData';
 import { setWidgetConfigs } from 'store/actions/app';
 import get from 'lodash/get';
-import * as respository from 'components/widgetCRUD/repo/widgetConfLSRepo';
+import * as respository from 'services/widgetCRUD/repo/';
 import { error } from 'console';
 import { loadWidgetConfigs, saveWidgetConfigs } from './widgetConfig';
 

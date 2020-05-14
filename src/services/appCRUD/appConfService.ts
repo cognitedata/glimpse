@@ -1,9 +1,6 @@
 // Copyright 2020 Cognite AS
 import { MESSAGES } from 'constants/messages';
-import {
-  getMachineConfig,
-  saveMachineConfig,
-} from './appConfRepo/appConfFSRepo';
+import { getMachineConfig, saveMachineConfig } from './appConfRepo';
 
 /**
  *
