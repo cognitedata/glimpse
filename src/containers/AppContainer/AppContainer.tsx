@@ -71,8 +71,10 @@ const AppContainer: FC<Props> = (props: Props) => {
   ];
 
   useEffect(() => {
-    props.updateAssets(true);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (props.userId) {
+      props.updateAssets(true);
+    }
+  }, [props.userId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   if (props.loading) {
     return <Loader />;
@@ -82,6 +84,7 @@ const AppContainer: FC<Props> = (props: Props) => {
 
 const mapStateToProps = (state: RootState) => ({
   loading: state.appState.loading,
+  userId: state.authState.userInfo?.name,
   cdfClient: state.appState.cdfClient,
   assetsLength: state.appState.assets.length,
   loggedIn: state.authState.loggedIn,
