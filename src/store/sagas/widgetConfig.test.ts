@@ -5,7 +5,7 @@ import { setWidgetConfigs } from 'store/actions/app';
 import get from 'lodash/get';
 import * as respository from 'components/widgetCRUD/repo/widgetConfLSRepo';
 import { error } from 'console';
-import { machineIdChanged, saveWidgetConfigs } from './widgetConfig';
+import { loadWidgetConfigs, saveWidgetConfigs } from './widgetConfig';
 
 describe('Widget configs Saga', () => {
   const mockUser = Object.keys(mockWidgetConfigs)[0];
@@ -20,7 +20,7 @@ describe('Widget configs Saga', () => {
 
   test('Should get correct configuration for user and selected asset Id', async () => {
     // @ts-ignore
-    const testGen = testSaga(machineIdChanged, {
+    const testGen = testSaga(loadWidgetConfigs, {
       payload: { id: mockAssetId },
     });
     return testGen
@@ -39,7 +39,7 @@ describe('Widget configs Saga', () => {
 
   test('Should get empty array if no configurations for sleted assetID', async () => {
     // @ts-ignore
-    const testGen = testSaga(machineIdChanged, {
+    const testGen = testSaga(loadWidgetConfigs, {
       payload: { id: '1' },
     });
     return testGen

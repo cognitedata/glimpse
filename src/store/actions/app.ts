@@ -51,7 +51,7 @@ export const setNewWidget = (widget: WidgetConfig) =>
   action(actionTypes.SET_NEW_WIDGET, widget);
 
 export const setWidgetConfigs = (widgetConfigs: WidgetConfWrapper) =>
-  action(actionTypes.SET_WIDGET_CONFIGS, widgetConfigs);
+  action(actionTypes.SAVE_WIDGET_CONFIGS, widgetConfigs);
 
 /** ------------------ Alarm actions ------------------ */
 

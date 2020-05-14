@@ -19,9 +19,9 @@ export function* showAlert(msg: string) {
 }
 
 /**
- * Retriew widget configs by userId and assetId
+ * Retrieve all widgetConfigs when an action received.
  */
-export function* machineIdChanged({ payload }: Effect) {
+export function* loadWidgetConfigs({ payload }: Effect) {
   const assetId = payload.id;
   const userId = yield select(getUserId);
   const widgetConf = yield getByUser(userId);
@@ -35,9 +35,8 @@ export function* machineIdChanged({ payload }: Effect) {
 }
 
 /**
- * save all widget configurations for user and for asset
- * @param lastSynced Date | null
- * @param isForceSync boolean
+ * Save all widgetConfigs when an action received.
+ * @param param0 Action
  */
 export function* saveWidgetConfigs({ payload }: Effect) {
   const userId = yield select(getUserId);
