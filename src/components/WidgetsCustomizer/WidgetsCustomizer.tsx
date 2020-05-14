@@ -168,7 +168,7 @@ const WidgetsCustomizer: FC<Props> = (props: Props) => {
   return (
     <div className="WidgetsCustomizer">
       <Button
-        data-testid="add-button"
+        data-testid="widget-add-button"
         variant="outlined"
         color="primary"
         className="Add-button"

@@ -23,14 +23,14 @@ describe('Alarm Configuration Popup', () => {
     const { getByTestId } = renderWithRedux(<AlarmConfigurator />, {
       appState: { ...appInitialState },
     });
-    expect(getByTestId('config-button')).toBeInTheDocument();
+    expect(getByTestId('alarm-config-button')).toBeInTheDocument();
   });
 
   test('Display popup on button click ', async () => {
     const { getByText, getByTestId } = renderWithRedux(<AlarmConfigurator />, {
       appState: { ...appInitialState },
     });
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('alarm-config-button'));
     expect(getByText('Alarm Configuration')).toBeInTheDocument();
   });
 
@@ -38,7 +38,7 @@ describe('Alarm Configuration Popup', () => {
     const { getByText, getByTestId } = renderWithRedux(<AlarmConfigurator />, {
       appState: { ...appInitialState },
     });
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('alarm-config-button'));
     expect(getByText('Event Type')).toBeInTheDocument();
     expect(getByText('Event Subtype')).toBeInTheDocument();
     expect(getByText('Metafield Key')).toBeInTheDocument();
@@ -50,7 +50,7 @@ describe('Alarm Configuration Popup', () => {
     const { getByTestId } = renderWithRedux(<AlarmConfigurator />, {
       appState: { ...appInitialState },
     });
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('alarm-config-button'));
     expect(getByTestId('pollingInterval').innerHTML).toContain('value="10"');
     expect(getByTestId('startTime').innerHTML).toContain('value="24"');
   });
