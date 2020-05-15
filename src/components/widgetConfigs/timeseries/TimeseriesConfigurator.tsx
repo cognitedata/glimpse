@@ -53,6 +53,7 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
    */
   const onTsExternalIdBlur = async () => {
     if (getValues().timeseriesExternalId) {
+      setValue('timeseriesName', '');
       setTimeseriesLoading(true);
       const timeseries = await fetchTimeseries(
         getValues().timeseriesExternalId
@@ -197,6 +198,7 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
               variant="contained"
               color="primary"
               type="submit"
+              disabled={timeseriesLoading}
             >
               Create
             </Button>

@@ -33,14 +33,14 @@ export function* updateAssets(action: RootAction) {
   try {
     const savedMachineConfigStr = yield getMachineIds();
 
-    const MACHINE_EXTERNAL_IDS = savedMachineConfigStr
+    const machineExternalIds = savedMachineConfigStr
       ? savedMachineConfigStr.split(',')
       : [];
 
-    if (MACHINE_EXTERNAL_IDS.length > 0) {
+    if (machineExternalIds.length > 0) {
       const cdfClient = yield select(getCdfClient);
       const assets = yield cdfClient.assets.retrieve(
-        MACHINE_EXTERNAL_IDS.map((externalId: string) => ({ externalId }))
+        machineExternalIds.map((externalId: string) => ({ externalId }))
       );
       yield put(setAssets(assets));
       yield put(setAsset(assets[0]));

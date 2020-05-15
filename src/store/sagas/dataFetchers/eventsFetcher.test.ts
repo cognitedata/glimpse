@@ -18,7 +18,7 @@ class CogniteClient {
 const client = new CogniteClient();
 
 beforeEach(() => {
-  client.events.list.mockReturnValue(eventList);
+  client.events.list.mockResolvedValue(eventList);
 });
 
 afterEach(() => {

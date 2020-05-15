@@ -23,7 +23,7 @@ const dataPointObject = {
 };
 
 beforeEach(() => {
-  client.datapoints.retrieveLatest.mockReturnValue(latestDatapoint);
+  client.datapoints.retrieveLatest.mockResolvedValue(latestDatapoint);
 });
 
 afterEach(() => {

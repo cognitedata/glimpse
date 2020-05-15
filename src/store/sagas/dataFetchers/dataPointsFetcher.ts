@@ -15,15 +15,19 @@ export default function* pollUpdateTsDps(action: RootAction) {
     const { actionKey } = action.payload;
     const cdfClient = yield select(getCdfClient);
     const { pollingInterval, queryParams } = action.payload;
-    const tsDataPointsObj = yield cdfClient.datapoints.retrieve({
-      items: [
-        {
-          end: 'now',
-          aggregates: ['average'],
-          ...queryParams,
-        },
-      ],
-    });
+    const tsDataPointsObj = yield cdfClient.datapoints
+      .retrieve({
+        items: [
+          {
+            end: 'now',
+            aggregates: ['average'],
+            ...queryParams,
+          },
+        ],
+      })
+      .catch(() => {
+        return [{ datapoints: [] }];
+      });
     yield put(setTsDps({ [actionKey]: tsDataPointsObj[0].datapoints }));
     const { cancel } = yield race({
       delay: delay(pollingInterval),

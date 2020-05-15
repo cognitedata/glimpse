@@ -15,7 +15,7 @@ class CogniteClient {
 const client = new CogniteClient();
 const tsDataPointsObj = [{ datapoints: mockDataPoints }];
 beforeEach(() => {
-  client.datapoints.retrieve.mockReturnValue(mockDataPoints);
+  client.datapoints.retrieve.mockResolvedValue(mockDataPoints);
 });
 
 afterEach(() => {

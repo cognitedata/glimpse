@@ -15,12 +15,16 @@ export default function* pollUpdateDataLatestPoint(action: RootAction) {
   while (true) {
     const cdfClient = yield select(getCdfClient);
 
-    const response = yield cdfClient.datapoints.retrieveLatest([
-      {
-        ...action.payload.queryParams,
-        before: 'now',
-      },
-    ]);
+    const response = yield cdfClient.datapoints
+      .retrieveLatest([
+        {
+          ...action.payload.queryParams,
+          before: 'now',
+        },
+      ])
+      .catch(() => {
+        return [{ datapoints: [] }];
+      });
 
     const { actionKey } = action.payload;
     let dataPointObject = {};
