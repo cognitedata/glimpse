@@ -3,13 +3,13 @@
 }
 
 .elasped-time .title {
-  font-size: 1em;
+  font-size: 1.2em;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
 .elasped-time .time {
-  font-size: 0.6em;
+  font-size: 0.8em;
   height: 15px;
 }

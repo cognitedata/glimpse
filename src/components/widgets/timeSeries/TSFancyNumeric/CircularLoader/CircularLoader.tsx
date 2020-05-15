@@ -10,10 +10,10 @@ type CircularBarProps = {
 };
 const CircularProgressBar: FC<CircularBarProps> = (props: CircularBarProps) => {
   const {
-    sqSize = 150,
-    percentage = 25,
-    strokeWidth = 15,
-    strokeWidthPadding = 4,
+    sqSize = 170,
+    percentage = 0,
+    strokeWidth = 18,
+    strokeWidthPadding = 5,
   } = props;
   // sqSize -> Size of the enclosing square
   // SVG centers the stroke width on the radius, subtract out so circle fits in square
