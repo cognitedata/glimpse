@@ -27,6 +27,7 @@ import { getDynamicFields, timeUnitMapping } from './constants';
 export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
   const { onCreate, configFields } = props;
   const [timeseriesLoading, setTimeseriesLoading] = useState(false);
+  const [timeseriesFound, setTimeseriesFound] = useState(false);
 
   const defaultValues: FormValues = {
     timeseriesExternalId: '',
@@ -45,6 +46,14 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
     defaultValues,
   });
 
+  const showTimeseriesNotFoundError = () => {
+    props.setAlerts({
+      type: 'warning',
+      text: 'Timeseries not found!',
+      hideApp: false,
+    });
+  };
+
   /**
    * This activates when the Timeseries external id is entered and user leaves the text box.
    * This passes user entered timeseries external id and fetch timeseries data.
@@ -52,6 +61,7 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
    * If there is no timeseries for the entered timeseries external id, it will show an alert.
    */
   const onTsExternalIdBlur = async () => {
+    setTimeseriesFound(false);
     if (getValues().timeseriesExternalId) {
       setValue('timeseriesName', '');
       setTimeseriesLoading(true);
@@ -60,16 +70,13 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
       );
 
       if (timeseries) {
+        setTimeseriesFound(true);
         setValue('timeseriesName', timeseries.name);
         setValue('timeseriesUnit', timeseries.unit);
       } else {
         setValue('timeseriesName', '');
         setValue('timeseriesUnit', '');
-        props.setAlerts({
-          type: 'warning',
-          text: 'Timeseries not found!',
-          hideApp: false,
-        });
+        showTimeseriesNotFoundError();
       }
       setTimeseriesLoading(false);
     }
@@ -81,6 +88,10 @@ export const TimeseriesConfigurator = (props: TimeseriesConfiguratorProps) => {
    * Return value is updated based on the required fields.
    */
   const onSubmit = (data: FormValues) => {
+    if (!timeseriesFound) {
+      showTimeseriesNotFoundError();
+      return;
+    }
     const queryParams: QueryParams = {
       externalId: data.timeseriesExternalId,
     };
