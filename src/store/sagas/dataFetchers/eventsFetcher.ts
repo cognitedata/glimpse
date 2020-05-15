@@ -18,15 +18,19 @@ export default function* pollUpdateEventInfo(action: RootAction) {
     const cdfClient = yield select(getCdfClient);
     const assetId = yield select(getAssetId);
     const { ongoing, type, subtype } = action.payload.queryParams;
-    const eventsResults = yield cdfClient.events.list({
-      sort: { [ongoing ? 'startTime' : 'endTime']: 'desc' },
-      limit: ongoing ? 100 : 1,
-      filter: {
-        assetIds: [assetId],
-        type,
-        subtype,
-      },
-    });
+    const eventsResults = yield cdfClient.events
+      .list({
+        sort: { [ongoing ? 'startTime' : 'endTime']: 'desc' },
+        limit: ongoing ? 100 : 1,
+        filter: {
+          assetIds: [assetId],
+          type,
+          subtype,
+        },
+      })
+      .catch(() => {
+        return { items: [] };
+      });
 
     let events: CogniteEvent[] = eventsResults.items;
 
