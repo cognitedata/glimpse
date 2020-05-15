@@ -15,7 +15,7 @@
 }
 
 .basic-string .name {
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 .basic-string .time {
@@ -23,6 +23,6 @@
 }
 
 .basic-string .value {
-  font-size: 1.5em;
+  font-size: 2.5em;
   font-weight: 500;
 }
