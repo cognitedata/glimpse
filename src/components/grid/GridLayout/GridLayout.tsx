@@ -18,6 +18,7 @@ import WidgetContainer from '../../../containers/WidgetContainer/WidgetContainer
 const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
   const refGridLayout = useRef() as React.MutableRefObject<HTMLInputElement>;
   const [height, setHeight] = useState(600);
+  const { onDragStop, isDraggable, onLayoutChange, layouts, size } = props;
 
   const updateWindowDimensions = useCallback(() => {
     setHeight(
@@ -47,18 +48,18 @@ const GridLayout: FC<GridLayoutProps> = (props: GridLayoutProps) => {
         <ResponsiveGridLayout
           className="layout"
           compactType={null}
-          onDragStop={props.onDragStop}
-          isDraggable={props.isDraggable}
-          onLayoutChange={props.onLayoutChange}
+          onDragStop={onDragStop}
+          isDraggable={isDraggable || false}
+          onLayoutChange={onLayoutChange}
           isResizable={IS_RESIZABLE}
           margin={MARGIN}
           maxRows={MAXROWS}
           breakpoints={BREAKPOINTS}
-          layouts={{ lg: props.layouts }}
+          layouts={{ lg: layouts }}
           cols={{ lg: MAXCOLS }}
           preventCollision
           rowHeight={getRowHeight()}
-          width={props.size.width < MIN_WIDTH ? MIN_WIDTH : props.size.width}
+          width={size.width < MIN_WIDTH ? MIN_WIDTH : size.width}
         >
           {WidgetContainer(props)}
         </ResponsiveGridLayout>
